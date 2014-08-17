@@ -11,34 +11,21 @@
 <body>
     <nav>
         <ul class="list-unstyled main-menu">
-
             <!--Include your navigation here-->
             <li class="text-right"><a href="#" id="nav-close">X</a></li>
-            <li><a href="#">Menu One <span class="icon"></span></a></li>
-            <li><a href="#">Menu Two <span class="icon"></span></a></li>
-            <li><a href="#">Menu Three <span class="icon"></span></a></li>
-            <li>
-                <a href="#">Dropdown</a>
-                <ul class="list-unstyled">
-                    <li class="sub-nav"><a href="#">Sub Menu One <span class="icon"></span></a></li>
-                    <li class="sub-nav"><a href="#">Sub Menu Two <span class="icon"></span></a></li>
-                    <li class="sub-nav"><a href="#">Sub Menu Three <span class="icon"></span></a></li>
-                    <li class="sub-nav"><a href="#">Sub Menu Four <span class="icon"></span></a></li>
-                    <li class="sub-nav"><a href="#">Sub Menu Five <span class="icon"></span></a></li>
-                </ul>
-            </li>
-            <li><a href="#">Menu Four <span class="icon"></span></a></li>
-            <li><a href="#">Menu Five <span class="icon"></span></a></li>
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("About", "About", "Home")</li>
+            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
         </ul>
+        @Html.Partial("_LoginPartial")
     </nav>
-
     <div class="navbar navbar-inverse navbar-fixed-top">
-
         <!--Include your brand here-->
-        <a class="navbar-brand" href="#">Off Canvas Menu</a>
+        @Html.ActionLink("Happy Ball", "Index", "Home", null, new { @class = "navbar-brand" })
+
         <div class="navbar-header pull-right">
             <a id="nav-expander" class="nav-expander fixed">
-                MENU &nbsp;<i class="fa fa-bars fa-lg white"></i>
+                MENU &nbsp;<i class="glyphicon glyphicon-align-justify"></i>
             </a>
         </div>
     </div>
