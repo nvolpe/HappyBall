@@ -185,6 +185,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bootstrap-validate.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -197,6 +198,21 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\Public\app.js" />
+    <Content Include="Scripts\Public\backbone-libs\backbone-extensions.js" />
+    <Content Include="Scripts\Public\happyBall\modules\propModule.js" />
+    <Content Include="Scripts\Public\happyBall\views\propView.js" />
+    <Content Include="Scripts\Public\ladda-bootstrap\ladda.js" />
+    <Content Include="Scripts\Public\ladda-bootstrap\spin.js" />
+    <Content Include="Scripts\Public\marionette\backbone.js" />
+    <Content Include="Scripts\Public\marionette\backbone.marionette.js" />
+    <Content Include="Scripts\Public\marionette\json2.js" />
+    <Content Include="Scripts\Public\marionette\underscore.js" />
+    <Content Include="Scripts\Public\utils\ffa.namespace.js" />
+    <Content Include="Scripts\Public\utils\ffa.ui.js" />
+    <Content Include="Scripts\Public\utils\String.js" />
+    <Content Include="Scripts\Public\utils\StringBuilder.js" />
+    <Content Include="Scripts\Public\utils\utils.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -225,9 +241,11 @@
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\Templates\_Templates.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Scripts\Public\leaflet-awesome-markers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

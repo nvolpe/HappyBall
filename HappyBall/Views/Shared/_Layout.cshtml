@@ -14,8 +14,11 @@
             <!--Include your navigation here-->
             <li class="text-right"><a href="#" id="nav-close">X</a></li>
             <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li><a class="change-page" data-target="NicksBets">Prop Bets</a></li>
             <li>@Html.ActionLink("About", "About", "Home")</li>
             <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+
+            <li><a class="glyphicon glyphicon-globe" data-target="Map" style="font-size: 1.3em;"></a></li>
         </ul>
         @Html.Partial("_LoginPartial")
     </nav>
