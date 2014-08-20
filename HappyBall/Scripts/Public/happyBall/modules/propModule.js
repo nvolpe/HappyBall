@@ -20,22 +20,42 @@
                 _.bindAll.apply(_, [this].concat(_.functions(this)));
                 this.region = options.region;
 
-                //this.collection = new ffa.App.SearchResultCollection({
-                //    baseUrl: options.config.docketApiUrl,
-                //});
+                this.collection = new ffa.App.PropCollection();
 
-                this.propView = new ffa.App.PropItemView({
-                    conifg: options
+                var obj = [
+                     {
+                         Bet: 10,
+                         Id: 'nick1'
+                     },
+                     {
+                         Bet: 20,
+                         Id: 'nick2'
+                     },
+                     {
+                         Bet: 30,
+                         Id: 'nick3'
+                     },
+                     {
+                         Bet: 40,
+                         Id: 'nick4'
+                     }
+                ];
+
+                this.collection.set(obj);
+
+
+                this.PropCollectionView = new ffa.App.PropCollectionView({
+                    collection: this.collection
                 });
 
                 // log it
                 console.log('Prop controller initialized...');
 
-                this.init()
+                //this.init()
             },
 
             init: function () {
-                this.region.show(this.propView);
+                this.region.show(this.PropCollectionView);
             }
         });
     }, ffa);

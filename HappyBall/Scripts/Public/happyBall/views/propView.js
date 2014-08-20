@@ -5,7 +5,12 @@
     //===============
     //MODELS
     //===============
-    ffa.App.propModel = Backbone.Model.extend({});
+    ffa.App.propModel = Backbone.Model.extend({
+        defaults: {
+            Id: 'nicksbets',
+            Bet: 20
+        }
+    });
 
     //===============
     //COLLECTION
@@ -35,5 +40,17 @@
             'click .edit-by-docket': 'editResult'
         }
     });
+
+
+    ffa.App.PropCollectionView = Marionette.CollectionView.extend({
+        initialize: function (options) {
+            _.bindAll.apply(_, [this].concat(_.functions(this)));
+
+            console.log('Init Prop Composite View');
+        },
+        childView: ffa.App.PropItemView
+    });
+
+
 
 }(jQuery, Backbone, _));

@@ -4,29 +4,24 @@ namespace HappyBall.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using HappyBall.Models;
 
     internal sealed class Configuration : DbMigrationsConfiguration<HappyBall.Models.ApplicationDbContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
             ContextKey = "HappyBall.Models.ApplicationDbContext";
         }
 
         protected override void Seed(HappyBall.Models.ApplicationDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            context.Prop.AddOrUpdate(
+              p => p.Id,
+              new Prop { Id = 1, Bet = "Bet 1" },
+              new Prop { Id = 2, Bet = "Bet 2" },
+              new Prop { Id = 3, Bet = "Bet 3" }
+            );
         }
     }
 }

@@ -18,5 +18,7 @@ namespace HappyBall.Models
             : base("DefaultConnection")
         {
         }
+
+        public System.Data.Entity.DbSet<HappyBall.Models.Prop> Prop { get; set; }
     }
 }
