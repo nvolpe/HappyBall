@@ -17,7 +17,10 @@ namespace HappyBall.Models
         public ApplicationDbContext()
             : base("DefaultConnection")
         {
+            var test = "something";
         }
+
+
 
         public System.Data.Entity.DbSet<HappyBall.Models.Prop> Prop { get; set; }
     }
