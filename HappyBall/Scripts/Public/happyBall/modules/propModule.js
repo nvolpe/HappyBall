@@ -8,7 +8,7 @@
         //==================================
         Mod.addInitializer(function (options) {
             Mod.controller = new PropController({
-                region: App.MainRegion
+                region: App.PropRegion
             });
         });
 
@@ -29,7 +29,7 @@
                 // log it
                 console.log('Prop controller initialized...');
 
-                this.fetchBets()
+                //this.fetchBets()
             },
 
             //go get bets from database

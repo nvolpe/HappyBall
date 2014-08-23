@@ -5,76 +5,10 @@
 
 <div id="main-content" class="container-fluid">
 
-    <div class="jumbotron">
-        <h1>Welcome Back Bitch!</h1>
-        <p class="lead">Happy Ball 2.0, bring it on ladies</p>
-        <p><a href="http://asp.net" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
-    </div>
+    
+    <div id="home-region"></div>
+    <div id="prop-region"></div>
 
-    <div class="row">
-        <div class="col-lg-4">
-            <h2>Weekly</h2>
-            <table class="table table-condensed">
-                <thead>
-                    <tr>
-                        <th>Leader</th>
-                        <th>Points</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Mighty Morphine Power Rangers</td>
-                        <td>460</td>
-                    </tr>
-                    <tr>
-                        <td>The Polish Hammer</td>
-                        <td>410</td>
-                    </tr>
-                    <tr>
-                        <td>Thunder Pussies</td>
-                        <td>360</td>
-                    </tr>
-                </tbody>
-            </table>
-            <br />
-            <p><a data-target="Seasonal" class="btn btn-default change-page">Place Bets &raquo;</a></p>
-        </div>
-        <div class="col-lg-4">
-            <h2>Seasonal</h2>
-            <table class="table table-condensed">
-                <thead>
-                    <tr>
-                        <th>Leader</th>
-                        <th>Stock Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Smooth Criminals</td>
-                        <td>57.71</td>
-                    </tr>
-                    <tr>
-                        <td>Monstars</td>
-                        <td>43.20</td>
-                    </tr>
-                    <tr>
-                        <td>Man the Harpoons</td>
-                        <td>39.40</td>
-                    </tr>
-                </tbody>
-            </table>
-            <br />
-            <p><a data-target="NicksBets" class="btn btn-default change-page">Place Bets &raquo;</a></p>
-        </div>
-        <div class="col-lg-4">
-            <h2>Week 9 Winner</h2>
-            <div class="alert alert-success">
-                <p>
-                    Gah Tyler, apparently my style of betting for only Volpes to win failed. Oh and dustin, suck it.
-                </p>
-            </div>
-        </div>
-    </div>
 
     @Html.Partial("Templates/_Templates")
 
@@ -95,15 +29,14 @@
 
         var options = {
             regions: {
-                MainRegion: '#main-content'
+                HomeRegion: '#home-region',
+                PropRegion: '#prop-region'
             }
         };
 
         //--------------------------------
         // Spin up app
         //--------------------------------
-
-        console.log('something is fucked');
 
         ffa.App.start(options);
 

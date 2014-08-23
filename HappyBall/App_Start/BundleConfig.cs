@@ -75,8 +75,16 @@ namespace HappyBall
             // Author: Nick V
             //------------------------
             bundles.Add(new ScriptBundle("~/bundles/happyBall").Include(
+
+                //App
                 "~/Scripts/Public/app.js",
+
+                //Modules
+                "~/Scripts/Public/happyBall/modules/homeModule.js",
                 "~/Scripts/Public/happyBall/modules/propModule.js",
+
+                //Views
+                "~/Scripts/Public/happyBall/views/homeView.js",
                 "~/Scripts/Public/happyBall/views/propView.js"
                 ));
 
