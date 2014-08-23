@@ -22,28 +22,6 @@
 
                 this.collection = new ffa.App.PropCollection();
 
-                var obj = [
-                     {
-                         Bet: 10,
-                         Id: 'nick1'
-                     },
-                     {
-                         Bet: 20,
-                         Id: 'nick2'
-                     },
-                     {
-                         Bet: 30,
-                         Id: 'nick3'
-                     },
-                     {
-                         Bet: 40,
-                         Id: 'nick4'
-                     }
-                ];
-
-                this.collection.set(obj);
-
-
                 this.PropCollectionView = new ffa.App.PropCollectionView({
                     collection: this.collection
                 });
@@ -51,12 +29,30 @@
                 // log it
                 console.log('Prop controller initialized...');
 
-                //this.init()
+                this.fetchBets()
             },
 
-            init: function () {
+            //go get bets from database
+            fetchBets: function () {
+
+                this.collection.fetch({
+                    success: this.fetchCallback,
+                    error: this.fetchErrback
+                });
+            },
+
+            //fetch success
+            fetchCallback: function (result) {
+
                 this.region.show(this.PropCollectionView);
+            },
+
+            //fetch error
+            fetchErrback: function (obj, xhr) {
+                alert('Error ' + xhr.statusText);
             }
+
+
         });
     }, ffa);
 })();

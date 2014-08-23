@@ -16,13 +16,14 @@ namespace HappyBall.Controllers.Api
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET api/Prop
+
+        //GET api/Prop
         public IQueryable<Prop> GetProp()
         {
             return db.Prop;
         }
 
-        // GET api/Prop/5
+        //GET api/Prop/5
         [ResponseType(typeof(Prop))]
         public IHttpActionResult GetProp(int id)
         {

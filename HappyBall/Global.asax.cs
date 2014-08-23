@@ -30,11 +30,10 @@ namespace HappyBall
             // Remove default XML formatter
             formatters.XmlFormatter.SupportedMediaTypes.Clear();
 
-            // JSON formattings
+            // JSON formatting
             var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
             json.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
             json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-
 
             // Fix JSON.NET self referencing hell
             json.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;

@@ -5,12 +5,7 @@
     //===============
     //MODELS
     //===============
-    ffa.App.propModel = Backbone.Model.extend({
-        defaults: {
-            Id: 'nicksbets',
-            Bet: 20
-        }
-    });
+    ffa.App.propModel = Backbone.Model.extend({});
 
     //===============
     //COLLECTION
@@ -22,7 +17,11 @@
             options || (options = {});//jshint ignore:line
 
             console.log('Init Prop Collection');
-        }
+        },
+
+        url: function () {
+            return '/happyball/api/prop';
+        },
     });
 
 

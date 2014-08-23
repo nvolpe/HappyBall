@@ -17,7 +17,6 @@ namespace HappyBall.Models
         public ApplicationDbContext()
             : base("DefaultConnection")
         {
-            var test = "something";
         }
 
 
