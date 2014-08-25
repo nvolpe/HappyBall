@@ -13,7 +13,11 @@
         },
         template: '#home-template',
         events: {
-            'click .edit-by-docket': 'editResult'
+            'click .jumbotron': 'test'
+        },
+
+        test: function () {
+            ffa.App.trigger("route:prop");
         }
     });
 

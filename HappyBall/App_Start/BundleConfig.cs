@@ -77,7 +77,10 @@ namespace HappyBall
             bundles.Add(new ScriptBundle("~/bundles/happyBall").Include(
 
                 //App
-                "~/Scripts/Public/app.js",
+                "~/Scripts/Public/happyBall/app.js",
+
+                //Router
+                "~/Scripts/Public/happyBall/router.js",
 
                 //Modules
                 "~/Scripts/Public/happyBall/modules/homeModule.js",

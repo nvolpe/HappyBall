@@ -29,27 +29,25 @@
     //VIEWS
     //===============
 
+    //Item View
     ffa.App.PropItemView = Marionette.ItemView.extend({
         initialize: function (options) {
             _.bindAll.apply(_, [this].concat(_.functions(this)));
         },
         model: ffa.propModel,
-        template: '#prop-template',
-        events: {
-            'click .edit-by-docket': 'editResult'
-        }
+        template: '#prop-template'
     });
 
-
-    ffa.App.PropCollectionView = Marionette.CollectionView.extend({
+    //Collection View
+    ffa.App.PropCompositeView = Marionette.CompositeView.extend({
         initialize: function (options) {
             _.bindAll.apply(_, [this].concat(_.functions(this)));
 
             console.log('Init Prop Composite View');
         },
-        childView: ffa.App.PropItemView
+        childView: ffa.App.PropItemView,
+        childViewContainer: "#prop-bet-container",
+        template: "#prop-container-template"
     });
-
-
 
 }(jQuery, Backbone, _));

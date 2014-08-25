@@ -4,17 +4,12 @@
 
 
 <div id="main-content" class="container-fluid">
-
-    
-    <div id="home-region"></div>
-    <div id="prop-region"></div>
-
-
-    @Html.Partial("Templates/_Templates")
-
 </div>
-
-
+    
+    <!-- This was causing problems when inserted in the main-content div, 
+    was being removed from div when new route was hit because the show/hid
+    punted that shit -->
+    @Html.Partial("Templates/_Templates")
 
 
 @section scripts{
@@ -29,8 +24,7 @@
 
         var options = {
             regions: {
-                HomeRegion: '#home-region',
-                PropRegion: '#prop-region'
+                MainRegion: '#main-content'
             }
         };
 

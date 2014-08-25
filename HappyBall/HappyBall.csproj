@@ -213,10 +213,11 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\Public\app.js" />
+    <Content Include="Scripts\Public\happyBall\app.js" />
     <Content Include="Scripts\Public\backbone-libs\backbone-extensions.js" />
     <Content Include="Scripts\Public\happyBall\modules\homeModule.js" />
     <Content Include="Scripts\Public\happyBall\modules\propModule.js" />
+    <Content Include="Scripts\Public\happyBall\router.js" />
     <Content Include="Scripts\Public\happyBall\views\homeView.js" />
     <Content Include="Scripts\Public\happyBall\views\propView.js" />
     <Content Include="Scripts\Public\ladda-bootstrap\ladda.js" />

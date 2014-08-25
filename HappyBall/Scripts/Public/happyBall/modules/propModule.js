@@ -8,7 +8,7 @@
         //==================================
         Mod.addInitializer(function (options) {
             Mod.controller = new PropController({
-                region: App.PropRegion
+                region: App.MainRegion
             });
         });
 
@@ -22,14 +22,16 @@
 
                 this.collection = new ffa.App.PropCollection();
 
-                this.PropCollectionView = new ffa.App.PropCollectionView({
+                this.PropCompositeView = new ffa.App.PropCompositeView({
                     collection: this.collection
                 });
 
                 // log it
                 console.log('Prop controller initialized...');
 
-                //this.fetchBets()
+                //in order to show the view, we have to fetch the bets first. 
+                //I guess we could fetch on app load?
+                ffa.App.vent.on('show:prop', this.fetchBets);
             },
 
             //go get bets from database
@@ -44,7 +46,9 @@
             //fetch success
             fetchCallback: function (result) {
 
-                this.region.show(this.PropCollectionView);
+                console.log('fetch complete');
+
+                this.region.show(this.PropCompositeView);
             },
 
             //fetch error

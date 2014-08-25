@@ -20,14 +20,35 @@ if (!this.ffa || typeof this.ffa !== 'object') {
         ffa.App.addRegions(regions);
     });
 
+    //navigate to route
+    ffa.App.navigate = function (route, options) {
+        options || (options = {});
+        Backbone.history.navigate(route, options);
+    };
+
+    //get current route
+    ffa.App.getCurrentRoute = function () {
+        return Backbone.history.fragment
+    };
+
+
     // fires before ALL addInitializers have been run!
     ffa.App.on("initialize:before", function (options) {
         // none added thus far
     });
 
     // fires after ALL addInitializers have been run!
-    ffa.App.on('initialize:after', function (options) {
+    ffa.App.on('start', function (options) {
         // function receives the options passed into Application.start() method.
+
+        //start listening to the router
+        if (Backbone.history) {
+            Backbone.history.start();
+
+            if (this.getCurrentRoute() === "") {
+                ffa.App.trigger("route:home");
+            }
+        }
     });
 
     //debugging so we can see events flying around

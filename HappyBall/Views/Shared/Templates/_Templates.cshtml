@@ -2,7 +2,39 @@
 @* =====TEMPLATES===== *@
 
 
-@* Home Template *@
+<!-- =================================================== -->
+<!--      PROP COMPOSITE TEMPLATE                                  -->
+<!-- =================================================== -->
+
+<script type="text/template" id="prop-container-template">
+    <div>
+        <h1>Prop Bets</h1>
+        <div id="prop-bet-container" class="well"></div>
+    </div>
+    <div style="text-align: center">
+        <br />
+        <button id="submitProp" style="margin-bottom: 50px" class="btn btn-large btn-primary">Submit Prop Bets</button>
+    </div>
+</script>
+
+<script type="text/template" id="prop-template">
+    <div class="centerText">
+        <h3 style="font-size: 22px;"><%= bet %></h3>
+    </div>
+    <br />
+    <button data-target='<%= id %>' id="noBtn<%= id %>" class="btn btn-mini btn-default noBtn" data-stuff="<%= id %>">
+        <span class="glyphicon glyphicon-remove"></span>
+    </button>
+    <button data-target='<%= id %>' id="yesBtn<%= id %>" class="btn btn-mini btn-default pull-right yesBtn" data-stuff="<%= id %>">
+        <span class="glyphicon glyphicon-ok"></span>
+    </button>
+</script>
+
+
+<!-- =================================================== -->
+<!--      HOME TEMPLATE                                  -->
+<!-- =================================================== -->
+
 
 <script type="text/template" id="home-template">
     <div class="jumbotron">
@@ -76,27 +108,4 @@
         </div>
     </div>
 </script>
-
-
-
-@* Prop Template *@
-
-<script type="text/template" id="prop-template">
-    <div class="well">
-        <div class="centerText">
-            <h3 style="font-size: 22px;"><%= bet %></h3>
-        </div>
-        <br />
-        <button data-target='<%= id %>' id="noBtn<%= id %>" class="btn btn-mini btn-default noBtn" data-stuff="<%= id %>">
-            <span class="glyphicon glyphicon-remove"></span>
-        </button>
-        <button data-target='<%= id %>' id="yesBtn<%= id %>" class="btn btn-mini btn-default pull-right yesBtn" data-stuff="<%= id %>">
-            <span class="glyphicon glyphicon-ok"></span>
-        </button>
-    </div>
-</script>
-
-
-
-
 

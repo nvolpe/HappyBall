@@ -8,7 +8,7 @@
         //==================================
         Mod.addInitializer(function (options) {
             Mod.controller = new HomeController({
-                region: App.HomeRegion
+                region: App.MainRegion
             });
         });
 
@@ -25,16 +25,14 @@
                 // log it
                 console.log('Home controller initialized...');
 
-                this.showView();
+                ffa.App.vent.on('show:home', this.showView);
             },
 
             //Render the View
             showView: function () {
 
                 this.region.show(this.HomeItemView);
-            },
-
-
+            }
 
         });
     }, ffa);
