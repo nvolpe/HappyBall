@@ -22,10 +22,6 @@
 
                 this.collection = new ffa.App.PropCollection();
 
-                this.PropCompositeView = new ffa.App.PropCompositeView({
-                    collection: this.collection
-                });
-
                 // log it
                 console.log('Prop controller initialized...');
 
@@ -47,6 +43,10 @@
             fetchCallback: function (result) {
 
                 console.log('fetch complete');
+
+                this.PropCompositeView = new ffa.App.PropCompositeView({
+                    collection: this.collection
+                });
 
                 this.region.show(this.PropCompositeView);
             },

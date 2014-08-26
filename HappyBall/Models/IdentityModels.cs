@@ -19,8 +19,7 @@ namespace HappyBall.Models
         {
         }
 
-
-
         public System.Data.Entity.DbSet<HappyBall.Models.Prop> Prop { get; set; }
+        public System.Data.Entity.DbSet<HappyBall.Models.Result> Results { get; set; }
     }
 }

@@ -3,13 +3,30 @@
 }
 
 
-<div id="main-content" class="container-fluid">
-</div>
-    
-    <!-- This was causing problems when inserted in the main-content div, 
-    was being removed from div when new route was hit because the show/hid
-    punted that shit -->
-    @Html.Partial("Templates/_Templates")
+@if (Request.IsAuthenticated)
+{
+    <div id="main-content" class="container-fluid">
+
+    </div>
+}
+else
+{
+    <div id="Home" class="container-fluid">
+        <div class="jumbotron">
+            <h1>You need you to log in, bro.</h1>
+            <p>Sup Chump? Think you got game? Wanna win billions in worthless virtual points? First you gotta log in.</p>
+            <ul style="list-style-type: none">
+                <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "btn btn-primary btn-large" })</li>
+            </ul>
+        </div>
+    </div>
+}
+
+
+<!-- This was causing problems when inserted in the main-content div,
+was being removed from div when new route was hit because the show/hid
+punted that shit -->
+@Html.Partial("Templates/_Templates")
 
 
 @section scripts{
@@ -22,17 +39,30 @@
 
     <script type="text/javascript">
 
-        var options = {
-            regions: {
-                MainRegion: '#main-content'
-            }
-        };
+        if ('@User.Identity.IsAuthenticated' === 'True') {
 
-        //--------------------------------
-        // Spin up app
-        //--------------------------------
+            var userTeamName = '@ViewBag.TeamName';
+            var userName = '@ViewBag.UserName';
+            var userId = '@ViewBag.UserId';
 
-        ffa.App.start(options);
+            var config = {
+                userTeamName: userTeamName,
+                userName: userName,
+                userId: userId,
+                regions: {
+                    MainRegion: '#main-content'
+                }
+            };
+
+            //--------------------------------
+            // Spin up app
+            //--------------------------------
+
+            ffa.App.start(config);
+        
+        }
+
+
 
     </script>
 

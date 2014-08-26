@@ -8,7 +8,7 @@
         //==================================
         Mod.addInitializer(function (options) {
             Mod.controller = new HomeController({
-                region: App.MainRegion
+                config: options
             });
         });
 
@@ -18,9 +18,10 @@
         var HomeController = Backbone.Marionette.Controller.extend({
             initialize: function (options) {
                 _.bindAll.apply(_, [this].concat(_.functions(this)));
-                this.region = options.region;
 
-                this.HomeItemView = new ffa.App.HomeItemView({});
+                this.region = App.MainRegion;
+                this.userTeamName = options.config.userTeamName;
+
 
                 // log it
                 console.log('Home controller initialized...');
@@ -31,7 +32,9 @@
             //Render the View
             showView: function () {
 
+                this.HomeItemView = new ffa.App.HomeItemView({});
                 this.region.show(this.HomeItemView);
+
             }
 
         });
