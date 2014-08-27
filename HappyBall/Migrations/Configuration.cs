@@ -22,6 +22,15 @@ namespace HappyBall.Migrations
               new Prop { Id = 2, Bet = "Bet 2" },
               new Prop { Id = 3, Bet = "Bet 3" }
             );
+
+
+            context.Results.AddOrUpdate(
+              p => p.Id,
+              new Result { Id = 1, PropBet1 = "Bet 1" },
+              new Result { Id = 2, PropBet2 = "Bet 2" },
+              new Result { Id = 3, PropBet3 = "Bet 3" }
+            );
+
         }
     }
 }

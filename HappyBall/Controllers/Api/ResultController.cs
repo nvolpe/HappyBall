@@ -69,7 +69,7 @@ namespace HappyBall.Controllers.Api
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST api/Result
+         //POST api/Result
         [ResponseType(typeof(Result))]
         public IHttpActionResult PostResult(Result result)
         {

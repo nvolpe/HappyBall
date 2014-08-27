@@ -70,7 +70,6 @@ namespace HappyBall
                 "~/Scripts/Public/utils/utils.js"
                 ));
 
-
             //------------------------
             // Author: Nick V
             //------------------------
@@ -83,8 +82,8 @@ namespace HappyBall
                 "~/Scripts/Public/happyBall/router.js",
 
                 //Modules
-                "~/Scripts/Public/happyBall/modules/homeModule.js",
-                "~/Scripts/Public/happyBall/modules/propModule.js",
+                "~/Scripts/Public/happyBall/modules/mainModule.js",
+                //"~/Scripts/Public/happyBall/modules/propModule.js",
 
                 //Views
                 "~/Scripts/Public/happyBall/views/homeView.js",
