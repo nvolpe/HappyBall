@@ -15,6 +15,7 @@
         url: function () {
             var resultUrl = '/happyball/api/result/' + this.id ;
 
+
             return resultUrl;
         }
     });

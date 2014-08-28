@@ -19,9 +19,11 @@ namespace HappyBall.Controllers
             var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
 
             if (User.Identity.IsAuthenticated) {
+
                 var currentUser = manager.FindById(User.Identity.GetUserId());
-                ViewBag.TeamName = currentUser.TeamName;
-                ViewBag.UserId = currentUser.Id;
+
+                ViewBag.TeamName = currentUser.UserInfo.TeamName;
+                ViewBag.UserId = currentUser.UserInfo.Id;
                 ViewBag.UserName = currentUser.UserName;
             }
 

@@ -4,17 +4,29 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Net;
-using System.Net.Http;
+using System.Web;
+using System.Web.Mvc;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using HappyBall.Models;
+
 
 namespace HappyBall.Controllers.Api
 {
     public class ResultController : ApiController
     {
+        private UserManager<ApplicationUser> manager;
         private ApplicationDbContext db = new ApplicationDbContext();
+
+        public ResultController()
+        {
+            manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+        }
+
 
         // GET api/Result
         public IQueryable<Result> GetResults()
@@ -38,12 +50,16 @@ namespace HappyBall.Controllers.Api
         // PUT api/Result/5
         public IHttpActionResult PutResult(int id, Result result)
         {
+
+            //var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId()); 
+            var currentUser = manager.FindByIdAsync(User.Identity.GetUserId());
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != result.Id)
+            if (id != result.User.UserInfo.Id)
             {
                 return BadRequest();
             }
@@ -81,7 +97,7 @@ namespace HappyBall.Controllers.Api
             db.Results.Add(result);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = result.Id }, result);
+            return CreatedAtRoute("DefaultApi", new { id = result.User.UserInfo.Id }, result);
         }
 
         // DELETE api/Result/5
@@ -111,7 +127,7 @@ namespace HappyBall.Controllers.Api
 
         private bool ResultExists(int id)
         {
-            return db.Results.Count(e => e.Id == id) > 0;
+            return db.Results.Count(e => e.User.UserInfo.Id == id) > 0;
         }
     }
 }

@@ -46,6 +46,20 @@ namespace HappyBall.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindAsync(model.UserName, model.Password);
+
+
+                // // Insert a new user into the database
+                //using (var db = new ApplicationDbContext())
+                //{
+
+                //    db.Results.Add(new Result { TeamName = model.} )
+                //}
+
+
+
+
+
+
                 if (user != null)
                 {
                     await SignInAsync(user, model.RememberMe);
@@ -79,10 +93,25 @@ namespace HappyBall.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser() { UserName = model.UserName, TeamName = model.TeamName };
+                user.UserInfo = new UserInfo() { TeamName = model.TeamName };
+                
+                
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await SignInAsync(user, isPersistent: false);
+
+                    // Insert a new user into the result table
+                    using (var db = new ApplicationDbContext())
+                    {
+
+
+                        ApplicationUser AppUser = db.Users.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
+                        db.Results.Add(new Result { TeamName = model.TeamName, User = AppUser.UserInfo.Id });
+                        db.SaveChanges();
+                    }
+
+
                     return RedirectToAction("Index", "Home");
                 }
                 else
