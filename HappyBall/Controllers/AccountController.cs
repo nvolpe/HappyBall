@@ -107,7 +107,7 @@ namespace HappyBall.Controllers
 
 
                         ApplicationUser AppUser = db.Users.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
-                        db.Results.Add(new Result { TeamName = model.TeamName, User = AppUser.UserInfo.Id });
+                        db.Results.Add(new Result { TeamName = model.TeamName, User = AppUser });
                         db.SaveChanges();
                     }
 

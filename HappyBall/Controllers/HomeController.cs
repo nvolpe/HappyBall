@@ -13,6 +13,8 @@ namespace HappyBall.Controllers
     public class HomeController : Controller
     {
 
+        ApplicationDbContext db = new ApplicationDbContext();
+
         public ActionResult Index()
         {
 
@@ -25,6 +27,17 @@ namespace HappyBall.Controllers
                 ViewBag.TeamName = currentUser.UserInfo.TeamName;
                 ViewBag.UserId = currentUser.UserInfo.Id;
                 ViewBag.UserName = currentUser.UserName;
+
+                int resultId = (from r in db.Results
+                                where r.User.Id == currentUser.Id
+                                select r.Id).First();
+
+
+                ViewBag.ResultId = resultId;
+
+
+
+
             }
 
             return View();

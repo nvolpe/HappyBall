@@ -22,11 +22,11 @@
                 this.region = App.MainRegion;
                 this.userTeamName = options.config.userTeamName;
                 this.userId = 3; //switch to user auth
-
+                this.resultId = options.config.resultId;
 
                 //Prop Bet Entities
                 //-----------------------------------------
-                this.propModel = new ffa.App.PropModel({ id: this.userId });
+                this.propModel = new ffa.App.PropModel({ id: this.resultId });
                 this.propCollection = new ffa.App.PropCollection();
 
 
