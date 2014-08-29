@@ -72,7 +72,10 @@
             console.log('Save Prop bets!');
 
             this.model.set({
-                PropBet1: "yes"
+                PropBet1: "yes",
+                PropBet2: "yes",
+                PropBet3: "no",
+                LogIns: 1
             });
 
             this.model.save({}, {

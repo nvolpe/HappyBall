@@ -40,3 +40,9 @@ input[type="checkbox"].input-validation-error {
 .validation-summary-valid {
     display: none;
 }
+
+/**Nick Volpe Styles Start Right Hurrrr*/
+
+.adminMaxWidth {
+    max-width: 700px;
+}

@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Admin</h1>
+
+<div class="row well">
+    <h3>Prop Bets</h3>
+    <div> Question 1 </div>
+    <textarea id="propQuestion1" class="form-control adminMaxWidth" rows="3"></textarea>
+    <div> Question 2 </div>
+    <textarea id="propQuestion2" class="form-control adminMaxWidth" rows="3"></textarea>
+    <div> Question 3 </div>
+    <textarea id="propQuestion3" class="form-control adminMaxWidth" rows="3"></textarea>
+    <button id="submitPropQuestions" type="submit" class="btn btn-default">Submit</button>
+</div>
+
+
+@*TODO: Fix this, why is this not loading in time through the _layout*@
+@Scripts.Render("~/bundles/jquery")
+
+
+<script type="text/javascript">
+
+    //AHH Everything about this Script Is nasty, but who the fuck cares it works.
+
+    $(function () {
+
+        console.log('YES');
+
+        $.getJSON("/happyball/api/prop", function (json) {
+            console.dir(json);
+            $('#propQuestion1').text(json[0].bet);
+            $('#propQuestion2').text(json[1].bet);
+            $('#propQuestion3').text(json[2].bet);
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            console.warn('Error in Admin Page:  API Get Prop Bets')
+        });
+
+
+        $("#submitPropQuestions").click(function () {
+
+            submitPropQuestions();
+
+        });
+
+        function submitPropQuestions() {
+
+            var question1 = $('#propQuestion1').val();
+            var question2 = $('#propQuestion2').val();
+            var question3 = $('#propQuestion3').val();
+
+            console.log(question1);
+            console.log(question2);
+            console.log(question3);
+
+            var data = [
+                { "id": 1, "bet": question1 },
+                { "id": 2, "bet": question2 },
+                { "id": 3, "bet": question3 }
+            ]
+
+            var url = null;
+
+            $.each(data, function (index, value) {
+
+                url = '/happyball/api/prop' + '/' + value.id;
+
+                $.ajax({
+                    type: "PUT",
+                    url: url,
+                    data: value,
+                    dataType: 'json'
+                });
+            });
+        }
+
+
+    });
+
+</script>
