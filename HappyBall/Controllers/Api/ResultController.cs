@@ -70,10 +70,6 @@ namespace HappyBall.Controllers.Api
         // PUT api/Result/5
         public IHttpActionResult PutResult(int id, Result result)
         {
-
-            //var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId()); 
-            var currentUser = manager.FindByIdAsync(User.Identity.GetUserId());
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

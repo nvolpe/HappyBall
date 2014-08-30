@@ -5,15 +5,45 @@
 
 <h1>Admin</h1>
 
+
+<div id="adminWeekContainer" class="row well">
+    <h3>Set Week</h3>
+
+    <select id="week-select" class="form-control">
+        <option value="1">Week 1</option>
+        <option value="2">Week 2</option>
+        <option value="3">Week 3</option>
+        <option value="4">Week 4</option>
+        <option value="5">Week 5</option>
+        <option value="6">Week 6</option>
+        <option value="7">Week 7</option>
+        <option value="8">Week 8</option>
+        <option value="9">Week 9</option>
+        <option value="10">Week 10</option>
+        <option value="11">Week 11</option>
+        <option value="12">Week 12</option>
+        <option value="13">Week 13</option>
+        <option value="14">Week 14</option>
+        <option value="15">Week 15</option>
+        <option value="16">Week 16</option>
+    </select>
+    <br>
+    <button id="submitWeek" type="submit" class="btn btn-default">Submit</button>
+
+</div>
+
+
+
 <div id="adminPropContainer" class="row well">
-    <h3>Prop Bets</h3>
+    <h3>Set Prop Bets</h3>
     <div> Question 1 </div>
     <textarea id="propQuestion1" class="form-control adminMaxWidth" rows="3"></textarea>
     <div> Question 2 </div>
     <textarea id="propQuestion2" class="form-control adminMaxWidth" rows="3"></textarea>
     <div> Question 3 </div>
     <textarea id="propQuestion3" class="form-control adminMaxWidth" rows="3"></textarea>
-    <button id="submitPropQuestions" type="submit" class="btn btn-default">Submit</button>
+    <br>
+    <button id="submitProp" type="submit" class="btn btn-default">Submit</button>
 </div>
 
 
@@ -29,6 +59,9 @@
 
     $(function () {
 
+        ////////////////////////////////////////////
+        //SPINNER
+        ////////////////////////////////////////////
 
         //spin up spinjs bitch
         var opts = {
@@ -49,29 +82,113 @@
             top: '100%', // Top position relative to parent
             left: '100%' // Left position relative to parent
         };
-        var target = document.getElementById('adminPropContainer');
-        var spinner = new Spinner(opts).spin(target);
+        var weekTarget = document.getElementById('adminWeekContainer');
+        var _weekSpinner = new Spinner(opts).spin(weekTarget);
 
-        //Go get props and populate them in the text area boxes
-        $.getJSON("/happyball/api/prop", function (json) {
-            spinner.stop();
-            $('#propQuestion1').text(json[0].bet);
-            $('#propQuestion2').text(json[1].bet);
-            $('#propQuestion3').text(json[2].bet);
-        })
-        .fail(function (jqXHR, textStatus, errorThrown) {
-            console.warn('Error in Admin Page:  API Get Prop Bets')
-            alert('shit didnt work, ask nick');
-            spinner.stop();
+
+        var propTarget = document.getElementById('adminPropContainer');
+        var _PropSpinner = new Spinner(opts).spin(propTarget);
+
+
+        ////////////////////////////////////////////
+        //INITS
+        ////////////////////////////////////////////
+
+        initWeek();
+        initProp();
+
+
+        ////////////////////////////////////////////
+        //CLICK EVENTS
+        ////////////////////////////////////////////
+
+        //on submit, save the fucking wekk
+        $("#submitWeek").click(function () {
+            submitWeek();
         });
 
         //on submit, save the fucking props
-        $("#submitPropQuestions").click(function () {
+        $("#submitProp").click(function () {
             submitPropQuestions();
         });
 
+
+        ////////////////////////////////////////////
+        //Week
+        ////////////////////////////////////////////
+
+        function initWeek() {
+
+            $.getJSON("/happyball/api/week", function (json) {
+                _weekSpinner.stop();
+
+                //$("#week-select").val(json.Week_Id);
+
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                console.warn('Error in Admin Page:  API Get WEEK')
+                alert('shit didnt work, ask nick :: Get WEEK');
+                _weekSpinner.stop();
+            });
+        }
+
+
+        function submitWeek() {
+            //Hack to spin spinner again
+            var weekTarget = document.getElementById('adminWeekContainer');
+            _weekSpinner.spin(weekTarget);
+
+            var selectedWeek = $("#week-select").val();
+            var data = [{ "id": 1, "Week_Id": selectedWeek }]
+
+            //TODO: Is this really the best way, looping through and sending put requests?
+            //Or should i post new data each time?
+            var url = '/happyball/api/week' + '/' + data[0].id; //TODO: Use c# razer shit to get route
+            $.ajax({
+                type: "PUT",
+                url: url,
+                data: data[0],
+                dataType: 'json',
+                error: function () {
+                    _weekSpinner.stop();
+                    console.log('admin error posting week');
+                    alert('shit didnt work, ask nick :: GET WEEK');
+                },
+                success: function () {
+                    _weekSpinner.stop();
+                    console.log('admin succesffully updated week');
+                }
+            });
+        }
+
+
+        ////////////////////////////////////////////
+        //PROP BETS
+        ////////////////////////////////////////////
+
+        function initProp() {
+            //Go get props and populate them in the text area boxes
+            $.getJSON("/happyball/api/prop", function (json) {
+                _PropSpinner.stop();
+                $('#propQuestion1').text(json[0].bet);
+                $('#propQuestion2').text(json[1].bet);
+                $('#propQuestion3').text(json[2].bet);
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                console.warn('Error in Admin Page:  API Get Prop Bets')
+                alert('shit didnt work, ask nick :: GET PROP BETS');
+                _PropSpinner.stop();
+            });
+        }
+
+
+
+
         function submitPropQuestions() {
-            spinner.start();
+            //Hack to spin spinner again
+            var propTarget = document.getElementById('adminPropContainer');
+            _PropSpinner.spin(propTarget);
+
 
             var question1 = $('#propQuestion1').val();
             var question2 = $('#propQuestion2').val();
@@ -95,17 +212,20 @@
                     data: value,
                     dataType: 'json',
                     error: function () {
-                        spinner.stop();
+                        _PropSpinner.stop();
                         console.log('admin error posting props');
                         alert('shit didnt work, ask nick');
                     },
                     success: function () {
-                        spinner.stop();
+                        _PropSpinner.stop();
                         console.log('admin succesffully updated props');
                     }
                 });
             });
         }
+
+
+
 
 
     });
