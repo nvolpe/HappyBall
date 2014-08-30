@@ -60,15 +60,15 @@
             fetchBets: function () {
                 var self = this;
 
-                this.propResultModel.fetch({
-                    success: function (results) {
-                        console.log('yess');
-                        console.dir(results);
-                    },
-                    error: function () {
-                        console.log('noo');
-                    }
-                });
+                //this.propResultModel.fetch({
+                //    success: function (results) {
+                //        console.log('yess');
+                //        console.dir(results);
+                //    },
+                //    error: function () {
+                //        console.log('noo');
+                //    }
+                //});
 
 
                 this.propCollection.fetch({
