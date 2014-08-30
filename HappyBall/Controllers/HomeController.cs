@@ -24,16 +24,16 @@ namespace HappyBall.Controllers
 
                 var currentUser = manager.FindById(User.Identity.GetUserId());
 
-                ViewBag.TeamName = currentUser.UserInfo.TeamName;
-                ViewBag.UserId = currentUser.UserInfo.Id;
+                //ViewBag.TeamName = currentUser.UserInfo.TeamName;
+                //ViewBag.UserId = currentUser.UserInfo.Id;
                 ViewBag.UserName = currentUser.UserName;
 
-                int resultId = (from r in db.Results
-                                where r.User.Id == currentUser.Id
-                                select r.Id).First();
+                //int resultId = (from r in db.Results
+                //                where r.User.Id == currentUser.Id
+                //                select r.Id).First();
 
 
-                ViewBag.ResultId = resultId;
+                //ViewBag.ResultId = resultId;
 
 
 

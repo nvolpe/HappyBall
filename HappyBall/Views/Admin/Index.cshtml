@@ -5,7 +5,7 @@
 
 <h1>Admin</h1>
 
-<div class="row well">
+<div id="adminPropContainer" class="row well">
     <h3>Prop Bets</h3>
     <div> Question 1 </div>
     <textarea id="propQuestion1" class="form-control adminMaxWidth" rows="3"></textarea>
@@ -19,6 +19,8 @@
 
 @*TODO: Fix this, why is this not loading in time through the _layout*@
 @Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/utilities")
+
 
 
 <script type="text/javascript">
@@ -27,34 +29,54 @@
 
     $(function () {
 
-        console.log('YES');
 
+        //spin up spinjs bitch
+        var opts = {
+            lines: 9, // The number of lines to draw
+            length: 6, // The length of each line
+            width: 10, // The line thickness
+            radius: 30, // The radius of the inner circle
+            corners: 0.5, // Corner roundness (0..1)
+            rotate: 77, // The rotation offset
+            direction: 1, // 1: clockwise, -1: counterclockwise
+            color: '#000', // #rgb or #rrggbb or array of colors
+            speed: 1.7, // Rounds per second
+            trail: 60, // Afterglow percentage
+            shadow: false, // Whether to render a shadow
+            hwaccel: false, // Whether to use hardware acceleration
+            className: 'spinner', // The CSS class to assign to the spinner
+            zIndex: 2e9, // The z-index (defaults to 2000000000)
+            top: '100%', // Top position relative to parent
+            left: '100%' // Left position relative to parent
+        };
+        var target = document.getElementById('adminPropContainer');
+        var spinner = new Spinner(opts).spin(target);
+
+        //Go get props and populate them in the text area boxes
         $.getJSON("/happyball/api/prop", function (json) {
-            console.dir(json);
             $('#propQuestion1').text(json[0].bet);
             $('#propQuestion2').text(json[1].bet);
             $('#propQuestion3').text(json[2].bet);
+
+            spinner.stop();
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
             console.warn('Error in Admin Page:  API Get Prop Bets')
+            alert('shit didnt work, ask nick');
+            spinner.stop();
         });
 
-
+        //on submit, save the fucking props
         $("#submitPropQuestions").click(function () {
-
             submitPropQuestions();
-
         });
 
         function submitPropQuestions() {
+            spinner.start();
 
             var question1 = $('#propQuestion1').val();
             var question2 = $('#propQuestion2').val();
             var question3 = $('#propQuestion3').val();
-
-            console.log(question1);
-            console.log(question2);
-            console.log(question3);
 
             var data = [
                 { "id": 1, "bet": question1 },
@@ -64,15 +86,24 @@
 
             var url = null;
 
+            //TODO: Is this really the best way, looping through and sending put requests?
+            //Or should i post new data each time?
             $.each(data, function (index, value) {
-
-                url = '/happyball/api/prop' + '/' + value.id;
-
+                url = '/happyball/api/prop' + '/' + value.id; //TODO: User c# razer shit to get route
                 $.ajax({
                     type: "PUT",
                     url: url,
                     data: value,
-                    dataType: 'json'
+                    dataType: 'json',
+                    error: function () {
+                        spinner.stop();
+                        console.log('admin error posting props');
+                        alert('shit didnt work, ask nick');
+                    },
+                    success: function () {
+                        spinner.stop();
+                        console.log('admin succesffully updated props');
+                    }
                 });
             });
         }

@@ -26,7 +26,7 @@
 
                 //Prop Bet Entities
                 //-----------------------------------------
-                this.propModel = new ffa.App.PropModel({ id: this.resultId });
+                this.propModel = new ffa.App.PropModel({ id: 2 });
                 this.propCollection = new ffa.App.PropCollection();
 
 

@@ -30,6 +30,11 @@ namespace HappyBall.Migrations
               new Result { Id = 3, TeamName = "team3", PropBet3 = "Bet 3" }
             );
 
+            context.Week.AddOrUpdate(
+              p => p.Id,
+              new Week { Id = 1, Week_Id = 1 }
+            );
+
         }
     }
 }

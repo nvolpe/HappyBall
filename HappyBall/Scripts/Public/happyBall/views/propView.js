@@ -12,8 +12,10 @@
             console.dir(options);
             console.log('Init Prop Model');
         },
+        idAttribute: "Id",
         url: function () {
-            var resultUrl = '/happyball/api/result/' + this.id ;
+            //var resultUrl = '/happyball/api/result/' + this.id;
+            var resultUrl = '/happyball/api/result' 
 
 
             return resultUrl;
@@ -75,7 +77,8 @@
                 PropBet1: "yes",
                 PropBet2: "yes",
                 PropBet3: "no",
-                LogIns: 1
+                LogIns: 1,
+                User_Id: '0c0161b3-1fd8-4433-a374-263cca41d19b'
             });
 
             this.model.save({}, {

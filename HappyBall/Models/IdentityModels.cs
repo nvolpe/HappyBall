@@ -14,16 +14,16 @@ namespace HappyBall.Models
     {
         public string TeamName { get; set; }
 
-        public virtual UserInfo UserInfo { get; set; }
+        //public virtual UserInfo UserInfo { get; set; }
 
-        public virtual ICollection<Result> Results { get; set; }
+        //public virtual ICollection<Result> Results { get; set; }
     }
 
-    public class UserInfo
-    {
-        public int Id { get; set; }
-        public string TeamName { get; set; }
-    }
+    //public class UserInfo
+    //{
+    //    public int Id { get; set; }
+    //    public string TeamName { get; set; }
+    //}
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -34,5 +34,6 @@ namespace HappyBall.Models
 
         public System.Data.Entity.DbSet<HappyBall.Models.Prop> Prop { get; set; }
         public System.Data.Entity.DbSet<HappyBall.Models.Result> Results { get; set; }
+        public System.Data.Entity.DbSet<HappyBall.Models.Week> Week { get; set; }
     }
 }

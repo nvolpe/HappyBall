@@ -59,10 +59,10 @@ namespace HappyBall.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            if (id != result.User.UserInfo.Id)
-            {
-                return BadRequest();
-            }
+            //if (id != result.User.UserInfo.Id)
+            //{
+            //    return BadRequest();
+            //}
 
             db.Entry(result).State = EntityState.Modified;
 
@@ -94,10 +94,13 @@ namespace HappyBall.Controllers.Api
                 return BadRequest(ModelState);
             }
 
+
+
             db.Results.Add(result);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = result.User.UserInfo.Id }, result);
+            return CreatedAtRoute("DefaultApi", new { id = result.Id }, result);
+            //return CreatedAtRoute("DefaultApi", new { id = result.User.UserInfo.Id }, result);
         }
 
         // DELETE api/Result/5
@@ -127,7 +130,8 @@ namespace HappyBall.Controllers.Api
 
         private bool ResultExists(int id)
         {
-            return db.Results.Count(e => e.User.UserInfo.Id == id) > 0;
+            return db.Results.Count(e => e.Id == id) > 0;
+            //return db.Results.Count(e => e.User.UserInfo.Id == id) > 0;
         }
     }
 }

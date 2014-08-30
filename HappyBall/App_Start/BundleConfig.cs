@@ -62,8 +62,9 @@ namespace HappyBall
             // utlities
             //------------------------
             bundles.Add(new ScriptBundle("~/bundles/utilities").Include(
-                "~/Scripts/Public/vendor/ladda-bootstrap/spin.js",
-                "~/Scripts/Public/vendor/ladda-bootstrap/ladda.js",
+                "~/Scripts/spin.js",
+                "~/Scripts/Public/ladda-bootstrap/spin.js",
+                "~/Scripts/Public/ladda-bootstrap/ladda.js",
                 "~/Scripts/Public/utils/ffa.namespace.js",
                 "~/Scripts/Public/utils/String.js",
                 "~/Scripts/Public/utils/StringBuilder.js",

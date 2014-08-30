@@ -18,6 +18,15 @@ namespace HappyBall.Models
         public string PropBet2 { get; set; }
         public string PropBet3 { get; set; }
         public int LogIns { get; set; }
+        public int Week { get; set; }
+        
+
+        public Result()
+        {
+            this.Week = 1;
+        }
+
+
         
     }
 }
