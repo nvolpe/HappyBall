@@ -30,6 +30,10 @@
                 this.propCollection = new ffa.App.PropCollection();
 
 
+                this.propResultModel = new ffa.App.PropResultModel();
+                
+
+
                 // log it
                 console.log('Home controller initialized...');
 
@@ -54,6 +58,18 @@
 
             //go get bets from database
             fetchBets: function () {
+                var self = this;
+
+                this.propResultModel.fetch({
+                    success: function (results) {
+                        console.log('yess');
+                        console.dir(results);
+                    },
+                    error: function () {
+                        console.log('noo');
+                    }
+                });
+
 
                 this.propCollection.fetch({
                     success: this.fetchBetsCallback,

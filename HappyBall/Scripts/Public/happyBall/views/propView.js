@@ -17,14 +17,55 @@
             //var resultUrl = '/happyball/api/result/' + this.id;
             var resultUrl = '/happyball/api/result' 
 
-
             return resultUrl;
         }
     });
 
+
+    ffa.App.PropResultModel = Backbone.Model.extend({
+        initialize: function (options) {
+            options || (options = {});
+
+            console.dir(options);
+            console.log('Init Prop Result Model');
+        },
+        idAttribute: "id",
+        url: function () {
+
+            var resultUrl = '/happyball/api/result/week';
+            return resultUrl;
+        }
+    });
+
+
+
+
     //===============
-    //COLLECTION
+    //COLLECTIONS
     //===============
+    //ffa.App.PropResultCollection = Backbone.Collection.extend({
+
+    //    initialize: function (options) {
+    //        //_.bindAll.apply(_, [this].concat(_.functions(this)));
+    //        options || (options = {});//jshint ignore:line
+
+    //        console.log('Init Prop Collection');
+    //        console.dir(options);
+
+
+    //        this.optio
+
+    //    },
+    //    url: function () {
+
+    //        console.log('setting url');
+
+    //        var resultUrl = '/happyball/api/result/' + this.weekId;
+    //        return resultUrl;
+    //    }
+
+    //});
+
     ffa.App.PropCollection = Backbone.Collection.extend({
         //model: ffa.App.PropModel,
 
@@ -78,7 +119,8 @@
                 PropBet2: "yes",
                 PropBet3: "no",
                 LogIns: 1,
-                User_Id: '0c0161b3-1fd8-4433-a374-263cca41d19b'
+                TeamName: 'Touchdown Jesus',
+                UserId: '0c0161b3-1fd8-4433-a374-263cca41d19b'
             });
 
             this.model.save({}, {

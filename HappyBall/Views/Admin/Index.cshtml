@@ -54,11 +54,10 @@
 
         //Go get props and populate them in the text area boxes
         $.getJSON("/happyball/api/prop", function (json) {
+            spinner.stop();
             $('#propQuestion1').text(json[0].bet);
             $('#propQuestion2').text(json[1].bet);
             $('#propQuestion3').text(json[2].bet);
-
-            spinner.stop();
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
             console.warn('Error in Admin Page:  API Get Prop Bets')

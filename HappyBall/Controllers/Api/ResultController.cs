@@ -36,16 +36,32 @@ namespace HappyBall.Controllers.Api
 
         // GET api/Result/5
         [ResponseType(typeof(Result))]
-        public IHttpActionResult GetResult(int id)
+        [System.Web.Http.Route("api/result/week", Name = "GetResultByWeek")]
+        public IHttpActionResult GetResultByWeek()
         {
-            Result result = db.Results.Find(id);
-            if (result == null)
+
+            //Get Current Week?
+            //------------------------------------
+            var weekId = db.Week.First().Week_Id;
+
+            //Get user ID
+            //------------------------------------
+            //var currentUser = manager.FindByIdAsync(User.Identity.GetUserId());
+            var testUseId = User.Identity.GetUserId();
+
+            //Get Matching Prop Model based off this type of query: where userID == 'abc123' and weekId = 1 
+            //------------------------------------
+            //TODO: Try and understand this better lol. switch to: .ToList() if we want a collection of results.. i dont understand linq!
+            var results = db.Results.Where(x => x.Week == weekId && x.UserId == testUseId).First();
+
+            if (results == null)
             {
                 return NotFound();
             }
 
-            return Ok(result);
+            return Ok(results);
         }
+
 
         // PUT api/Result/5
         public IHttpActionResult PutResult(int id, Result result)
@@ -85,7 +101,7 @@ namespace HappyBall.Controllers.Api
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-         //POST api/Result
+        //POST api/Result
         [ResponseType(typeof(Result))]
         public IHttpActionResult PostResult(Result result)
         {
@@ -93,7 +109,6 @@ namespace HappyBall.Controllers.Api
             {
                 return BadRequest(ModelState);
             }
-
 
 
             db.Results.Add(result);

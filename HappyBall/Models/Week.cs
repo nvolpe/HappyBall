@@ -9,5 +9,6 @@ namespace HappyBall.Models
     {
         public int Id { get; set; }
         public int Week_Id { get; set; }
+
     }
 }
