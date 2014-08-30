@@ -52,12 +52,16 @@ namespace HappyBall.Controllers.Api
             //Get Matching Prop Model based off this type of query: where userID == 'abc123' and weekId = 1 
             //------------------------------------
             //TODO: Try and understand this better lol. switch to: .ToList() if we want a collection of results.. i dont understand linq!
-            var results = db.Results.Where(x => x.Week == weekId && x.UserId == testUseId).First();
+            var results = db.Results.Where(x => x.Week == weekId && x.UserId == testUseId).FirstOrDefault();
 
-            if (results == null)
-            {
-                return NotFound();
-            }
+
+            //TODO: IMPORTANT! Figure out another way to return empty result if query above returns nothing
+            //NEED TO FIX. 
+            //if (results == null)
+            //{
+            //    return NotFound();
+            //}
+            
 
             return Ok(results);
         }
@@ -107,8 +111,13 @@ namespace HappyBall.Controllers.Api
 
             //Get user ID
             //------------------------------------
-            //var currentUser = manager.FindByIdAsync(User.Identity.GetUserId());
-            //var currentUser = User.Identity.GetUserId();
+            var currentUserId = User.Identity.GetUserId();
+            var currentTeamName = manager.FindById(currentUserId).TeamName;
+
+            //Set user information so we dont have to send it from javascript. Seems like a hacker could hack the guid being sent through ajax.
+            //------------------------------------
+            result.TeamName = currentTeamName;
+            result.UserId = currentUserId;
 
 
             db.Results.Add(result);

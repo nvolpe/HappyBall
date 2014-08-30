@@ -13,7 +13,6 @@
             console.log('Init Prop Model');
         },
         idAttribute: "id",
-
         restAction: 'GET',
 
         url: function () {
@@ -32,30 +31,9 @@
                 resultUrl = '/happyball/api/result/week'
             }
 
-
-            //else {
-            //    resultUrl = '/happyball/api/result/'
-            //}
-
             return resultUrl;
         }
     });
-
-
-    //ffa.App.PropResultModel = Backbone.Model.extend({
-    //    initialize: function (options) {
-    //        options || (options = {});
-
-    //        console.dir(options);
-    //        console.log('Init Prop Result Model');
-    //    },
-    //    idAttribute: "id",
-    //    url: function () {
-
-    //        var resultUrl = '/happyball/api/result/week';
-    //        return resultUrl;
-    //    }
-    //});
 
 
     //===============
@@ -170,10 +148,10 @@
 
             //TODO: Set dynamic Team and User Info
             //Maybe do this on initialization
-            this.model.set({
-                TeamName: 'Touchdown Jesus', 
-                UserId: '0c0161b3-1fd8-4433-a374-263cca41d19b'
-            });
+            //this.model.set({
+            //    TeamName: 'Touchdown Jesus', 
+            //    UserId: '0c0161b3-1fd8-4433-a374-263cca41d19b'
+            //});
 
             this.model.save({}, {
                 success: this.saveCallback,
@@ -183,7 +161,7 @@
 
         saveCallback: function (obj, xhr) {
 
-            this.model.isPut = true;
+            this.model.restAction = 'PUT';
             console.log('Save Success');
         },
 
