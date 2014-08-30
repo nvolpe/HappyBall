@@ -75,11 +75,6 @@ namespace HappyBall.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            //if (id != result.User.UserInfo.Id)
-            //{
-            //    return BadRequest();
-            //}
-
             db.Entry(result).State = EntityState.Modified;
 
             try
@@ -109,6 +104,11 @@ namespace HappyBall.Controllers.Api
             {
                 return BadRequest(ModelState);
             }
+
+            //Get user ID
+            //------------------------------------
+            //var currentUser = manager.FindByIdAsync(User.Identity.GetUserId());
+            //var currentUser = User.Identity.GetUserId();
 
 
             db.Results.Add(result);
