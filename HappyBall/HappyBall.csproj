@@ -232,6 +232,8 @@
     <Content Include="Scripts\Public\marionette\backbone.marionette.js" />
     <Content Include="Scripts\Public\marionette\json2.js" />
     <Content Include="Scripts\Public\marionette\underscore.js" />
+    <Content Include="Content\vendor\ladda-bootstrap\ladda-themeless.css" />
+    <Content Include="Content\vendor\ladda-bootstrap\ladda.css" />
     <Content Include="Scripts\Public\utils\ffa.namespace.js" />
     <Content Include="Scripts\Public\utils\ffa.ui.js" />
     <Content Include="Scripts\Public\utils\String.js" />

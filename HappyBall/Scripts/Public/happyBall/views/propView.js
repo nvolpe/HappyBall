@@ -83,6 +83,10 @@
         childViewContainer: "#prop-bet-container",
         template: "#prop-container-template",
 
+        ui: {
+            submitPropBtn: '#submitProp'
+        },
+
         events: {
             'click .yesBtn': 'yesBtnClick',
             'click .noBtn': 'noBtnClick',
@@ -124,6 +128,9 @@
         submiPropClickHandler: function (evt) {
             console.log('Save Prop bets!');
 
+            this.submitPropBtn = Ladda.create($(this.ui.submitPropBtn)[0]);
+            this.submitPropBtn.start();
+
             //set url to post url
             this.model.isPost = true;
 
@@ -160,8 +167,14 @@
         },
 
         saveCallback: function (obj, xhr) {
+            this.submitPropBtn.stop();
 
+            //make sure the next time the user submits, if they do, that it is a put instead
             this.model.restAction = 'PUT';
+
+            //display success message to the user
+            $('#modalSuccess').modal();
+
             console.log('Save Success');
         },
 

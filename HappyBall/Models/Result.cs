@@ -24,8 +24,10 @@ namespace HappyBall.Models
         public Result()
         {
             //TODO: Get date and lookup to see what Football week is being played
-            this.Week = 1;
+            ApplicationDbContext db = new ApplicationDbContext();
+            var weekId = db.Week.First().Week_Id;
 
+            this.Week = weekId;
         }
 
 

@@ -31,13 +31,7 @@ namespace HappyBall.Controllers
                 //int resultId = (from r in db.Results
                 //                where r.User.Id == currentUser.Id
                 //                select r.Id).First();
-
-
                 //ViewBag.ResultId = resultId;
-
-
-
-
             }
 
             return View();
@@ -46,7 +40,6 @@ namespace HappyBall.Controllers
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-
 
             return View();
         }

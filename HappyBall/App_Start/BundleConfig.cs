@@ -38,6 +38,7 @@ namespace HappyBall
             //------------------------
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/vendor/ladda-bootstrap/ladda-themeless.css",
                       "~/Content/offcanvas.css",
                       "~/Content/site.css"));
 
@@ -70,6 +71,7 @@ namespace HappyBall
                 "~/Scripts/Public/utils/StringBuilder.js",
                 "~/Scripts/Public/utils/utils.js"
                 ));
+
 
             //------------------------
             // Author: Nick V
