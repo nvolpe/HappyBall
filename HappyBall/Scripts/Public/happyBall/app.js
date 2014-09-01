@@ -5,17 +5,43 @@ if (!this.ffa || typeof this.ffa !== 'object') {
 (function () {
     'use strict';
 
-    // auto render on change
-    //Backbone.Marionette.ItemView.prototype["modelEvents"] = { "change": "render" };
 
     ffa.App = new Backbone.Marionette.Application();
+
+    ffa.App.ModalRegion = Backbone.Marionette.Region.extend({
+
+        constructor: function () {
+            Marionette.Region.prototype.constructor.apply(this, arguments);
+
+            this._ensureElement();
+            this.$el.on('hidden', { region: this }, function (event) {
+                event.data.region.close();
+            });
+        },
+
+        onShow: function () {
+            //this.$el.modal('show');
+            this.$el.children().children().modal('show'); //such a hack
+        },
+
+        onClose: function () {
+            this.$el.modal('hide');
+        }
+    });
+
 
     //Add an initializer to the app to expose a property
     //we can check in the rest of the code to decide if
     //we are in the Mobile app or not.
     ffa.App.addInitializer(function (options) {
         options = options || {};
-        var regions = options.regions || {};
+        //var regions = options.regions || {};
+
+        var regions =  {
+                MainRegion: '#main-content'
+                //modal: ffa.App.ModalRegion
+        };
+
 
         ffa.App.addRegions(regions);
     });
@@ -50,6 +76,11 @@ if (!this.ffa || typeof this.ffa !== 'object') {
             }
         }
     });
+
+
+
+
+
 
     //debugging so we can see events flying around
     ffa.App.vent.on('all', function (evt, model) {

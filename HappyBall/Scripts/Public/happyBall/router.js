@@ -5,7 +5,8 @@ ffa.App.module('Mod', function (Mod, App, Backbone, Marionette, $, _) {
     Mod.Router = Marionette.AppRouter.extend({
         appRoutes: {
             'home': 'home',
-            'prop': 'prop'
+            'prop': 'prop',
+            'map': 'map'
         }
     });
 
@@ -16,6 +17,10 @@ ffa.App.module('Mod', function (Mod, App, Backbone, Marionette, $, _) {
         },
         prop: function () {
             ffa.App.vent.trigger('show:prop');
+            //ffa.App.Mod.Create.Controller.createGameDetails();
+        },
+        map: function () {
+            ffa.App.vent.trigger('show:map');
             //ffa.App.Mod.Create.Controller.createGameDetails();
         }
     };
@@ -28,6 +33,11 @@ ffa.App.module('Mod', function (Mod, App, Backbone, Marionette, $, _) {
     ffa.App.on("route:prop", function () {
         ffa.App.navigate("prop");
         API.prop();
+    });
+
+    ffa.App.on("route:map", function () {
+        ffa.App.navigate("map");
+        API.map();
     });
 
     ffa.App.addInitializer(function () {

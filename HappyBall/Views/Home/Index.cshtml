@@ -5,8 +5,7 @@
 
 @if (Request.IsAuthenticated)
 {
-    <div id="main-content" class="container-fluid">
-
+    <div id="main-content">
     </div>
 }
 else
@@ -120,6 +119,11 @@ punted that shit -->
     @Scripts.Render("~/bundles/marionette")
     @Scripts.Render("~/bundles/backbone-extensions")
     @Scripts.Render("~/bundles/utilities")
+
+
+    <script src='https://api.tiles.mapbox.com/mapbox.js/v2.0.1/mapbox.js'></script>
+
+
     @Scripts.Render("~/bundles/happyBall")
 
 

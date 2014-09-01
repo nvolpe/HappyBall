@@ -106,6 +106,11 @@
 
             $('#noBtn' + selectorVal).removeClass('btn-danger');
             $('#noBtn' + selectorVal).addClass('btn-default');
+
+            var isChecked = this.checkButtons();
+            if (isChecked) {
+                this.ui.submitPropBtn.removeClass('disabled');
+            }
         },
 
         noBtnClick: function (evt) {
@@ -122,8 +127,29 @@
 
             $('#yesBtn' + selectorVal).removeClass('btn-success');
             $('#yesBtn' + selectorVal).addClass('btn-default');
+
+            var isChecked = this.checkButtons();
+            if (isChecked) {
+                this.ui.submitPropBtn.removeClass('disabled');
+            } 
         },
 
+        checkButtons: function () {
+
+            var btnGroup1, btnGroup2, btnGroup3;
+
+            btnGroup1 = $('#yesBtn1').hasClass('btn-success') || $('#noBtn1').hasClass('btn-danger') ? 0 : 1;
+            btnGroup2 = $('#yesBtn2').hasClass('btn-success') || $('#noBtn2').hasClass('btn-danger') ? 0 : 1;
+            btnGroup3 = $('#yesBtn3').hasClass('btn-success') || $('#noBtn3').hasClass('btn-danger') ? 0 : 1;
+
+            var sum = btnGroup1 + btnGroup2 + btnGroup3;
+
+            if (sum > 0) {
+                return false;
+            } else {
+                return true;
+            }
+        },
 
         submiPropClickHandler: function (evt) {
             console.log('Save Prop bets!');
@@ -152,13 +178,6 @@
             } else {
                 this.model.set('propBet3', 'no')
             }
-
-            //TODO: Set dynamic Team and User Info
-            //Maybe do this on initialization
-            //this.model.set({
-            //    TeamName: 'Touchdown Jesus', 
-            //    UserId: '0c0161b3-1fd8-4433-a374-263cca41d19b'
-            //});
 
             this.model.save({}, {
                 success: this.saveCallback,
@@ -246,11 +265,13 @@
                 }
 
             }
+
+            var isChecked = this.checkButtons();
+            if (isChecked) {
+                this.ui.submitPropBtn.removeClass('disabled');
+            }
+
         }
-
-
-
-
 
 
 

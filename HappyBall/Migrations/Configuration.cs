@@ -5,6 +5,8 @@ namespace HappyBall.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
     using HappyBall.Models;
+    using System.Data.Entity.Spatial;
+
 
     internal sealed class Configuration : DbMigrationsConfiguration<HappyBall.Models.ApplicationDbContext>
     {
@@ -34,6 +36,14 @@ namespace HappyBall.Migrations
               p => p.Id,
               new Week { Id = 1, Week_Id = 1 }
             );
+
+            var loc = DbGeography.FromText("POINT(" + -105.080056 + "  " + 40.589574 + ")");
+
+            context.GeoMasters.AddOrUpdate(
+                p => p.Id,
+                new GeoMaster { Id = 1, Week = 1, Location = loc, Latitude = 40.589574, Longitude = -105.080056 }
+            );
+
 
         }
     }

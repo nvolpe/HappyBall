@@ -4,40 +4,40 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
-using System.Web;
-using System.Web.Mvc;
+using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using HappyBall.Models;
-
+using System.Data.Entity.Spatial;
 
 namespace HappyBall.Controllers.Api
 {
-    public class ResultController : ApiController
+    public class GeoResultController : ApiController
     {
         private UserManager<ApplicationUser> manager;
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        public ResultController()
+
+        public GeoResultController()
         {
             manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
         }
 
 
-        // GET api/Result
-        public IQueryable<Result> GetResults()
+
+        // GET api/GeoResult
+        public IQueryable<GeoResult> GetGeoResults()
         {
-            return db.Results;
+            return db.GeoResults;
         }
 
-        // GET result by week
-        [ResponseType(typeof(Result))]
-        [System.Web.Http.Route("api/result/week", Name = "GetResultByWeek")]
-        public IHttpActionResult GetResultByWeek()
+        // GET api/GeoResult/5
+        [ResponseType(typeof(GeoResult))]
+        [System.Web.Http.Route("api/georesult/week", Name = "GetGeoResultByWeek")]
+        public IHttpActionResult GetGeoResultByWeek()
         {
 
             //Get Current Week?
@@ -52,30 +52,33 @@ namespace HappyBall.Controllers.Api
             //Get Matching Prop Model based off this type of query: where userID == 'abc123' and weekId = 1 
             //------------------------------------
             //TODO: Try and understand this better lol. switch to: .ToList() if we want a collection of results.. i dont understand linq!
-            var results = db.Results.Where(x => x.Week == weekId && x.UserId == userId).FirstOrDefault();
+            var georesult = db.GeoResults.Where(x => x.Week == weekId && x.UserId == userId).FirstOrDefault();
 
 
-            //TODO: IMPORTANT! Figure out another way to return empty result if query above returns nothing
-            //NEED TO FIX. 
-            //if (results == null)
+            //GeoResult georesult = db.GeoResults.Find(id);
+
+            //if (georesult == null)
             //{
             //    return NotFound();
             //}
-            
 
-            return Ok(results);
+            return Ok(georesult);
         }
 
-
-        // PUT api/Result/5
-        public IHttpActionResult PutResult(int id, Result result)
+        // PUT api/GeoResult/5
+        public IHttpActionResult PutGeoResult(int id, GeoResult georesult)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Entry(result).State = EntityState.Modified;
+            if (id != georesult.Id)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(georesult).State = EntityState.Modified;
 
             try
             {
@@ -83,7 +86,7 @@ namespace HappyBall.Controllers.Api
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ResultExists(id))
+                if (!GeoResultExists(id))
                 {
                     return NotFound();
                 }
@@ -96,9 +99,9 @@ namespace HappyBall.Controllers.Api
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        //POST api/Result
-        [ResponseType(typeof(Result))]
-        public IHttpActionResult PostResult(Result result)
+        // POST api/GeoResult
+        [ResponseType(typeof(GeoResult))]
+        public IHttpActionResult PostGeoResult(GeoResult georesult)
         {
             if (!ModelState.IsValid)
             {
@@ -112,30 +115,46 @@ namespace HappyBall.Controllers.Api
 
             //Set user information so we dont have to send it from javascript. Seems like a hacker could hack the guid being sent through ajax.
             //------------------------------------
-            result.TeamName = currentTeamName;
-            result.UserId = currentUserId;
+            georesult.TeamName = currentTeamName;
+            georesult.UserId = currentUserId;
 
+            georesult.Location = DbGeography.FromText("POINT(" + georesult.Longitude + "  " + georesult.Latitude + ")");
 
-            db.Results.Add(result);
+            //Get Current Week
+            //------------------------------------
+            var weekId = db.Week.First().Week_Id;
+
+            //Get GeoMaster by week
+            //----------------------
+            var geoMasters = db.GeoMasters.Where(x => x.Week == weekId).FirstOrDefault();
+
+            //Get distance between the posted users bullshit guess, and then the real answer
+            //----------------------
+            var distance = georesult.Location.Distance(geoMasters.Location);
+
+            //Add the distance to the geoResult model
+            //----------------------
+
+            db.GeoResults.Add(georesult);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = result.Id }, result);
+            return CreatedAtRoute("DefaultApi", new { id = georesult.Id }, georesult);
         }
 
-        // DELETE api/Result/5
-        [ResponseType(typeof(Result))]
-        public IHttpActionResult DeleteResult(int id)
+        // DELETE api/GeoResult/5
+        [ResponseType(typeof(GeoResult))]
+        public IHttpActionResult DeleteGeoResult(int id)
         {
-            Result result = db.Results.Find(id);
-            if (result == null)
+            GeoResult georesult = db.GeoResults.Find(id);
+            if (georesult == null)
             {
                 return NotFound();
             }
 
-            db.Results.Remove(result);
+            db.GeoResults.Remove(georesult);
             db.SaveChanges();
 
-            return Ok(result);
+            return Ok(georesult);
         }
 
         protected override void Dispose(bool disposing)
@@ -147,10 +166,10 @@ namespace HappyBall.Controllers.Api
             base.Dispose(disposing);
         }
 
-        private bool ResultExists(int id)
+        private bool GeoResultExists(int id)
         {
-            return db.Results.Count(e => e.Id == id) > 0;
-            //return db.Results.Count(e => e.User.UserInfo.Id == id) > 0;
+            return db.GeoResults.Count(e => e.Id == id) > 0;
         }
+
     }
 }

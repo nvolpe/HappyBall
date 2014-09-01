@@ -40,6 +40,7 @@ namespace HappyBall
                       "~/Content/bootstrap.css",
                       "~/Content/vendor/ladda-bootstrap/ladda-themeless.css",
                       "~/Content/offcanvas.css",
+                      "~/Content/vendor/flipclock/flipclock.css",
                       "~/Content/site.css"));
 
             //------------------------
@@ -66,6 +67,7 @@ namespace HappyBall
                 "~/Scripts/spin.js",
                 "~/Scripts/Public/ladda-bootstrap/spin.js",
                 "~/Scripts/Public/ladda-bootstrap/ladda.js",
+                "~/Scripts/flipclock.js",
                 "~/Scripts/Public/utils/ffa.namespace.js",
                 "~/Scripts/Public/utils/String.js",
                 "~/Scripts/Public/utils/StringBuilder.js",
@@ -90,7 +92,10 @@ namespace HappyBall
 
                 //Views
                 "~/Scripts/Public/happyBall/views/homeView.js",
-                "~/Scripts/Public/happyBall/views/propView.js"
+                "~/Scripts/Public/happyBall/views/propView.js",
+                "~/Scripts/Public/happyBall/views/mapView.js",
+                "~/Scripts/Public/happyBall/views/geoResultsView.js"
+
                 ));
 
         }

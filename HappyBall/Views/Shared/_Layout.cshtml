@@ -4,8 +4,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
+
+
     @Styles.Render("~/Content/css")
+
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v2.0.1/mapbox.css' rel='stylesheet' />
+
     @Scripts.Render("~/bundles/modernizr")
+
+    <script src='https://api.tiles.mapbox.com/mapbox.js/v2.0.1/mapbox.js'></script>
+
+
 
 </head>
 <body>
@@ -14,11 +23,11 @@
             <!--Include your navigation here-->
             <li class="text-right"><a href="#" id="nav-close">X</a></li>
             <li>@Html.ActionLink("Home", "Index", "Home")</li>
-            <li><a class="change-page" data-target="NicksBets">Prop Bets</a></li>
+            <li><a href="#prop">Prop Bets</a></li>
             <li>@Html.ActionLink("About", "About", "Home")</li>
             <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
 
-            <li><a class="glyphicon glyphicon-globe" data-target="Map" style="font-size: 1.3em;"></a></li>
+            <li><a href="#map" class="glyphicon glyphicon-globe" data-target="Map" style="font-size: 1.3em;"></a></li>
         </ul>
         @Html.Partial("_LoginPartial")
     </nav>
@@ -33,20 +42,27 @@
         </div>
     </div>
 
-    <div class="container body-content">
+    <div>
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - bros and hoes</p>
-        </footer>
+        @*<hr />*@
+        @*<footer>
+                <p>&copy; @DateTime.Now.Year - bros and hoes</p>
+            </footer>*@
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+
+    
+   
+
+
     @RenderSection("scripts", required: false)
 
     <script>
         $(document).ready(function () {
+
+            console.log('wtf dude regular layout');
 
             //Navigation Menu Slider
             $('#nav-expander').on('click', function (e) {

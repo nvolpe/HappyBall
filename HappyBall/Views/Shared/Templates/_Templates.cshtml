@@ -1,5 +1,4 @@
-﻿
-@* =====TEMPLATES===== *@
+﻿@* =====TEMPLATES===== *@
 
 
 <!-- =================================================== -->
@@ -13,7 +12,7 @@
     </div>
     <div style="text-align: center">
         <br />
-        <button id="submitProp" class="btn btn-primary ladda-button" data-style="zoom-out"><span class="ladda-label">Submit Prop Bets</span></button>
+        <button id="submitProp" class="btn btn-primary ladda-button disabled" data-style="zoom-out"><span class="ladda-label">Submit Prop Bets</span></button>
     </div>
 </script>
 
@@ -39,75 +38,140 @@
 
 
 <script type="text/template" id="home-template">
-    <div class="jumbotron">
-        <h1>Welcome Back Bitch!</h1>
-        <p class="lead">Happy Ball 2.0, bring it on ladies</p>
-        <p><a href="http://asp.net" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
-    </div>
+    <div class="container">
+        <div class="jumbotron">
+            <h1>Welcome Back Bitch!</h1>
+            <p class="lead">Happy Ball 2.0, bring it on ladies</p>
+            <p><a href="http://asp.net" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+        </div>
 
-    <div class="row">
-        <div class="col-lg-4">
-            <h2>Weekly</h2>
-            <table class="table table-condensed">
-                <thead>
-                    <tr>
-                        <th>Leader</th>
-                        <th>Points</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Mighty Morphine Power Rangers</td>
-                        <td>460</td>
-                    </tr>
-                    <tr>
-                        <td>The Polish Hammer</td>
-                        <td>410</td>
-                    </tr>
-                    <tr>
-                        <td>Thunder Pussies</td>
-                        <td>360</td>
-                    </tr>
-                </tbody>
-            </table>
-            <br />
-            <p><a data-target="Seasonal" class="btn btn-default change-page">Place Bets &raquo;</a></p>
-        </div>
-        <div class="col-lg-4">
-            <h2>Seasonal</h2>
-            <table class="table table-condensed">
-                <thead>
-                    <tr>
-                        <th>Leader</th>
-                        <th>Stock Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Smooth Criminals</td>
-                        <td>57.71</td>
-                    </tr>
-                    <tr>
-                        <td>Monstars</td>
-                        <td>43.20</td>
-                    </tr>
-                    <tr>
-                        <td>Man the Harpoons</td>
-                        <td>39.40</td>
-                    </tr>
-                </tbody>
-            </table>
-            <br />
-            <p><a data-target="NicksBets" class="btn btn-default change-page">Place Bets &raquo;</a></p>
-        </div>
-        <div class="col-lg-4">
-            <h2>Week 9 Winner</h2>
-            <div class="alert alert-success">
-                <p>
-                    Gah Tyler, apparently my style of betting for only Volpes to win failed. Oh and dustin, suck it.
-                </p>
+        <div class="row">
+            <div class="col-lg-4">
+                <h2>Weekly</h2>
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Leader</th>
+                            <th>Points</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Mighty Morphine Power Rangers</td>
+                            <td>460</td>
+                        </tr>
+                        <tr>
+                            <td>The Polish Hammer</td>
+                            <td>410</td>
+                        </tr>
+                        <tr>
+                            <td>Thunder Pussies</td>
+                            <td>360</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+                <p><a data-target="Seasonal" class="btn btn-default change-page">Place Bets &raquo;</a></p>
+            </div>
+            <div class="col-lg-4">
+                <h2>Seasonal</h2>
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Leader</th>
+                            <th>Stock Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Smooth Criminals</td>
+                            <td>57.71</td>
+                        </tr>
+                        <tr>
+                            <td>Monstars</td>
+                            <td>43.20</td>
+                        </tr>
+                        <tr>
+                            <td>Man the Harpoons</td>
+                            <td>39.40</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+                <p><a data-target="NicksBets" class="btn btn-default change-page">Place Bets &raquo;</a></p>
+            </div>
+            <div class="col-lg-4">
+                <h2>Week 9 Winner</h2>
+                <div class="alert alert-success">
+                    <p>
+                        Gah Tyler, apparently my style of betting for only Volpes to win failed. Oh and dustin, suck it.
+                    </p>
+                </div>
             </div>
         </div>
     </div>
+</script>
+
+<!-- =================================================== -->
+<!--      MAP TEMPLATE                                   -->
+<!-- =================================================== -->
+
+<script type="text/template" id="map-template">
+    @*<div id="quiz"><i class="glyphicon glyphicon-tower"></i></div>*@
+
+    <!-- Indicates a successful or positive action -->
+    <button id="quiz-start" type="button" class="btn btn-primary">GeoMaster <i class="glyphicon glyphicon-tower"></i></button>
+    <button id="quiz-results" type="button" class="btn btn-primary">Results <i class="glyphicon glyphicon-th-list"></i></button>
+    <div id="geoClock"></div>
+    <div id="modal"></div>
+    <div id="map"></div>
+
+</script>
+
+
+
+<!-- =================================================== -->
+<!--      GEO RESULTS COMPOSITE TEMPLATE                 -->
+<!-- =================================================== -->
+
+<script type="text/template" id="geo-results-modal-container-template">
+
+    <div id="geoResultsModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Modal title</h4>
+                </div>
+                <div class="modal-body">
+
+                    <h2>GeoResults</h2>
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Leader</th>
+                                <th>Distance from target</th>
+                            </tr>
+                        </thead>
+                        <tbody id="geo-results-container"></tbody>
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Ok</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+</script>
+
+
+<script type="text/template" id="geo-results-template">
+
+    <td><%= teamName %></td>
+    <td><%= distance %></td>
+
 </script>
 
