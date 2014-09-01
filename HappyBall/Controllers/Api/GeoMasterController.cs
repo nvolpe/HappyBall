@@ -41,7 +41,7 @@ namespace HappyBall.Controllers.Api
             //------------------------------------
             var weekId = db.Week.First().Week_Id;
 
-            var geomaster = db.GeoResults.Where(x => x.Week == weekId).FirstOrDefault();
+            var geomaster = db.GeoMasters.Where(x => x.Week == weekId).FirstOrDefault();
 
             if (geomaster == null)
             {

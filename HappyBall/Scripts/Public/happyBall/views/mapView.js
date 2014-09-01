@@ -16,9 +16,6 @@
             console.log('INIT MAP');
 
             this.fetchQuestion();
-            this.fetchResults();
-            
-
         },
 
         template: '#map-template',
@@ -26,6 +23,8 @@
         ui: {
             quizButton: '#quiz-start',
             quizSubmitBtn: '#quiz-submit',
+            quizAlert: '#geo-quiz-alert',
+            closeQuizBtn: '#close-quiz',
             centerPoint: '#centerpoint'
            
         },
@@ -41,15 +40,14 @@
                 position: 'bottomright'
             }).addTo(this.map);
 
-
-            //$('#geo-quiz-alert').show();
-
+            this.ui.quizAlert.hide();
         },
 
         events: {
             'click #quiz-results': 'resultsClickHandler',
             'click #quiz-start': 'quizStartClickHandler',
             'click #quiz-submit': 'quizSubmitClickHandler',
+            'click #close-quiz': 'closeQuizClickHandler'
         },
 
         resultsClickHandler: function (evt) {
@@ -63,6 +61,19 @@
         //adjust their answer if they fat fuck finger a map click
         quizStartClickHandler: function (evt) {
             var self = this;
+
+            this.ui.quizButton.addClass('disabled');
+
+            var geoMasterNerd = this.geoMaster.teamName;
+            var geoMasterQuestion = this.geoMaster.question;
+
+            var questionText = String.format('<strong style="color: blue">{0}: </strong> {1}.', geoMasterNerd, geoMasterQuestion);
+
+            //this.ui.quizAlert.text(questionText);
+            this.ui.quizAlert.append(questionText);
+            this.ui.quizAlert.show();
+
+
 
             this.ui.quizSubmitBtn.removeClass('disabled');
             this.ui.quizSubmitBtn.addClass('btn-success');
@@ -129,20 +140,12 @@
 
         },
 
-        onMapClick: function (evt) {
+        //closeQuizClickHandler: function (evt) {
 
-            if (this.usersAnswerMarker) {
-                this.map.removeLayer(this.usersAnswerMarker);
-            }
+        //    this.ui.quizButton.addClass('disabled');
+        //    this.ui.quizSubmitBtn.addClass('disabled');
 
-            this.model.set('latitude', evt.latlng.lat);
-            this.model.set('longitude', evt.latlng.lng);
-
-            this.usersAnswerLatLng = evt.latlng;
-            this.usersAnswerMarker = L.marker([evt.latlng.lat, evt.latlng.lng]).addTo(this.map);
-
-            this.deactivateMapClick();
-        },
+        //},
 
 
         showNewPin: function () {
@@ -168,7 +171,12 @@
             $.getJSON("/happyball/api/geomaster/week", function (json) {
 
                 self.geoMaster = json;
-                self.ui.quizButton.removeClass('disabled'); //remove for development
+                //self.ui.quizButton.removeClass('disabled'); //remove for development
+
+                console.log('succcessfuly fetched da geomaster');
+                console.dir(json);
+
+                self.fetchResults();
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
                 console.warn('Failed to get da GeoMaster')
@@ -207,15 +215,16 @@
 
             if (lat && lon) {
                 //might need to rename this
+                this.ui.quizButton.addClass('disabled');
+
                 this.usersAnswerMarker = L.marker([lat, lon]).addTo(this.map);
 
                 this.addAllOtherMarkers();
 
-                his.ui.quizButton.addClass('disabled');
-
             } else {
 
                 console.log('User has not answered da GeoMaster Yet!')
+                this.ui.quizButton.removeClass('disabled');
 
                 
             }

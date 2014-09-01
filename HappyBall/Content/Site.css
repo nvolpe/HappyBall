@@ -93,6 +93,10 @@ input[type="checkbox"].input-validation-error {
     margin-right: 15%;
     position:absolute;
     z-index: 5;
+    color: #000000;
+    border-color: #000000;
+    background-color: #F5F5F5;
+    font-weight: bold;
 }
 
 
