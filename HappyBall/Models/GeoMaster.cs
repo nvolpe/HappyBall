@@ -12,6 +12,8 @@ namespace HappyBall.Models
         public int Week { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
+        public string TeamName { get; set; }
+        public string Question { get; set; }
         public DbGeography Location { get; set; }
 
 

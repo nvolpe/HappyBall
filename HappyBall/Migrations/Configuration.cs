@@ -41,7 +41,7 @@ namespace HappyBall.Migrations
 
             context.GeoMasters.AddOrUpdate(
                 p => p.Id,
-                new GeoMaster { Id = 1, Week = 1, Location = loc, Latitude = 40.589574, Longitude = -105.080056 }
+                new GeoMaster { Id = 1, Week = 1, Location = loc, Latitude = 40.589574, Longitude = -105.080056, TeamName = "Touchdown Jesus", Question = "Some question goes here" }
             );
 
 

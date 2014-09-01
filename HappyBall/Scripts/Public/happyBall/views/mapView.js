@@ -15,23 +15,41 @@
 
             console.log('INIT MAP');
 
+            this.fetchQuestion();
             this.fetchResults();
+            
 
         },
 
         template: '#map-template',
 
+        ui: {
+            quizButton: '#quiz-start',
+            quizSubmitBtn: '#quiz-submit',
+            centerPoint: '#centerpoint'
+           
+        },
+
         //Built into marionette, Map DIV is not ready yet until this fires
         //TODO: Roll this into other views
-        onShow: function(){
+        onShow: function () {
             L.mapbox.accessToken = 'pk.eyJ1IjoibmF2b2xwZSIsImEiOiJwWXhPSjZZIn0.fiO-LWxqNxZo38G2sg02mA';
-            this.map = L.mapbox.map('map', 'navolpe.jcfnjdb9')
+            this.map = L.mapbox.map('map', 'navolpe.jcfnjdb9', { zoomControl: false })
                 .setView([40, -74.50], 9);
+
+            L.control.zoom({
+                position: 'bottomright'
+            }).addTo(this.map);
+
+
+            //$('#geo-quiz-alert').show();
+
         },
 
         events: {
             'click #quiz-results': 'resultsClickHandler',
-            'click #quiz-start': 'quizStartClickHandler'
+            'click #quiz-start': 'quizStartClickHandler',
+            'click #quiz-submit': 'quizSubmitClickHandler',
         },
 
         resultsClickHandler: function (evt) {
@@ -46,8 +64,19 @@
         quizStartClickHandler: function (evt) {
             var self = this;
 
-            //activate click handler
-            this.map.on('click', this.onMapClick);
+            this.ui.quizSubmitBtn.removeClass('disabled');
+            this.ui.quizSubmitBtn.addClass('btn-success');
+            //=========================================
+            //SHOUT OUT TO SHAERABOUTS FOR THIS CODE
+            //=========================================
+
+            this.showNewPin();
+            this.map.on('movestart', this.onMapMoveStart);
+            this.map.on('moveend', this.onMapMoveEnd);
+
+            //=========================================
+            //SHOUT OUT TO SHAERABOUTS FOR THIS CODE
+            //=========================================
 
             this.clock = $('#geoClock').FlipClock({
                 //countdown: true,
@@ -57,11 +86,25 @@
 
             this.clock.setTime(15);
 
-            setTimeout(function() {
-              self.clockInterval = setInterval(function() {
+            setTimeout(function () {
+                self.clockInterval = setInterval(function () {
                     self.clock.decrement();
 
                     var currentTime = self.clock.getTime();
+
+                    console.log(currentTime);
+
+                    if (currentTime.time < 10 & currentTime.time > 5) {
+                        self.ui.quizSubmitBtn.removeClass('btn-success');
+                        self.ui.quizSubmitBtn.addClass('btn-warning');
+                    }
+
+
+                    if (currentTime.time < 5) {
+                        self.ui.quizSubmitBtn.removeClass('btn-warning');
+                        self.ui.quizSubmitBtn.addClass('btn-danger');
+                    }
+                    
 
                     if (currentTime.time === 0) {
                         self.stopTimer();
@@ -77,21 +120,23 @@
             this.clock.stop();
             console.log('ahh flip clock stop');
 
-            this.constructor();
+            this.ui.quizSubmitBtn.removeClass('btn-danger');
+            this.ui.quizSubmitBtn.addClass('disabled');
 
             if (this.usersAnswerMarker) {
-                this.submitAnswer();
+                //this.submitAnswer(); //remove for development
             }
 
         },
 
         onMapClick: function (evt) {
 
-            //console.log(this.clock.getTime());
-
             if (this.usersAnswerMarker) {
                 this.map.removeLayer(this.usersAnswerMarker);
             }
+
+            this.model.set('latitude', evt.latlng.lat);
+            this.model.set('longitude', evt.latlng.lng);
 
             this.usersAnswerLatLng = evt.latlng;
             this.usersAnswerMarker = L.marker([evt.latlng.lat, evt.latlng.lng]).addTo(this.map);
@@ -100,8 +145,34 @@
         },
 
 
-        deactivateMapClick: function () {
-            this.map.off('click', this.onMapClick);
+        showNewPin: function () {
+            this.ui.centerPoint.show().addClass('newpin');
+        },
+        showCenterPoint: function () {
+            this.ui.centerPoint.show().removeClass('newpin');
+        },
+        hideCenterPoint: function () {
+            this.ui.centerPoint.hide();
+        },
+        onMapMoveStart: function (evt) {
+            this.ui.centerPoint.addClass('dragging');
+        },
+        onMapMoveEnd: function (evt) {
+            this.ui.centerPoint.removeClass('dragging');
+        },
+
+
+        fetchQuestion: function (vt) {
+            var self = this;
+
+            $.getJSON("/happyball/api/geomaster/week", function (json) {
+
+                self.geoMaster = json;
+                self.ui.quizButton.removeClass('disabled'); //remove for development
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                console.warn('Failed to get da GeoMaster')
+            });
         },
 
         fetchResults: function (vt) {
@@ -129,13 +200,60 @@
 
         },
 
+        initView: function () {
 
+            var lat = this.model.get('latitude');
+            var lon = this.model.get('latitude');
+
+            if (lat && lon) {
+                //might need to rename this
+                this.usersAnswerMarker = L.marker([lat, lon]).addTo(this.map);
+
+                this.addAllOtherMarkers();
+
+                his.ui.quizButton.addClass('disabled');
+
+            } else {
+
+                console.log('User has not answered da GeoMaster Yet!')
+
+                
+            }
+
+        },
+
+        addAllOtherMarkers: function () {
+
+            console.log('TODO: Fetch Collection of Errrybodys Results');
+        },
 
         submitAnswer: function () {
 
+            this.model.restAction = 'POST';
 
+            this.model.save({}, {
+                success: this.saveCallback,
+                error: this.saveErrback
+            });
 
-        }
+        },
+
+        saveCallback: function (obj, xhr) {
+            //this.submitPropBtn.stop();
+
+            ////make sure the next time the user submits, if they do, that it is a put instead
+            //this.model.restAction = 'PUT';
+
+            ////display success message to the user
+            //$('#modalSuccess').modal();
+
+            console.log('Save geo Success');
+        },
+
+        saveErrback: function (obj, xhr) {
+            console.log('Save geo Error');
+        },
+
 
 
 

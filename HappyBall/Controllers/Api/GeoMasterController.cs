@@ -9,13 +9,22 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using HappyBall.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity.Spatial;
 
 namespace HappyBall.Controllers.Api
 {
     public class GeoMasterController : ApiController
     {
+        private UserManager<ApplicationUser> manager;
         private ApplicationDbContext db = new ApplicationDbContext();
+
+        public GeoMasterController()
+        {
+            manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+        }
+
 
         // GET api/GeoMaster
         public IQueryable<GeoMaster> GetGeoMasters()
@@ -23,11 +32,17 @@ namespace HappyBall.Controllers.Api
             return db.GeoMasters;
         }
 
-        // GET api/GeoMaster/5
+        // GET api/geomaster/week
         [ResponseType(typeof(GeoMaster))]
-        public IHttpActionResult GetGeoMaster(int id)
+        [System.Web.Http.Route("api/geomaster/week", Name = "GetGeoMasterByWeek")]
+        public IHttpActionResult GetGeoMasterByWeek()
         {
-            GeoMaster geomaster = db.GeoMasters.Find(id);
+            //Get Current Week?
+            //------------------------------------
+            var weekId = db.Week.First().Week_Id;
+
+            var geomaster = db.GeoResults.Where(x => x.Week == weekId).FirstOrDefault();
+
             if (geomaster == null)
             {
                 return NotFound();
@@ -84,6 +99,13 @@ namespace HappyBall.Controllers.Api
 
             //set week to geomaster
             geomaster.Week = weekId;
+
+            //get user id and teamname
+            var currentUserId = User.Identity.GetUserId();
+            var currentTeamName = manager.FindById(currentUserId).TeamName;
+
+            //set TeamName
+            geomaster.TeamName = currentTeamName;
 
             //convert lat long to geomaster location
             geomaster.Location = DbGeography.FromText("POINT(" + geomaster.Longitude + "  " + geomaster.Latitude + ")");

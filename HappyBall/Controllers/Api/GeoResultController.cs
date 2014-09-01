@@ -132,9 +132,17 @@ namespace HappyBall.Controllers.Api
             //----------------------
             var distance = georesult.Location.Distance(geoMasters.Location);
 
+            distance = distance * 0.000621371;
+            decimal distaanceAway = (decimal)(distance);
+
+            distaanceAway = Math.Round(distaanceAway, 2);
+
+
             //Add the distance to the geoResult model
             //----------------------
+            georesult.DistanceAway = distaanceAway;
 
+       
             db.GeoResults.Add(georesult);
             db.SaveChanges();
 

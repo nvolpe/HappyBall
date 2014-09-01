@@ -60,7 +60,7 @@ input[type="checkbox"].input-validation-error {
     margin-top: 50px;
 }
 
-#quiz-start {
+/*#quiz-start {
     position: absolute;
     z-index: 2;
     left: 20px;
@@ -76,6 +76,23 @@ input[type="checkbox"].input-validation-error {
     font-size: 15px;
     top: 215px;
     cursor: pointer;
+}*/
+
+.quiz {
+    position: absolute;
+    z-index: 2;
+    left: 10px;
+    font-size: 15px;
+    top: 65px;
+    cursor: pointer;
+}
+
+#geo-quiz-alert {
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+    position:absolute;
+    z-index: 5;
 }
 
 

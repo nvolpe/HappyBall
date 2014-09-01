@@ -41,7 +41,11 @@ namespace HappyBall
                       "~/Content/vendor/ladda-bootstrap/ladda-themeless.css",
                       "~/Content/offcanvas.css",
                       "~/Content/vendor/flipclock/flipclock.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css" ));
+
+            //bundles.Add(new StyleBundle("~/Content/marker").Include("~/Content/marker.css", new CssRewriteUrlTransform()));
+
+            bundles.Add(new StyleBundle("~/Content/marker").Include("~/Content/marker.css", new CssRewriteUrlTransform()));
 
             //------------------------
             // marionette

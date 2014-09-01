@@ -119,9 +119,21 @@
 <script type="text/template" id="map-template">
     @*<div id="quiz"><i class="glyphicon glyphicon-tower"></i></div>*@
 
+
+    <div>Heads up! This alert needs your attention, but it's not super important.</div>
     <!-- Indicates a successful or positive action -->
-    <button id="quiz-start" type="button" class="btn btn-primary">GeoMaster <i class="glyphicon glyphicon-tower"></i></button>
-    <button id="quiz-results" type="button" class="btn btn-primary">Results <i class="glyphicon glyphicon-th-list"></i></button>
+    <div id="geo-quiz-alert" class="alert alert-warning" role="alert">The question should be something liket this</div>
+
+    <div class="btn-group btn-group-lg btn-group-vertical quiz">
+        <button id="quiz-start" type="button" class="btn btn-default disabled"><i class="glyphicon glyphicon-tower"></i></button>
+        <button id="quiz-submit" type="button" class="btn btn-default disabled"><i class="glyphicon glyphicon-map-marker"></i></button>
+        <button id="quiz-results" type="button" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
+        <button id="quiz-people" type="button" class="btn btn-default"><i class="glyphicon glyphicon-user"></i></button>
+        <button id="quiz-question" type="button" class="btn btn-default"><i class="glyphicon glyphicon-question-sign"></i></button>
+    </div>
+
+    
+    <span id="centerpoint" class="" style="display: none;"><span class="shadow"></span><span class="x"></span><span class="marker"></span></span>
     <div id="geoClock"></div>
     <div id="modal"></div>
     <div id="map"></div>

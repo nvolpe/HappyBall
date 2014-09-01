@@ -69,7 +69,9 @@
 
             //Render the Home View
             showMapView: function () {
-                this.MapItemView = new ffa.App.MapItemView({});
+                this.MapItemView = new ffa.App.MapItemView({
+                    model: this.geoModel
+                });
                 //this.MapItemView.render();
 
                 this.region.show(this.MapItemView);
