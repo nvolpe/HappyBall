@@ -15,7 +15,21 @@
 
             console.log('INIT MAP');
 
+            this.teamName = options.teamName;
+
             this.fetchQuestion();
+
+            var self = this;
+
+
+
+            $('#mapModalSuccess').on('hidden.bs.modal', function (e) {
+
+                $('#geoClock').hide();
+                self.ui.quizAlert.hide();
+                self.showErryBody();
+            })
+
         },
 
         template: '#map-template',
@@ -26,12 +40,15 @@
             quizAlert: '#geo-quiz-alert',
             closeQuizBtn: '#close-quiz',
             centerPoint: '#centerpoint'
-           
+
         },
 
         //Built into marionette, Map DIV is not ready yet until this fires
         //TODO: Roll this into other views
         onShow: function () {
+
+
+
             L.mapbox.accessToken = 'pk.eyJ1IjoibmF2b2xwZSIsImEiOiJwWXhPSjZZIn0.fiO-LWxqNxZo38G2sg02mA';
             this.map = L.mapbox.map('map', 'navolpe.jcfnjdb9', { zoomControl: false })
                 .setView([40, -74.50], 9);
@@ -39,6 +56,18 @@
             L.control.zoom({
                 position: 'bottomright'
             }).addTo(this.map);
+
+            // Creates a red marker with the coffee icon
+            //TODO FIGURE OUT AWESOME MARKERS OR GET RID OF IT FROM THE REPO
+            //this.maleMarker = L.AwesomeMarkers.icon({
+            //    icon: 'male',
+            //    color: 'darkblue'
+            //})
+
+            //this.femaleMarker = L.AwesomeMarkers.icon({
+            //    icon: 'female',
+            //    color: 'darkred'
+            //})
 
             this.ui.quizAlert.hide();
         },
@@ -66,13 +95,13 @@
 
             var geoMasterNerd = this.geoMaster.teamName;
             var geoMasterQuestion = this.geoMaster.question;
+            this.allottedTime = this.geoMaster.allottedTime;
 
             var questionText = String.format('<strong style="color: blue">{0}: </strong> {1}.', geoMasterNerd, geoMasterQuestion);
 
             //this.ui.quizAlert.text(questionText);
             this.ui.quizAlert.append(questionText);
             this.ui.quizAlert.show();
-
 
 
             this.ui.quizSubmitBtn.removeClass('disabled');
@@ -95,7 +124,8 @@
                 clockFace: 'Counter'
             });
 
-            this.clock.setTime(15);
+
+            this.clock.setTime(this.allottedTime);
 
             setTimeout(function () {
                 self.clockInterval = setInterval(function () {
@@ -115,37 +145,49 @@
                         self.ui.quizSubmitBtn.removeClass('btn-warning');
                         self.ui.quizSubmitBtn.addClass('btn-danger');
                     }
-                    
+
 
                     if (currentTime.time === 0) {
-                        self.stopTimer();
+                        self.stopTimerAndSubmit();
                     }
                 }, 1000);
             }, 1000);
         },
 
         //Stop Timer, lock map click, pop modal window for submission?
-        stopTimer: function (evt) {
+        stopTimerAndSubmit: function (evt) {
 
             clearInterval(this.clockInterval);
             this.clock.stop();
-            console.log('ahh flip clock stop');
 
+            this.ui.quizSubmitBtn.removeClass('btn-warning');
             this.ui.quizSubmitBtn.removeClass('btn-danger');
+            this.ui.quizSubmitBtn.removeClass('btn-success');
+
+            this.ui.quizSubmitBtn.addClass('btn-default');
             this.ui.quizSubmitBtn.addClass('disabled');
 
-            if (this.usersAnswerMarker) {
-                //this.submitAnswer(); //remove for development
-            }
+            this.currentTime = this.clock.getTime()
+            this.center = this.map.getCenter();
 
+            this.showCenterPoint();
+            this.usersAnswerMarker = L.marker([this.center.lat, this.center.lng]).addTo(this.map);
+
+
+            this.timeUsed = this.allottedTime - this.currentTime.time;
+
+            this.model.set('longitude', this.center.lng);
+            this.model.set('latitude', this.center.lat);
+            this.model.set('time', this.timeUsed);
+
+            this.submitAnswer();
         },
 
-        //closeQuizClickHandler: function (evt) {
 
-        //    this.ui.quizButton.addClass('disabled');
-        //    this.ui.quizSubmitBtn.addClass('disabled');
+        quizSubmitClickHandler: function () {
 
-        //},
+            this.stopTimerAndSubmit();
+        },
 
 
         showNewPin: function () {
@@ -211,29 +253,23 @@
         initView: function () {
 
             var lat = this.model.get('latitude');
-            var lon = this.model.get('latitude');
+            var lon = this.model.get('longitude');
 
             if (lat && lon) {
                 //might need to rename this
                 this.ui.quizButton.addClass('disabled');
 
-                this.usersAnswerMarker = L.marker([lat, lon]).addTo(this.map);
+                this.usersAnswerMarker = L.marker([lat, lon]).addTo(this.map).bindPopup('You');
 
-                this.addAllOtherMarkers();
+                this.showErryBody();
 
             } else {
 
                 console.log('User has not answered da GeoMaster Yet!')
                 this.ui.quizButton.removeClass('disabled');
 
-                
             }
 
-        },
-
-        addAllOtherMarkers: function () {
-
-            console.log('TODO: Fetch Collection of Errrybodys Results');
         },
 
         submitAnswer: function () {
@@ -247,24 +283,63 @@
 
         },
 
-        saveCallback: function (obj, xhr) {
-            //this.submitPropBtn.stop();
+        saveCallback: function (results, xhr) {
 
-            ////make sure the next time the user submits, if they do, that it is a put instead
-            //this.model.restAction = 'PUT';
+            var distanceAway = results.get('distanceAway');
+            var amountOfTime = results.get('time');
+            var latitude = results.get('latitude');
+            var longitude = results.get('longitude');
 
-            ////display success message to the user
-            //$('#modalSuccess').modal();
+            var message = String.format('You submitted {0},{1} to da GeoMaster. It took you <strong>{2} seconds</strong> and you were <strong>{3} miles</strong> off target.. Now that you have submitted, da GeoMaster will place everyones results on the map', latitude, longitude, amountOfTime, distanceAway);
+
+            if (amountOfTime === this.allottedTime) {
+                message = String.format('You Sucked and were too slow... But da GeoMaster has decided to submit your lazy shit anyways. The last spot your cursor was seen at was {0},{1} which is <strong>{2} miles</strong> off target.. Now that you have submitted, da GeoMaster will place everyones results on the map', latitude, longitude, distanceAway);
+            }
+
+
+            $('#mapModalSuccess')
+                .find('.modal-body')
+                    .html(message)
+                .end()
+                    .modal('show');
 
             console.log('Save geo Success');
         },
 
         saveErrback: function (obj, xhr) {
             console.log('Save geo Error');
+
+            var message = 'try and refresh your browswer or some shit, contact nick if you cant submit results to da GeoMaster';
+
+            $('#mapModalFail')
+                .find('.modal-body')
+                    .html(message)
+                .end()
+                    .modal('show');
         },
 
 
+        showErryBody: function () {
 
+            var self = this;
+
+            console.log('showErryBody');
+            console.dir(this.collection);
+
+            var list = this.collection.toJSON()
+            _.each(list, function (item) {
+
+                if (item.latitude && item.teamName != self.teamName) {
+
+                    L.marker([item.latitude, item.longitude]).addTo(self.map)
+                        .bindPopup(item.teamName);
+                }
+
+            }, this);
+
+
+
+        }
 
 
     });

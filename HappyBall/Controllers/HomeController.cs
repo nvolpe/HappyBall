@@ -27,6 +27,7 @@ namespace HappyBall.Controllers
                 //ViewBag.TeamName = currentUser.UserInfo.TeamName;
                 //ViewBag.UserId = currentUser.UserInfo.Id;
                 ViewBag.UserName = currentUser.UserName;
+                ViewBag.TeamName = currentUser.TeamName;
 
                 //int resultId = (from r in db.Results
                 //                where r.User.Id == currentUser.Id

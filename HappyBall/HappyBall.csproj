@@ -246,6 +246,16 @@
     <Content Include="Scripts\Public\happyBall\views\propView.js" />
     <Content Include="Scripts\Public\ladda-bootstrap\ladda.js" />
     <Content Include="Scripts\Public\ladda-bootstrap\spin.js" />
+    <Content Include="Scripts\Public\leaflet-awesome-markers\images\markers-matte%402x.png" />
+    <Content Include="Scripts\Public\leaflet-awesome-markers\images\markers-matte.png" />
+    <Content Include="Scripts\Public\leaflet-awesome-markers\images\markers-plain.png" />
+    <Content Include="Scripts\Public\leaflet-awesome-markers\images\markers-shadow%402x.png" />
+    <Content Include="Scripts\Public\leaflet-awesome-markers\images\markers-shadow.png" />
+    <Content Include="Scripts\Public\leaflet-awesome-markers\images\markers-soft%402x.png" />
+    <Content Include="Scripts\Public\leaflet-awesome-markers\images\markers-soft.png" />
+    <Content Include="Scripts\Public\leaflet-awesome-markers\leaflet.awesome-markers.css" />
+    <Content Include="Scripts\Public\leaflet-awesome-markers\leaflet.awesome-markers.js" />
+    <Content Include="Scripts\Public\leaflet-awesome-markers\leaflet.awesome-markers.min.js" />
     <Content Include="Scripts\Public\marionette\backbone.js" />
     <Content Include="Scripts\Public\marionette\backbone.marionette.js" />
     <Content Include="Scripts\Public\marionette\json2.js" />
@@ -292,7 +302,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\Public\leaflet-awesome-markers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

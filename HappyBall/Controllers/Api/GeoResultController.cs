@@ -34,7 +34,7 @@ namespace HappyBall.Controllers.Api
             return db.GeoResults;
         }
 
-        // GET api/GeoResult/5
+        // GET Model
         [ResponseType(typeof(GeoResult))]
         [System.Web.Http.Route("api/georesult/week", Name = "GetGeoResultByWeek")]
         public IHttpActionResult GetGeoResultByWeek()
@@ -56,7 +56,6 @@ namespace HappyBall.Controllers.Api
 
 
             //GeoResult georesult = db.GeoResults.Find(id);
-
             //if (georesult == null)
             //{
             //    return NotFound();
@@ -64,6 +63,41 @@ namespace HappyBall.Controllers.Api
 
             return Ok(georesult);
         }
+
+
+        // GET Collection
+        [ResponseType(typeof(GeoResult))]
+        [System.Web.Http.Route("api/allgeoresult/week", Name = "GetAllGeoResultByWeek")]
+        public IHttpActionResult GetAllGeoResultByWeek()
+        {
+
+            //Get Current Week?
+            //------------------------------------
+            var weekId = db.Week.First().Week_Id;
+
+            //Get user ID
+            //------------------------------------
+            //var currentUser = manager.FindByIdAsync(User.Identity.GetUserId());
+            var userId = User.Identity.GetUserId();
+
+            //Get Matching Prop Model based off this type of query: where userID == 'abc123' and weekId = 1 
+            //------------------------------------
+            //TODO: Try and understand this better lol. switch to: .ToList() if we want a collection of results.. i dont understand linq!
+            var georesult = db.GeoResults.Where(x => x.Week == weekId).OrderBy(y => y.DistanceAway).ToList();
+
+
+            //GeoResult georesult = db.GeoResults.Find(id);
+            //if (georesult == null)
+            //{
+            //    return NotFound();
+            //}
+
+            return Ok(georesult);
+        }
+
+
+
+
 
         // PUT api/GeoResult/5
         public IHttpActionResult PutGeoResult(int id, GeoResult georesult)
@@ -135,7 +169,7 @@ namespace HappyBall.Controllers.Api
             distance = distance * 0.000621371;
             decimal distaanceAway = (decimal)(distance);
 
-            distaanceAway = Math.Round(distaanceAway, 2);
+            distaanceAway = Math.Round(distaanceAway, 3);
 
 
             //Add the distance to the geoResult model

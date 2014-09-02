@@ -97,6 +97,7 @@ input[type="checkbox"].input-validation-error {
     border-color: #000000;
     background-color: #F5F5F5;
     font-weight: bold;
+    top: 55px;
 }
 
 

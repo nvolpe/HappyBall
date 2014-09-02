@@ -46,7 +46,7 @@
     ffa.App.GeoCollection = Backbone.Collection.extend({
 
         url: function () {
-            return '/happyball/api/prop';
+            return '/happyball/api/allgeoresult/week';
         },
     });
 

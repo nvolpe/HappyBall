@@ -41,6 +41,7 @@ namespace HappyBall
                       "~/Content/vendor/ladda-bootstrap/ladda-themeless.css",
                       "~/Content/offcanvas.css",
                       "~/Content/vendor/flipclock/flipclock.css",
+                      "~/Scripts/Public/leaflet-awesome-markers/leaflet.awesome-markers.css",
                       "~/Content/site.css" ));
 
             //bundles.Add(new StyleBundle("~/Content/marker").Include("~/Content/marker.css", new CssRewriteUrlTransform()));
@@ -71,6 +72,7 @@ namespace HappyBall
                 "~/Scripts/spin.js",
                 "~/Scripts/Public/ladda-bootstrap/spin.js",
                 "~/Scripts/Public/ladda-bootstrap/ladda.js",
+                "~/Scripts/Public/leaflet-awesome-markers/leaflet.awesome-markers.js",
                 "~/Scripts/flipclock.js",
                 "~/Scripts/Public/utils/ffa.namespace.js",
                 "~/Scripts/Public/utils/String.js",

@@ -49,10 +49,10 @@
                 ffa.App.vent.on('show:prop', this.fetchBets);
 
                 //Does not sync with server, so we can show template instantly.
-                ffa.App.vent.on('show:map', this.showMapView);
+                ffa.App.vent.on('show:map', this.fetchGeoResults);
 
                 //Pop the modal, somehow
-                ffa.App.vent.on('show:geoResults', this.fetchGeoResults);
+                ffa.App.vent.on('show:geoResults', this.showGeoResults);
             },
 
             //Render the Home View
@@ -68,13 +68,17 @@
             },
 
             //Render the Home View
-            showMapView: function () {
-                this.MapItemView = new ffa.App.MapItemView({
-                    model: this.geoModel
-                });
-                //this.MapItemView.render();
+            showGeoResults: function () {
 
-                this.region.show(this.MapItemView);
+                this.GeoResultsCompositeView = new ffa.App.GeoResultCompositeView({
+                    model: this.geoModel,
+                    collection: this.geoCollection
+                });
+
+                var modalRegion = new ffa.App.ModalRegion({ el: '#modal' });
+
+                modalRegion.show(this.GeoResultsCompositeView);
+
             },
 
             //go get bets from database
@@ -108,54 +112,25 @@
             //go get bets from database
             fetchGeoResults: function () {
 
-                this.geoCollection.set([
-                    {
-                        teamName: 'greg',
-                        distance: 50
-                    },
-                    {
-                        teamName: 'tom',
-                        distance: 20
-                    }
-                ])
+                var self = this;
 
-                this.GeoResultsCompositeView = new ffa.App.GeoResultCompositeView({
-                    model: this.geoModel,
-                    collection: this.geoCollection
+                this.geoCollection.fetch({
+                    success: function (results) {
+                        
+                        self.MapItemView = new ffa.App.MapItemView({
+                            model: self.geoModel,
+                            collection: self.geoCollection,
+                            teamName: self.userTeamName
+                        });
+
+                        self.region.show(self.MapItemView);
+                    },
+                    error: function () {
+                        console.log('noo geoCollection results');
+                    }
+
                 });
 
-                var modalRegion = new ffa.App.ModalRegion({ el: '#modal' });
-
-                modalRegion.show(this.GeoResultsCompositeView);
-
-
-                //this.GeoResultsCompositeView.render();
-                //$('#geoResultsModal').modal('show');
-
-
-                //var self = this;
-
-                //this.propCollection.fetch({
-                //    success: this.fetchGeoResultsCallBack,
-                //    error: this.fetchGeoResultsErrback
-                //});
-            },
-
-            //fetch bets success
-            fetchGeoResultsCallBack: function (result) {
-                console.log('fetch geo results complete');
-
-                //this.PropCompositeView = new ffa.App.PropCompositeView({
-                //    model: this.propModel,
-                //    collection: this.propCollection
-                //});
-
-                //this.region.show(this.PropCompositeView);
-            },
-
-            //fetch bets error
-            fetchGeoResultsErrback: function (obj, xhr) {
-                alert('Error ' + xhr.statusText);
             }
 
 
