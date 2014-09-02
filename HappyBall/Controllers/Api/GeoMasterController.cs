@@ -64,6 +64,9 @@ namespace HappyBall.Controllers.Api
                 return BadRequest();
             }
 
+            //convert lat long to geomaster location
+            geomaster.Location = DbGeography.FromText("POINT(" + geomaster.Longitude + "  " + geomaster.Latitude + ")");
+
             db.Entry(geomaster).State = EntityState.Modified;
 
             try
@@ -105,7 +108,12 @@ namespace HappyBall.Controllers.Api
             var currentTeamName = manager.FindById(currentUserId).TeamName;
 
             //set TeamName
-            geomaster.TeamName = currentTeamName;
+
+            if (geomaster.TeamName.Length <= 0)
+            {
+                geomaster.TeamName = currentTeamName;
+            }
+
 
             //convert lat long to geomaster location
             geomaster.Location = DbGeography.FromText("POINT(" + geomaster.Longitude + "  " + geomaster.Latitude + ")");

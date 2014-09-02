@@ -2,233 +2,334 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="container">
+    <h1>Admin</h1>
 
-<h1>Admin</h1>
+
+    <div id="adminWeekContainer" class="row well">
+        <h3>Set Week</h3>
+        <br>
+        <select id="week-select" class="form-control">
+            <option value="1">Week 1</option>
+            <option value="2">Week 2</option>
+            <option value="3">Week 3</option>
+            <option value="4">Week 4</option>
+            <option value="5">Week 5</option>
+            <option value="6">Week 6</option>
+            <option value="7">Week 7</option>
+            <option value="8">Week 8</option>
+            <option value="9">Week 9</option>
+            <option value="10">Week 10</option>
+            <option value="11">Week 11</option>
+            <option value="12">Week 12</option>
+            <option value="13">Week 13</option>
+            <option value="14">Week 14</option>
+            <option value="15">Week 15</option>
+            <option value="16">Week 16</option>
+        </select>
+        <br>
+        <button id="submitWeek" type="submit" class="btn btn-default">Submit</button>
+
+    </div>
 
 
-<div id="adminWeekContainer" class="row well">
-    <h3>Set Week</h3>
 
-    <select id="week-select" class="form-control">
-        <option value="1">Week 1</option>
-        <option value="2">Week 2</option>
-        <option value="3">Week 3</option>
-        <option value="4">Week 4</option>
-        <option value="5">Week 5</option>
-        <option value="6">Week 6</option>
-        <option value="7">Week 7</option>
-        <option value="8">Week 8</option>
-        <option value="9">Week 9</option>
-        <option value="10">Week 10</option>
-        <option value="11">Week 11</option>
-        <option value="12">Week 12</option>
-        <option value="13">Week 13</option>
-        <option value="14">Week 14</option>
-        <option value="15">Week 15</option>
-        <option value="16">Week 16</option>
-    </select>
-    <br>
-    <button id="submitWeek" type="submit" class="btn btn-default">Submit</button>
+    <div id="adminPropContainer" class="row well">
+        <h3>Set Prop Bets</h3>
+        <br>
+        <div> Question 1 </div>
+        <textarea id="propQuestion1" class="form-control adminMaxWidth" rows="3"></textarea>
+        <br>
+        <div> Question 2 </div>
+        <textarea id="propQuestion2" class="form-control adminMaxWidth" rows="3"></textarea>
+        <br>
+        <div> Question 3 </div>
+        <textarea id="propQuestion3" class="form-control adminMaxWidth" rows="3"></textarea>
+        <br>
+        <button id="submitProp" type="submit" class="btn btn-default">Submit</button>
+    </div>
 
+
+    <div id="adminGeoContainer" class="row well">
+        <h3>Set Da GeoMaster</h3>
+        <h4>If you need help finding lat/long .. Go to maps.google.com and right click and select 'whats here?' -- this will display lat/lng</h4>
+        <div>
+            <div> Question </div>
+            <textarea id="geoQuestion" class="form-control adminMaxWidth" placeholder="where do the steelers play" rows="3"></textarea>
+            <br>
+            <div> Latitude </div>
+            <input id="lat" type="text" class="form-control" placeholder="example: 40.573546">
+            <br>
+            <div> Longitude </div>
+            <input id="long" type="text" class="form-control" placeholder="example: -105.107564">
+            <br>
+            <div> How many seconds to allow for users to submit to da GeoMaster</div>
+            <input id="geoTime" type="text" class="form-control" placeholder="example: 15">
+            <br>
+            <div> Team who set this </div>
+            <input id="geoTeam" type="text" class="form-control">
+            <br>
+            <button id="submitGeo" type="submit" class="btn btn-default">Submit</button>
+        </div>
+    </div>
 </div>
 
 
 
-<div id="adminPropContainer" class="row well">
-    <h3>Set Prop Bets</h3>
-    <div> Question 1 </div>
-    <textarea id="propQuestion1" class="form-control adminMaxWidth" rows="3"></textarea>
-    <div> Question 2 </div>
-    <textarea id="propQuestion2" class="form-control adminMaxWidth" rows="3"></textarea>
-    <div> Question 3 </div>
-    <textarea id="propQuestion3" class="form-control adminMaxWidth" rows="3"></textarea>
-    <br>
-    <button id="submitProp" type="submit" class="btn btn-default">Submit</button>
-</div>
-
-
-@*TODO: Fix this, why is this not loading in time through the _layout*@
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/utilities")
+    @*TODO: Fix this, why is this not loading in time through the _layout*@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/utilities")
 
 
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
-    //AHH Everything about this Script Is nasty, but who the fuck cares it works.
+        //AHH Everything about this Script Is nasty, but who the fuck cares it works.
 
-    $(function () {
+        $(function () {
 
-        ////////////////////////////////////////////
-        //SPINNER
-        ////////////////////////////////////////////
-
-        //spin up spinjs bitch
-        var opts = {
-            lines: 9, // The number of lines to draw
-            length: 6, // The length of each line
-            width: 10, // The line thickness
-            radius: 30, // The radius of the inner circle
-            corners: 0.5, // Corner roundness (0..1)
-            rotate: 77, // The rotation offset
-            direction: 1, // 1: clockwise, -1: counterclockwise
-            color: '#000', // #rgb or #rrggbb or array of colors
-            speed: 1.7, // Rounds per second
-            trail: 60, // Afterglow percentage
-            shadow: false, // Whether to render a shadow
-            hwaccel: false, // Whether to use hardware acceleration
-            className: 'spinner', // The CSS class to assign to the spinner
-            zIndex: 2e9, // The z-index (defaults to 2000000000)
-            top: '100%', // Top position relative to parent
-            left: '100%' // Left position relative to parent
-        };
-
-        var weekTarget = document.getElementById('adminWeekContainer');
-        var _weekSpinner = new Spinner(opts).spin(weekTarget);
+            //get teamName
+            var _teamName = '@ViewBag.TeamName';
 
 
-        var propTarget = document.getElementById('adminPropContainer');
-        var _PropSpinner = new Spinner(opts).spin(propTarget);
+            ////////////////////////////////////////////
+            //SPINNER
+            ////////////////////////////////////////////
 
+            //spin up spinjs bitch
+            var opts = {
+                lines: 9, // The number of lines to draw
+                length: 6, // The length of each line
+                width: 10, // The line thickness
+                radius: 30, // The radius of the inner circle
+                corners: 0.5, // Corner roundness (0..1)
+                rotate: 77, // The rotation offset
+                direction: 1, // 1: clockwise, -1: counterclockwise
+                color: '#000', // #rgb or #rrggbb or array of colors
+                speed: 1.7, // Rounds per second
+                trail: 60, // Afterglow percentage
+                shadow: false, // Whether to render a shadow
+                hwaccel: false, // Whether to use hardware acceleration
+                className: 'spinner', // The CSS class to assign to the spinner
+                zIndex: 2e9, // The z-index (defaults to 2000000000)
+                top: '100%', // Top position relative to parent
+                left: '100%' // Left position relative to parent
+            };
 
-        ////////////////////////////////////////////
-        //INITS
-        ////////////////////////////////////////////
-
-        initWeek();
-        initProp();
-
-
-        ////////////////////////////////////////////
-        //CLICK EVENTS
-        ////////////////////////////////////////////
-
-        //on submit, save the fucking wekk
-        $("#submitWeek").click(function () {
-            submitWeek();
-        });
-
-        //on submit, save the fucking props
-        $("#submitProp").click(function () {
-            submitPropQuestions();
-        });
-
-
-        ////////////////////////////////////////////
-        //Week
-        ////////////////////////////////////////////
-
-        function initWeek() {
-
-            $.getJSON("/happyball/api/week", function (json) {
-                _weekSpinner.stop();
-
-                //$("#week-select").val(json.Week_Id);
-
-            })
-            .fail(function (jqXHR, textStatus, errorThrown) {
-                console.warn('Error in Admin Page:  API Get WEEK')
-                alert('shit didnt work, ask nick :: Get WEEK');
-                _weekSpinner.stop();
-            });
-        }
-
-
-        function submitWeek() {
-            //Hack to spin spinner again
             var weekTarget = document.getElementById('adminWeekContainer');
-            _weekSpinner.spin(weekTarget);
-
-            var selectedWeek = $("#week-select").val();
-            var data = [{ "id": 1, "Week_Id": selectedWeek }]
-
-            //TODO: Is this really the best way, looping through and sending put requests?
-            //Or should i post new data each time?
-            var url = '/happyball/api/week' + '/' + data[0].id; //TODO: Use c# razer shit to get route
-            $.ajax({
-                type: "PUT",
-                url: url,
-                data: data[0],
-                dataType: 'json',
-                error: function () {
-                    _weekSpinner.stop();
-                    console.log('admin error posting week');
-                    alert('shit didnt work, ask nick :: GET WEEK');
-                },
-                success: function () {
-                    _weekSpinner.stop();
-                    console.log('admin succesffully updated week');
-                }
-            });
-        }
+            var _weekSpinner = new Spinner(opts).spin(weekTarget);
 
 
-        ////////////////////////////////////////////
-        //PROP BETS
-        ////////////////////////////////////////////
-
-        function initProp() {
-            //Go get props and populate them in the text area boxes
-            $.getJSON("/happyball/api/prop", function (json) {
-                _PropSpinner.stop();
-                $('#propQuestion1').text(json[0].bet);
-                $('#propQuestion2').text(json[1].bet);
-                $('#propQuestion3').text(json[2].bet);
-            })
-            .fail(function (jqXHR, textStatus, errorThrown) {
-                console.warn('Error in Admin Page:  API Get Prop Bets')
-                alert('shit didnt work, ask nick :: GET PROP BETS');
-                _PropSpinner.stop();
-            });
-        }
-
-
-
-
-        function submitPropQuestions() {
-            //Hack to spin spinner again
             var propTarget = document.getElementById('adminPropContainer');
-            _PropSpinner.spin(propTarget);
+            var _PropSpinner = new Spinner(opts).spin(propTarget);
 
 
-            var question1 = $('#propQuestion1').val();
-            var question2 = $('#propQuestion2').val();
-            var question3 = $('#propQuestion3').val();
+            var geoTarget = document.getElementById('adminGeoContainer');
+            var _geoSpinner = new Spinner(opts).spin(geoTarget);
 
-            var data = [
-                { "id": 1, "bet": question1 },
-                { "id": 2, "bet": question2 },
-                { "id": 3, "bet": question3 }
-            ]
+            ////////////////////////////////////////////
+            //INITS
+            ////////////////////////////////////////////
 
-            var url = null;
+            initWeek();
+            initProp();
+            initGeo();
 
-            //TODO: Is this really the best way, looping through and sending put requests?
-            //Or should i post new data each time?
-            $.each(data, function (index, value) {
-                url = '/happyball/api/prop' + '/' + value.id; //TODO: User c# razer shit to get route
+
+            ////////////////////////////////////////////
+            //CLICK EVENTS
+            ////////////////////////////////////////////
+
+            //on submit, save the fucking wekk
+            $("#submitWeek").click(function () {
+                submitWeek();
+            });
+
+            //on submit, save the fucking props
+            $("#submitProp").click(function () {
+                submitPropQuestions();
+            });
+
+            //on submit, save the fucking props
+            $("#submitGeo").click(function () {
+                submitGeoMaster();
+            });
+
+            ////////////////////////////////////////////
+            //Week
+            ////////////////////////////////////////////
+
+            function initWeek() {
+
+                $.getJSON("/happyball/api/week", function (json) {
+                    _weekSpinner.stop();
+
+                    //$("#week-select").val(json.Week_Id);
+
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    console.warn('Error in Admin Page:  API Get WEEK')
+                    alert('shit didnt work, ask nick :: Get WEEK');
+                    _weekSpinner.stop();
+                });
+            }
+
+
+            function submitWeek() {
+                //Hack to spin spinner again
+                var weekTarget = document.getElementById('adminWeekContainer');
+                _weekSpinner.spin(weekTarget);
+
+                var selectedWeek = $("#week-select").val();
+                var data = [{ "id": 1, "Week_Id": selectedWeek }]
+
+                //TODO: Is this really the best way, looping through and sending put requests?
+                //Or should i post new data each time?
+                var url = '/happyball/api/week' + '/' + data[0].id; //TODO: Use c# razer shit to get route
                 $.ajax({
                     type: "PUT",
                     url: url,
-                    data: value,
+                    data: data[0],
                     dataType: 'json',
                     error: function () {
-                        _PropSpinner.stop();
-                        console.log('admin error posting props');
-                        alert('shit didnt work, ask nick');
+                        _weekSpinner.stop();
+                        console.log('admin error posting week');
+                        alert('shit didnt work, ask nick :: GET WEEK');
                     },
                     success: function () {
-                        _PropSpinner.stop();
-                        console.log('admin succesffully updated props');
+                        _weekSpinner.stop();
+                        console.log('admin succesffully updated week');
                     }
                 });
-            });
-        }
+            }
+
+
+            ////////////////////////////////////////////
+            //PROP BETS
+            ////////////////////////////////////////////
+
+            function initProp() {
+                //Go get props and populate them in the text area boxes
+                $.getJSON("/happyball/api/prop", function (json) {
+                    _PropSpinner.stop();
+                    $('#propQuestion1').text(json[0].bet);
+                    $('#propQuestion2').text(json[1].bet);
+                    $('#propQuestion3').text(json[2].bet);
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    console.warn('Error in Admin Page:  API Get Prop Bets')
+                    alert('shit didnt work, ask nick :: GET PROP BETS');
+                    _PropSpinner.stop();
+                });
+            }
 
 
 
 
+            function submitPropQuestions() {
+                //Hack to spin spinner again
+                var propTarget = document.getElementById('adminPropContainer');
+                _PropSpinner.spin(propTarget);
 
-    });
 
-</script>
+                var question1 = $('#propQuestion1').val();
+                var question2 = $('#propQuestion2').val();
+                var question3 = $('#propQuestion3').val();
+
+                var data = [
+                    { "id": 1, "bet": question1 },
+                    { "id": 2, "bet": question2 },
+                    { "id": 3, "bet": question3 }
+                ]
+
+                var url = null;
+
+                //TODO: Is this really the best way, looping through and sending put requests?
+                //Or should i post new data each time?
+                $.each(data, function (index, value) {
+                    url = '/happyball/api/prop' + '/' + value.id; //TODO: User c# razer shit to get route
+                    $.ajax({
+                        type: "PUT",
+                        url: url,
+                        data: value,
+                        dataType: 'json',
+                        error: function () {
+                            _PropSpinner.stop();
+                            console.log('admin error posting props');
+                            alert('shit didnt work, ask nick');
+                        },
+                        success: function () {
+                            _PropSpinner.stop();
+                            console.log('admin succesffully updated props');
+                        }
+                    });
+                });
+            }
+
+
+
+
+            ////////////////////////////////////////////
+            //DA GEOMASTER
+            ////////////////////////////////////////////
+
+
+            function initGeo() {
+
+                var elem = document.getElementById("geoTeam"); // Get text field
+                elem.value = _teamName; // Change field
+
+                _geoSpinner.stop();
+            }
+
+
+            function submitGeoMaster() {
+                //Hack to spin spinner again
+                var geoTarget = document.getElementById('adminGeoContainer');
+                _geoSpinner.spin(geoTarget);
+
+
+                var lat = $('#lat').val();
+                var long = $('#long').val();
+                var time = $('#geoTime').val();
+                var geoTeam = $('#geoTeam').val();
+                var geoQuestion = $('#geoQuestion').val();
+
+                var data = [
+                    {
+                        "id": 1,
+                        "Question": geoQuestion,
+                        "Latitude": lat,
+                        "Longitude": long,
+                        "AllottedTime": time,
+                        "TeamName": geoTeam
+                    }
+                ]
+
+
+                //TODO: Is this really the best way, looping through and sending put requests?
+                //Or should i post new data each time?
+                var url = '/happyball/api/geomaster/1'; //TODO: Use c# razer shit to get route
+                $.ajax({
+                    type: "PUT",
+                    url: url,
+                    data: data[0],
+                    dataType: 'json',
+                    error: function () {
+                        _geoSpinner.stop();
+                        console.log('admin error posting geo');
+                        alert('shit didnt work, ask nick :: GET GEO');
+                    },
+                    success: function () {
+                        _geoSpinner.stop();
+                        console.log('admin succesffully updated week');
+                    }
+                });
+            }
+
+
+
+
+        });
+
+    </script>

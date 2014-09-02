@@ -3,7 +3,6 @@
 (function ($, Backbone, _) {
     'use strict';
 
-
     //===============
     //VIEWS
     //===============
@@ -12,7 +11,6 @@
         initialize: function (options) {
             _.bindAll.apply(_, [this].concat(_.functions(this)));
 
-
             console.log('INIT MAP');
 
             this.teamName = options.teamName;
@@ -20,8 +18,6 @@
             this.fetchQuestion();
 
             var self = this;
-
-
 
             $('#mapModalSuccess').on('hidden.bs.modal', function (e) {
 
@@ -84,7 +80,6 @@
             //dispatch event to show modal composite view
             ffa.App.vent.trigger("show:geoResults");
         },
-
 
         //May want to leave map click activated, so the user can
         //adjust their answer if they fat fuck finger a map click
@@ -205,7 +200,6 @@
         onMapMoveEnd: function (evt) {
             this.ui.centerPoint.removeClass('dragging');
         },
-
 
         fetchQuestion: function (vt) {
             var self = this;
