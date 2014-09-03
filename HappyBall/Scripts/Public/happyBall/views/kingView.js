@@ -59,7 +59,7 @@
             _.bindAll.apply(_, [this].concat(_.functions(this)));
         },
         tagName: 'li',
-        className: "list-group-item",
+        className: "list-group-item king-item",
         template: '#king-template'
     });
 
@@ -96,10 +96,16 @@
             console.log('King View OnShow');
 
             var kingContainer = document.getElementById('king-bet-container');
-            new Sortable(kingContainer);
+            new Sortable(kingContainer, {
+                onEnd: this.dragEnd
+            });
+
+        },
 
 
-        }
+        dragEnd: function (evt) {
+            console.log('Shit is done dragging');
+        },
 
 
 

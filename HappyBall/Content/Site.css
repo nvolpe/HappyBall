@@ -101,6 +101,18 @@ input[type="checkbox"].input-validation-error {
 }
 
 
+.king-item {
+    padding: 25px;
+    margin-bottom: 10px;
+} 
+
+#king-bet-container {
+    font-size: 40px;
+    margin: 10px;
+    /*margin: -45px 0 0 -70px;*/
+}
+
+
 #geoClock {
     text-align: center;
     position: absolute;
