@@ -36,18 +36,15 @@
             quizAlert: '#geo-quiz-alert',
             closeQuizBtn: '#close-quiz',
             centerPoint: '#centerpoint'
-
         },
 
         //Built into marionette, Map DIV is not ready yet until this fires
         //TODO: Roll this into other views
         onShow: function () {
 
-
-
-            L.mapbox.accessToken = 'pk.eyJ1IjoibmF2b2xwZSIsImEiOiJwWXhPSjZZIn0.fiO-LWxqNxZo38G2sg02mA';
+            L.mapbox.accessToken = 'pk.eyJ1IjoibmF2b2xwZSIsImEiOiJwWXhPSjZZIn0.fiO-LWxqNxZo38G2sg02mA';  //navolpe.jda58olb
             this.map = L.mapbox.map('map', 'navolpe.jcfnjdb9', { zoomControl: false })
-                .setView([40, -74.50], 9);
+                .setView([15.199, -6.328], 3);
 
             L.control.zoom({
                 position: 'bottomright'

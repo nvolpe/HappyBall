@@ -25,8 +25,6 @@ namespace HappyBall.Models
             var weekId = db.Week.First().Week_Id;
             this.Week = weekId;
 
-            //this.Location = DbGeography.FromText("POINT(" + -105.080056 + "  " + 40.589574 + ")");
-
         }
     }
 }

@@ -238,11 +238,11 @@
     <Content Include="Scripts\Public\happyBall\app.js" />
     <Content Include="Scripts\Public\backbone-libs\backbone-extensions.js" />
     <Content Include="Scripts\Public\happyBall\modules\mainModule.js" />
-    <Content Include="Scripts\Public\happyBall\modules\propModule.js" />
     <Content Include="Scripts\Public\happyBall\router.js" />
     <Content Include="Scripts\Public\happyBall\views\homeView.js" />
     <Content Include="Scripts\Public\happyBall\views\geoResultsView.js" />
     <Content Include="Scripts\Public\happyBall\views\mapView.js" />
+    <Content Include="Scripts\Public\happyBall\views\kingView.js" />
     <Content Include="Scripts\Public\happyBall\views\propView.js" />
     <Content Include="Scripts\Public\ladda-bootstrap\ladda.js" />
     <Content Include="Scripts\Public\ladda-bootstrap\spin.js" />
@@ -269,6 +269,7 @@
     <Content Include="Scripts\Public\utils\utils.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\Sortable.js" />
     <Content Include="Scripts\spin.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />

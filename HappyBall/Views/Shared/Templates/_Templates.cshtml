@@ -113,6 +113,30 @@
     </div>
 </script>
 
+
+<!-- =================================================== -->
+<!--       KING OF THE WEEK TEMPLATE                                  -->
+<!-- =================================================== -->
+
+<script type="text/template" id="king-container-template">
+    <div class="container">
+        <ul id="king-bet-container" class="list-group"></ul>
+    </div>
+    <div style="text-align: center">
+        <br />
+        <button id="submitKing" class="btn btn-primary ladda-button disabled" data-style="zoom-out"><span class="ladda-label">Submit Prop Bets</span></button>
+    </div>
+</script>
+
+<script type="text/template" id="king-template">
+
+        <span class="badge"><%= test %></span>
+        <%= itemName %>
+
+</script>
+
+
+
 <!-- =================================================== -->
 <!--      MAP TEMPLATE                                   -->
 <!-- =================================================== -->
@@ -137,7 +161,7 @@
         <button id="quiz-question" type="button" class="btn btn-default"><i class="glyphicon glyphicon-question-sign"></i></button>
     </div>
 
-    
+
     <span id="centerpoint" class="" style="display: none;"><span class="shadow"></span><span class="x"></span><span class="marker"></span></span>
     <div id="geoClock"></div>
     <div id="modal"></div>

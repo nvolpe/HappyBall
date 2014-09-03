@@ -74,6 +74,7 @@ namespace HappyBall
                 "~/Scripts/Public/ladda-bootstrap/ladda.js",
                 "~/Scripts/Public/leaflet-awesome-markers/leaflet.awesome-markers.js",
                 "~/Scripts/flipclock.js",
+                "~/Scripts/Sortable.js",
                 "~/Scripts/Public/utils/ffa.namespace.js",
                 "~/Scripts/Public/utils/String.js",
                 "~/Scripts/Public/utils/StringBuilder.js",
@@ -99,6 +100,7 @@ namespace HappyBall
                 //Views
                 "~/Scripts/Public/happyBall/views/homeView.js",
                 "~/Scripts/Public/happyBall/views/propView.js",
+                "~/Scripts/Public/happyBall/views/kingView.js",
                 "~/Scripts/Public/happyBall/views/mapView.js",
                 "~/Scripts/Public/happyBall/views/geoResultsView.js"
 

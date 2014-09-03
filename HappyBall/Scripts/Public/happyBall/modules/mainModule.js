@@ -32,6 +32,10 @@
                 this.propModel = new ffa.App.PropModel();
                 this.propCollection = new ffa.App.PropCollection();
 
+                //King Bet Entities
+                //-----------------------------------------
+                this.kingModel = new ffa.App.KingModel();
+                this.kingCollection = new ffa.App.KingCollection();
 
                 //Geo Results Entities
                 //-----------------------------------------
@@ -47,6 +51,9 @@
 
                 //We have to fetch from server first.
                 ffa.App.vent.on('show:prop', this.fetchBets);
+
+                //We have to fetch from server first.
+                ffa.App.vent.on('show:king', this.fetchKingBets);
 
                 //Does not sync with server, so we can show template instantly.
                 ffa.App.vent.on('show:map', this.fetchGeoResults);
@@ -106,6 +113,60 @@
             //fetch bets error
             fetchBetsErrback: function (obj, xhr) {
                 alert('Error ' + xhr.statusText);
+            },
+
+
+            //go get bets from database
+            fetchKingBets: function () {
+                
+                var self = this;
+
+                this.kingCollection.set([
+                    {
+                        test: 1,
+                        itemName: 'Noah keller'
+                    },
+                    {
+                        test: 2,
+                        itemName: '50 cent'
+                    },
+                    {
+                        test: 3,
+                        itemName: 'Tom Cruise'
+                    },
+                    {
+                        test: 4,
+                        itemName: 'Pretty Lights'
+                    },
+                    {
+                        test: 5,
+                        itemName: 'Eminem'
+                    }
+                ]);
+
+                console.dir(this.kingCollection);
+
+                self.KingCollectionView = new ffa.App.KingCompositeView({
+                    model: this.kingModel,
+                    collection: this.kingCollection
+                });
+
+                self.region.show(this.KingCollectionView);
+
+
+                //this.kingCollection.fetch({
+                //    success: function (results) {
+                //        self.KingItemView = new ffa.App.KingItemView({
+                //            model: self.kingModel,
+                //            collection: self.kingCollection
+                //        });
+                //        self.region.show(self.KingItemView);
+                //    },
+                //    error: function () {
+                //        console.log('noo kingCollection results');
+                //    }
+                //});
+
             },
 
 

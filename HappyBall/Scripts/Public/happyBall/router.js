@@ -6,6 +6,7 @@ ffa.App.module('Mod', function (Mod, App, Backbone, Marionette, $, _) {
         appRoutes: {
             'home': 'home',
             'prop': 'prop',
+            'king': 'king',
             'map': 'map'
         }
     });
@@ -13,15 +14,15 @@ ffa.App.module('Mod', function (Mod, App, Backbone, Marionette, $, _) {
     var API = {
         home: function () {
             ffa.App.vent.trigger('show:home');
-            //ffa.App.Mod.Map.Controller.showMap();
         },
         prop: function () {
             ffa.App.vent.trigger('show:prop');
-            //ffa.App.Mod.Create.Controller.createGameDetails();
+        },
+        king: function () {
+            ffa.App.vent.trigger('show:king');
         },
         map: function () {
             ffa.App.vent.trigger('show:map');
-            //ffa.App.Mod.Create.Controller.createGameDetails();
         }
     };
 
@@ -33,6 +34,11 @@ ffa.App.module('Mod', function (Mod, App, Backbone, Marionette, $, _) {
     ffa.App.on("route:prop", function () {
         ffa.App.navigate("prop");
         API.prop();
+    });
+
+    ffa.App.on("route:king", function () {
+        ffa.App.navigate("king");
+        API.king();
     });
 
     ffa.App.on("route:map", function () {
