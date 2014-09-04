@@ -24,15 +24,22 @@ namespace HappyBall.Controllers.Api
 
         // GET api/King/5
         [ResponseType(typeof(King))]
-        public IHttpActionResult GetKing(int id)
+        [System.Web.Http.Route("api/king/week", Name = "GetKingByWeek")]
+        public IHttpActionResult GetKingByWeek()
         {
-            King king = db.Kings.Find(id);
-            if (king == null)
+
+            //Get Current Week?
+            //------------------------------------
+            var weekId = db.Week.First().Week_Id;
+
+            var results = db.Kings.Where(x => x.Week == weekId).ToList();
+
+            if (results == null)
             {
                 return NotFound();
             }
 
-            return Ok(king);
+            return Ok(results);
         }
 
         // PUT api/King/5

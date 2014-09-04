@@ -15,7 +15,6 @@ namespace HappyBall.Models
         public int Week { get; set; }
         public string UserId { get; set; }
 
-
         public KingResult()
         {
             //TODO: Get date and lookup to see what Football week is being played

@@ -6,13 +6,15 @@
 <!-- =================================================== -->
 
 <script type="text/template" id="prop-container-template">
-    <div>
-        <h1 style="text-align: center;">Prop Bets</h1>
-        <div id="prop-bet-container"></div>
-    </div>
-    <div style="text-align: center">
-        <br />
-        <button id="submitProp" class="btn btn-primary ladda-button disabled" data-style="zoom-out"><span class="ladda-label">Submit Prop Bets</span></button>
+    <div class="container">
+        <div>
+            <h1 style="text-align: center;">Prop Bets</h1>
+            <div id="prop-bet-container"></div>
+        </div>
+        <div style="text-align: center">
+            <br />
+            <button id="submitProp" class="btn btn-primary ladda-button disabled" data-style="zoom-out"><span class="ladda-label">Submit Prop Bets</span></button>
+        </div>
     </div>
 </script>
 
@@ -121,7 +123,11 @@
 <script type="text/template" id="king-container-template">
     <div class="container">
         <h1 style="text-align: center;">King of the Week</h1>
-
+        <br />
+        <div id="kingQuestionContainer" class="well">
+            Some random question goes here wouldnt you know
+        </div>
+        <br />
         <div class="row">
             <div class="col-xs-9 col-md-8">
                 <ul id="king-bet-container" class="list-group"></ul>
@@ -134,7 +140,7 @@
     </div>
     <div style="text-align: center">
         <br />
-        <button id="submitKing" class="btn btn-primary ladda-button disabled" data-style="zoom-out"><span class="ladda-label">Submit Prop Bets</span></button>
+        <button id="submitKing" class="btn btn-primary ladda-button disabled" data-style="zoom-out"><span class="ladda-label">Submit Kings</span></button>
     </div>
 </script>
 

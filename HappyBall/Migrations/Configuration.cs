@@ -27,9 +27,9 @@ namespace HappyBall.Migrations
 
             context.Kings.AddOrUpdate(
               p => p.Id,
-              new King { Id = 1, Pick = "Andrew Luck" },
-              new King { Id = 2, Pick = "Michael Vick" },
-              new King { Id = 3, Pick = "Lebron James" }
+              new King { Id = 1, Pick = "Andrew Luck", Question = "Some question goes here wouldnt you know, gosh i think i fucked up this model", Week = 1, elementId = 1 },
+              new King { Id = 2, Pick = "Michael Vick", Question = "Some question goes here wouldnt you know, gosh i think i fucked up this model", Week = 1, elementId = 2 },
+              new King { Id = 3, Pick = "Lebron James", Question = "Some question goes here wouldnt you know, gosh i think i fucked up this model", Week = 1, elementId = 3 }
             );
 
             context.Results.AddOrUpdate(

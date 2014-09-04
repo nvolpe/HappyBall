@@ -89,6 +89,26 @@
 
             console.log('King View OnShow');
 
+            //set question ghetto ajax way
+            var question;
+
+            $.getJSON("/happyball/api/king", function (json) {
+
+                _.each(json, function (item) {
+                    console.log('king get!');
+                    console.dir(item.question);
+
+                    question = item.question;
+                });
+
+                $('#kingQuestionContainer').text(question);
+
+
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                console.log('Shits fucked bro');
+            });
+
             var kingContainer = document.getElementById('king-bet-container');
             this.sorter = new Sortable(kingContainer, {
                 onEnd: this.dragEnd
@@ -139,13 +159,13 @@
                     //set pick2
                     $('#' + kingId).addClass('text-success');
                     pick2 = $.trim($('#' + kingId).text());
-                    self.model.set('pick1', pick2);
+                    self.model.set('pick2', pick2);
 
                 } else if (counter == 3) {
                     //set pick3
                     $('#' + kingId).addClass('text-success');
                     pick3 = $.trim($('#' + kingId).text());
-                    self.model.set('pick1', pick3);
+                    self.model.set('pick3', pick3);
 
                 } else {
                     $('#' + kingId).addClass('text-danger');
@@ -157,7 +177,7 @@
 
         submiKingClickHandler: function (evt) {
 
-            this.submitKingBtn = Ladda.create($(this.ui.submitPropBtn)[0]);
+            this.submitKingBtn = Ladda.create($(this.ui.submitKingBtn)[0]);
             this.submitKingBtn.start();
 
             this.model.save({}, {
@@ -219,7 +239,7 @@
 
                 this.model.restAction = 'PUT';
                 console.log("TODO: INIT KING VIEW DIFFERENTLY IF USER HAS ALREADY ENTERED")
-                this.ui.submitKingBtn.addClass('disabled');
+                //this.ui.submitKingBtn.addClass('disabled');
 
             }
 
