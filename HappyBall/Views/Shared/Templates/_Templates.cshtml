@@ -121,7 +121,16 @@
 <script type="text/template" id="king-container-template">
     <div class="container">
         <h1 style="text-align: center;">King of the Week</h1>
-        <ul id="king-bet-container" class="list-group"></ul>
+
+        <div class="row">
+            <div class="col-xs-9 col-md-8">
+                <ul id="king-bet-container" class="list-group"></ul>
+            </div>
+            <div style="font-size: 4em;" class="col-xs-3 col-md-4 text-success">1</div>
+            <div style="font-size: 4em;" class="col-xs-3 col-md-4 text-success">2</div>
+            <div style="font-size: 4em;" class="col-xs-3 col-md-4 text-success">3</div>
+        </div>
+
     </div>
     <div style="text-align: center">
         <br />
@@ -131,9 +140,14 @@
 
 <script type="text/template" id="king-template">
 
+    @*<li id="<%= test %>" class="list-group-item">
         <span class="badge"><%= test %></span>
         <%= itemName %>
+    </li>*@
 
+    <li id="king<%= id %>" class="list-group-item">
+        <%= pick %>
+    </li>
 </script>
 
 

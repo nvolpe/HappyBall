@@ -121,51 +121,20 @@
                 
                 var self = this;
 
-                this.kingCollection.set([
-                    {
-                        test: 1,
-                        itemName: 'Noah keller'
+                this.kingCollection.fetch({
+                    success: function (results) {
+                        //init view
+                        self.KingCollectionView = new ffa.App.KingCompositeView({
+                            model: self.kingModel,
+                            collection: self.kingCollection
+                        });
+
+                        self.region.show(self.KingCollectionView);
                     },
-                    {
-                        test: 2,
-                        itemName: '50 cent'
-                    },
-                    {
-                        test: 3,
-                        itemName: 'Tom Cruise'
-                    },
-                    {
-                        test: 4,
-                        itemName: 'Pretty Lights'
-                    },
-                    {
-                        test: 5,
-                        itemName: 'Eminem'
+                    error: function () {
+                        console.log('noo kingCollection results');
                     }
-                ]);
-
-                console.dir(this.kingCollection);
-
-                self.KingCollectionView = new ffa.App.KingCompositeView({
-                    model: this.kingModel,
-                    collection: this.kingCollection
                 });
-
-                self.region.show(this.KingCollectionView);
-
-
-                //this.kingCollection.fetch({
-                //    success: function (results) {
-                //        self.KingItemView = new ffa.App.KingItemView({
-                //            model: self.kingModel,
-                //            collection: self.kingCollection
-                //        });
-                //        self.region.show(self.KingItemView);
-                //    },
-                //    error: function () {
-                //        console.log('noo kingCollection results');
-                //    }
-                //});
 
             },
 

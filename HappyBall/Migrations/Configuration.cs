@@ -25,6 +25,13 @@ namespace HappyBall.Migrations
               new Prop { Id = 3, Bet = "Bet 3" }
             );
 
+            context.Kings.AddOrUpdate(
+              p => p.Id,
+              new King { Id = 1, Pick = "Andrew Luck" },
+              new King { Id = 2, Pick = "Michael Vick" },
+              new King { Id = 3, Pick = "Lebron James" }
+            );
+
             context.Results.AddOrUpdate(
               p => p.Id,
               new Result { Id = 1, TeamName = "team1", PropBet1 = "Bet 1" },
