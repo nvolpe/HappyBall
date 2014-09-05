@@ -124,29 +124,6 @@ input[type="checkbox"].input-validation-error {
     margin: -45px 0 0 -70px;
 }
 
-html,
-body {
-    height: 100%;
-    /* The html and body elements cannot have any padding or margin. */
-}
-
-
-#wrap {
-    min-height: 100%;
-    height: auto;
-    /* Negative indent footer by its height */
-    margin: 0 auto -60px;
-    /* Pad bottom by footer height */
-    padding: 0 0 60px;
-}
-
-/* Set the fixed height of the footer here */
-#footer {
-    height: 60px;
-    background-color: #222;
-}
-
-
 
 
 /* nav */
@@ -157,14 +134,14 @@ body {
 }
 
 .navbar-inverse .navbar-toggle:hover {
-    background-color: #222;
-    color: #669900;
+    background-color: #777;
+    color: #777;
 }
 
 .navbar-inverse .navbar-nav > li > a:hover,
 .navbar-inverse .navbar-nav > li > a:focus,
 .activeNav {
-    color: #669900;
+    color: #428bca;
 }
 
 .chat-item:hover {
@@ -172,9 +149,9 @@ body {
     color: #669900;
 }
 
-.navbar-nav > li > a {
+/*.navbar-nav > li > a {
     padding-top: 10px;
-}
+}*/
 
 ul.nav.navbar-nav li {
     display: inline-block;

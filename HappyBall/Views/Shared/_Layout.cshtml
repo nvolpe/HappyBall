@@ -31,7 +31,6 @@
 
 </head>
 <body>
-    <div id="wrap">
 
 
         <div class="navbar navbar-inverse navbar-fixed-top container-fluid1">
@@ -40,11 +39,11 @@
 
 
             <ul class="nav navbar-nav">
-                <li><a class="home-link" title="Prop Bets" href="#home"><i class="fa fa-bullhorn"></i><span>Home</span></a></li>
-                <li><a class="prop-link" title="Prop Bets" href="#prop"><i class="fa fa-bullhorn"></i><span>Props</span></a></li>
-                <li><a class="king-link" title="Prop Bets" href="#king"><i class="fa fa-sign-in"></i><span>Kings</span></a></li>
-                <li><a class="map-link" title="Prop Bets" href="#map"><i class="fa fa-search"></i><span>Map</span></a></li>
-                <li><a class="about-link" title="Prop Bets" href="#about"><i class="fa fa-search"></i><span>About</span></a></li>
+                <li><a class="home-link" title="Home page" href="#home"><i class="fa fa-home"></i><span>Home</span></a></li>
+                <li><a class="prop-link" title="Prop Bets page" href="#prop"><i class="fa fa-bolt"></i><span>Props</span></a></li>
+                <li><a class="king-link" title="Kings of the Week page" href="#king"><i class="fa fa-users"></i><span>Kings</span></a></li>
+                <li><a class="map-link" title="Map Page" href="#map"><i class="fa fa-globe"></i><span>Map</span></a></li>
+                <li><a class="results-link" title="Results Page" href="#about"><i class="fa fa-bar-chart" ></i><span>Results</span></a></li>
             </ul>
 
         </div>
@@ -58,9 +57,6 @@
             @*<hr />*@
 
         </div>
-    </div>
-
-        @Html.Partial("_Footer")
 
         @Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/marionette")

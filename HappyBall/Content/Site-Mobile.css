@@ -9,6 +9,10 @@
     padding: 0;
 }*/
 
+.nick-container {
+    padding-top: 60px;
+}
+
 #map {
     position: absolute;
     top: 0;
@@ -89,7 +93,7 @@
     padding-right: 40px;
 }
 .navbar {
-    color: #fff;
+    color: #777;
     border: 0;
     border-radius: 0;
     margin-bottom: 0;
@@ -102,9 +106,9 @@
 }
 .navbar-inverse .navbar-toggle,
 .navbar-inverse .navbar-toggle:focus {
-    background: #222;
+    background: #777;
     border: none;
-    color: #fff;
+    color: #777;
     margin-bottom: 0;
 }
 .navbar-brand {
@@ -112,7 +116,7 @@
     margin: 0;
 }
 .navbar-inverse .navbar-nav > li > a {
-    color: #f6f6f6;
+    color: #777;
 }
 .navbar-inverse .nav span {
     display: block;
