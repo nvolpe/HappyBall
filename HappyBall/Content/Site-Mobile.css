@@ -1,0 +1,244 @@
+﻿/**Nick Volpe Styles Start Right Hurrrr*/
+
+.adminMaxWidth {
+    max-width: 700px;
+}
+
+/*body {
+    margin: 0;
+    padding: 0;
+}*/
+
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    margin-top: 50px;
+}
+
+/*#quiz-start {
+    position: absolute;
+    z-index: 2;
+    left: 20px;
+    font-size: 15px;
+    top: 155px;
+    cursor: pointer;
+}
+
+#quiz-results {
+    position: absolute;
+    z-index: 2;
+    left: 20px;
+    font-size: 15px;
+    top: 215px;
+    cursor: pointer;
+}*/
+
+.quiz {
+    position: absolute;
+    z-index: 2;
+    left: 10px;
+    font-size: 15px;
+    top: 65px;
+    cursor: pointer;
+}
+
+#geo-quiz-alert {
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+    position: absolute;
+    z-index: 5;
+    color: #000000;
+    border-color: #000000;
+    background-color: #F5F5F5;
+    font-weight: bold;
+    top: 55px;
+}
+
+
+.king-item {
+    padding: 25px;
+    margin-bottom: 10px;
+}
+
+#king-bet-container {
+    font-size: 40px;
+    margin: 10px;
+    /*margin: -45px 0 0 -70px;*/
+}
+
+
+#geoClock {
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    top: 90%;
+    width: 140px;
+    height: 68px;
+    margin: -45px 0 0 -70px;
+}
+
+
+
+.header-title p {
+    line-height: 50px;
+    margin-left: 8px;
+    font-size: 24px;
+    padding-right: 40px;
+}
+.navbar {
+    color: #fff;
+    border: 0;
+    border-radius: 0;
+    margin-bottom: 0;
+}
+.navbar-inverse {
+    margin: 0;
+}
+#collapse {
+    border: none;
+}
+.navbar-inverse .navbar-toggle,
+.navbar-inverse .navbar-toggle:focus {
+    background: #222;
+    border: none;
+    color: #fff;
+    margin-bottom: 0;
+}
+.navbar-brand {
+    display: none;
+    margin: 0;
+}
+.navbar-inverse .navbar-nav > li > a {
+    color: #f6f6f6;
+}
+.navbar-inverse .nav span {
+    display: block;
+    margin-left: 8px;
+    font-size: 12px;
+}
+.navbar-inverse .nav li > a {
+    /*padding-top: 15px;*/
+    height: 50px;
+}
+.navbar-inverse .nav li > a > i {
+    font-size: 24px;
+}
+
+ul.nav.navbar-nav {
+    margin: 0;
+}
+ul.nav.navbar-nav li {
+    width: 20%;
+    height: 50px;
+    float: left;
+    cursor: pointer;
+    text-align: center;
+}
+.navbar-collapse,
+.navbar-collapse ul {
+    z-index: 10;
+    background: #222;
+}
+.navbar-collapse ul li {
+    z-index: 10;
+    background: #222;
+}
+
+.navbar-nav > li > a {
+    padding-top: 5px;
+}
+.chat-item {
+    cursor: pointer;
+}
+#collapse {
+    margin: 0;
+}
+
+#about-modal p {
+    padding-bottom: 10px;
+}
+/*=====MOBILE FIRST======*/
+
+.row .col-xs-5 {
+    margin: 4%;
+}
+.share-message {
+    float: right;
+    margin: 15px 15px 0 0;
+    width: 85px;
+}
+
+
+.nested {
+    text-align: left;
+    padding-left: 15px;  
+}
+#search-results li:last-child {
+    border-bottom:solid 1px #bfbfbf
+}
+#search-results li img {
+    margin:0 15px 3px 0
+}
+
+.msg-container{
+    height: 350px;
+    overflow: auto;
+}
+
+.chat-date {
+    font-weight: bold;
+    font-size: .7em;
+}
+
+#about-modal li {
+    margin-left: 6%;
+}
+
+#add-event-btn {
+    float: right;
+}
+
+.location-selector i {
+    padding-right: 5px;
+}
+
+input {
+    margin-bottom: 10px;
+}
+
+/* override esri popup */
+.esriPopup .titleButton {
+    /*top: -29px;*/
+}
+.esriPopup .titleButton.close {
+    right: 15px;
+    top: 1px;
+    opacity: 1;
+    background: none;
+
+}
+.esriPopup .titleButton.close:after {
+    color: red;
+    content: url('../img/close-white.png');
+
+}
+.titleButton.maximize {
+    display: none;
+}
+
+
+
+/*HELPER CLASSES*/
+
+.no-padding {
+    padding: 0;
+}
+.no-margin {
+    margin: 0;
+}
+.no-mobile {
+    display: none;
+}
