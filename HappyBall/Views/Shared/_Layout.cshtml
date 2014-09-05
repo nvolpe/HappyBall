@@ -11,7 +11,7 @@
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/marker")
 
-    
+
 
     @*<link href="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/Content/css")" rel="stylesheet" type="text/css" />*@
 
@@ -33,79 +33,78 @@
 <body>
 
 
-        <div class="navbar navbar-inverse navbar-fixed-top container-fluid1">
-            <!--Include your brand here-->
-            @Html.ActionLink("Happy Ball 2.0", "Index", "Home", null, new { @class = "navbar-brand header-title" })
+    <div class="navbar navbar-inverse navbar-fixed-top container-fluid1">
+        <!--Include your brand here-->
+        @Html.ActionLink("Happy Ball 2.0", "Index", "Home", null, new { @class = "navbar-brand header-title" })
 
 
-            <ul class="nav navbar-nav">
-                <li><a class="home-link" title="Home page" href="#home"><i class="fa fa-home"></i><span>Home</span></a></li>
-                <li><a class="prop-link" title="Prop Bets page" href="#prop"><i class="fa fa-bolt"></i><span>Props</span></a></li>
-                <li><a class="king-link" title="Kings of the Week page" href="#king"><i class="fa fa-users"></i><span>Kings</span></a></li>
-                <li><a class="map-link" title="Map Page" href="#map"><i class="fa fa-globe"></i><span>Map</span></a></li>
-                <li><a class="results-link" title="Results Page" href="#about"><i class="fa fa-bar-chart" ></i><span>Results</span></a></li>
-            </ul>
+        <ul class="nav navbar-nav">
+            <li><a class="home-link" title="Home page" href="#home"><i class="fa fa-home"></i><span>Home</span></a></li>
+            <li><a class="prop-link" title="Prop Bets page" href="#prop"><i class="fa fa-bolt"></i><span>Props</span></a></li>
+            <li><a class="king-link" title="Kings of the Week page" href="#king"><i class="fa fa-users"></i><span>Kings</span></a></li>
+            <li><a class="map-link" title="Map Page" href="#map"><i class="fa fa-globe"></i><span>Map</span></a></li>
+            <li><a class="results-link" title="Results Page" href="#about"><i class="fa fa-bar-chart"></i><span>Results</span></a></li>
+        </ul>
 
-        </div>
-
-
-
-
-
-        <div>
-            @RenderBody()
-            @*<hr />*@
-
-        </div>
-
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/marionette")
-        @Scripts.Render("~/bundles/bootstrap")
+    </div>
 
 
 
 
 
+    <div>
+        @RenderBody()
+        @*<hr />*@
+
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/marionette")
+    @Scripts.Render("~/bundles/bootstrap")
 
 
 
-
-        @RenderSection("scripts", required: false)
-
-        <script>
-            $(document).ready(function () {
-
-                console.log('wtf dude regular layout');
-
-                //Navigation Menu Slider
-                $('#nav-expander').on('click', function (e) {
-                    e.preventDefault();
-                    $('body').toggleClass('nav-expanded');
-                });
-                $('#nav-close').on('click', function (e) {
-                    e.preventDefault();
-                    $('body').removeClass('nav-expanded');
-                });
+    
+    
 
 
-                // Initialize navgoco with default options
-                $(".main-menu").navgoco({
-                    caret: '<span class="caret"></span>',
-                    accordion: false,
-                    openClass: 'open',
-                    save: true,
-                    cookie: {
-                        name: 'navgoco',
-                        expires: false,
-                        path: '/'
-                    },
-                    slide: {
-                        duration: 300,
-                        easing: 'swing'
-                    }
-                });
+
+    @RenderSection("scripts", required: false)
+
+    <script>
+        $(document).ready(function () {
+
+            console.log('wtf dude regular layout');
+
+            //Navigation Menu Slider
+            $('#nav-expander').on('click', function (e) {
+                e.preventDefault();
+                $('body').toggleClass('nav-expanded');
             });
-        </script>
+            $('#nav-close').on('click', function (e) {
+                e.preventDefault();
+                $('body').removeClass('nav-expanded');
+            });
+
+
+            // Initialize navgoco with default options
+            $(".main-menu").navgoco({
+                caret: '<span class="caret"></span>',
+                accordion: false,
+                openClass: 'open',
+                save: true,
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 300,
+                    easing: 'swing'
+                }
+            });
+        });
+    </script>
 
 
 

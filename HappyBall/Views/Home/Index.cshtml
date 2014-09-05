@@ -10,16 +10,41 @@
 }
 else
 {
-    <div id="Home" class="container-fluid">
-        <div class="jumbotron">
-            <h1>You need you to log in, bro.</h1>
-            <p>Sup Chump? Think you got game? Wanna win billions in worthless virtual points? First you gotta log in.</p>
-            <ul style="list-style-type: none">
-                <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "btn btn-primary btn-large" })</li>
-            </ul>
+    <div class="container nick-container">
+        <div id="Home" class="container-fluid">
+            <div class="jumbotron">
+                <h1>You need you to log in, bro.</h1>
+                <p>Helllllo, lets get this party started. Log in please.</p>
+                <ul style="list-style-type: none">
+                    <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "btn btn-primary btn-large" })</li>
+                </ul>
+            </div>
         </div>
     </div>
 }
+
+
+<div id="learnMore" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Noooo Dont log out!</h4>
+            </div>
+            <div class="modal-body">
+                @Html.Partial("_LoginPartial")
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
 
 <div id="modalSuccess" class="modal fade">
     <div class="modal-dialog">

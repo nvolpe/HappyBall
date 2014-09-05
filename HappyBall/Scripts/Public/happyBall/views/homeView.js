@@ -13,12 +13,18 @@
         },
         template: '#home-template',
         events: {
-            'click .jumbotron': 'test'
+            'click .jumbotron': 'test',
+            'click .logOutModal': 'logOut'
         },
 
         test: function () {
-            ffa.App.trigger("route:prop");
-        }
+            //ffa.App.trigger("route:prop");
+        },
+
+        logOut: function () {
+            $('#learnMore').modal('show');
+        },
+
     });
 
 
