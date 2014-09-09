@@ -100,7 +100,6 @@
 
                 _.each(json, function (item) {
                     console.log('king get!');
-                    console.dir(item.question);
 
                     question = item.question;
                 });

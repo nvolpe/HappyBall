@@ -51,7 +51,7 @@
         //},s
 
         url: function () {
-            return ffa.siteRoot + '/api/prop';
+            return ffa.siteRoot + '/api/prop/week';
         },
     });
 

@@ -20,16 +20,16 @@ namespace HappyBall.Migrations
         {
             context.Prop.AddOrUpdate(
               p => p.Id,
-              new Prop { Id = 1, Bet = "Bet 1" },
-              new Prop { Id = 2, Bet = "Bet 2" },
-              new Prop { Id = 3, Bet = "Bet 3" }
+              new Prop { Id = 1, Bet = "Bet 1", Week = 1, TeamName = "Touchdown Jesus" },
+              new Prop { Id = 2, Bet = "Bet 2", Week = 1, TeamName = "Touchdown Jesus" },
+              new Prop { Id = 3, Bet = "Bet 3", Week = 1, TeamName = "Touchdown Jesus" }
             );
 
             context.Kings.AddOrUpdate(
               p => p.Id,
-              new King { Id = 1, Pick = "Andrew Luck", Question = "Some question goes here wouldnt you know, gosh i think i fucked up this model", Week = 1, elementId = 1 },
-              new King { Id = 2, Pick = "Michael Vick", Question = "Some question goes here wouldnt you know, gosh i think i fucked up this model", Week = 1, elementId = 2 },
-              new King { Id = 3, Pick = "Lebron James", Question = "Some question goes here wouldnt you know, gosh i think i fucked up this model", Week = 1, elementId = 3 }
+              new King { Id = 1, Pick = "Andrew Luck", Question = "Some question goes here wouldnt you know, gosh i think i fucked up this model", Week = 1, elementId = 1, TeamName = "Touchdown Jesus"},
+              new King { Id = 2, Pick = "Michael Vick", Question = "Some question goes here wouldnt you know, gosh i think i fucked up this model", Week = 1, elementId = 2, TeamName = "Touchdown Jesus" },
+              new King { Id = 3, Pick = "Lebron James", Question = "Some question goes here wouldnt you know, gosh i think i fucked up this model", Week = 1, elementId = 3, TeamName = "Touchdown Jesus" }
             );
 
             context.Results.AddOrUpdate(

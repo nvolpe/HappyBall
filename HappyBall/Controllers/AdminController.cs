@@ -24,6 +24,8 @@ namespace HappyBall.Controllers
 
                 var currentUser = manager.FindById(User.Identity.GetUserId());
 
+                ViewBag.SiteRoot = string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~"));
+
                 ViewBag.UserName = currentUser.UserName;
                 ViewBag.TeamName = currentUser.TeamName;
 

@@ -8,13 +8,21 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using HappyBall.Models;
 
 namespace HappyBall.Controllers.Api
 {
     public class KingController : ApiController
     {
+        private UserManager<ApplicationUser> manager;
         private ApplicationDbContext db = new ApplicationDbContext();
+
+        public KingController()
+        {
+            manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+        }
 
         // GET api/King
         public IQueryable<King> GetKings()
@@ -83,6 +91,22 @@ namespace HappyBall.Controllers.Api
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+
+            //get week
+            var weekId = db.Week.First().Week_Id;
+
+            //set week to geomaster
+            king.Week = weekId;
+
+            //get user id and teamname
+            var currentUserId = User.Identity.GetUserId();
+            var currentTeamName = manager.FindById(currentUserId).TeamName;
+
+            //set TeamName
+            if (king.TeamName.Length <= 0)
+            {
+                king.TeamName = currentTeamName;
             }
 
             db.Kings.Add(king);

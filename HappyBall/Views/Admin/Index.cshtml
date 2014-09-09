@@ -46,6 +46,9 @@
         <div> Question 3 </div>
         <textarea id="propQuestion3" class="form-control adminMaxWidth" rows="3"></textarea>
         <br>
+        <div> Team who set this </div>
+        <input id="propTeam" type="text" class="form-control">
+        <br>
         <button id="submitProp" type="submit" class="btn btn-default">Submit</button>
     </div>
 
@@ -59,6 +62,9 @@
         <br>
         <div> Values for pick list  -- please insert commma delimited list of words for kings of the week </div>
         <textarea id="kingListValues" class="form-control adminMaxWidth" rows="3"></textarea>
+        <br>
+        <div> Team who set this </div>
+        <input id="kingTeam" type="text" class="form-control">
         <br>
         <button id="submitKing" type="submit" class="btn btn-default">Submit</button>
     </div>
@@ -104,7 +110,7 @@
 
             //get teamName
             var _teamName = '@ViewBag.TeamName';
-
+            var _siteRoot = '@ViewBag.SiteRoot';
 
             ////////////////////////////////////////////
             //SPINNER
@@ -186,7 +192,7 @@
 
             function initWeek() {
 
-                $.getJSON(ffa.siteRoot + "/api/week", function (json) {
+                $.getJSON(_siteRoot + "/api/week", function (json) {
                     _weekSpinner.stop();
 
                     //$("#week-select").val(json.Week_Id);
@@ -210,7 +216,7 @@
 
                 //TODO: Is this really the best way, looping through and sending put requests?
                 //Or should i post new data each time?
-                var url = ffa.siteRoot + '/api/week' + '/' + data[0].id; //TODO: Use c# razer shit to get route
+                var url = _siteRoot + '/api/week' + '/' + data[0].id; //TODO: Use c# razer shit to get route
                 $.ajax({
                     type: "PUT",
                     url: url,
@@ -234,8 +240,13 @@
             ////////////////////////////////////////////
 
             function initProp() {
+
+                var elem = document.getElementById("propTeam"); // Get text field
+                elem.value = _teamName; // Change field
+
+
                 //Go get props and populate them in the text area boxes
-                $.getJSON(ffa.siteRoot + "/api/prop", function (json) {
+                $.getJSON(_siteRoot + "/api/prop/week", function (json) {
                     _PropSpinner.stop();
                     $('#propQuestion1').text(json[0].bet);
                     $('#propQuestion2').text(json[1].bet);
@@ -260,11 +271,12 @@
                 var question1 = $('#propQuestion1').val();
                 var question2 = $('#propQuestion2').val();
                 var question3 = $('#propQuestion3').val();
+                var propTeam = $('#propTeam').val();
 
                 var data = [
-                    { "id": 1, "bet": question1 },
-                    { "id": 2, "bet": question2 },
-                    { "id": 3, "bet": question3 }
+                    { "id": 1, "bet": question1, "teamName": propTeam },
+                    { "id": 2, "bet": question2, "teamName": propTeam },
+                    { "id": 3, "bet": question3,  }
                 ]
 
                 var url = null;
@@ -272,7 +284,7 @@
                 //TODO: Is this really the best way, looping through and sending put requests?
                 //Or should i post new data each time?
                 $.each(data, function (index, value) {
-                    url = ffa.siteRoot + '/api/prop' + '/' + value.id; //TODO: User c# razer shit to get route
+                    url = _siteRoot + '/api/prop' + '/' + value.id; //TODO: User c# razer shit to get route
                     $.ajax({
                         type: "PUT",
                         url: url,
@@ -300,11 +312,14 @@
 
             function initKing() {
 
+                var elem = document.getElementById("kingTeam"); // Get text field
+                elem.value = _teamName; // Change field
+
                 var stringArray = [];
                 var question;
 
                 //Go get props and populate them in the text area boxes
-                $.getJSON(ffa.siteRoot + "/api/king/week", function (json) {
+                $.getJSON(_siteRoot + "/api/king/week", function (json) {
                     _KingSpinner.stop();
 
                     //underscore each over json results and 
@@ -346,6 +361,8 @@
 
                 var question = $('#kingQuestion').val();
 
+                var kingTeam = $('#kingTeam').val();
+
                 //build up data with underscore loop over comma dilemited list
 
                 var array = kingList.split(',');
@@ -363,6 +380,7 @@
                     obj.elementId = counter;
                     obj.pick = strippedString;
                     obj.question = question;
+                    obj.teamName = kingTeam;
 
                     dataArray.push(obj);
 
@@ -375,7 +393,7 @@
                 //TODO: Is this really the best way, looping through and sending put requests?
                 //Or should i post new data each time?
                 $.each(dataArray, function (index, value) {
-                    url = ffa.siteRoot + '/api/king'; //TODO: User c# razer shit to get route
+                    url = _siteRoot + '/api/king'; //TODO: User c# razer shit to get route
                     $.ajax({
                         type: "POST",
                         url: url,
@@ -437,7 +455,7 @@
 
                 //TODO: Is this really the best way, looping through and sending put requests?
                 //Or should i post new data each time?
-                var url = ffa.siteRoot + '/api/geomaster/1'; //TODO: Use c# razer shit to get route
+                var url = _siteRoot + '/api/geomaster/1'; //TODO: Use c# razer shit to get route
                 $.ajax({
                     type: "PUT",
                     url: url,

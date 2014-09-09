@@ -11,6 +11,7 @@ namespace HappyBall.Models
         public int elementId { get; set; } //has to be 1 - whatever
         public string Pick { get; set; }
         public string Question { get; set; }
+        public string TeamName { get; set; }
         public int Week { get; set; }
 
         public King()

@@ -8,13 +8,21 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using HappyBall.Models;
 
 namespace HappyBall.Controllers.Api
 {
     public class PropController : ApiController
     {
+        private UserManager<ApplicationUser> manager;
         private ApplicationDbContext db = new ApplicationDbContext();
+
+        public PropController()
+        {
+            manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+        }
 
 
         //GET api/Prop
@@ -25,15 +33,23 @@ namespace HappyBall.Controllers.Api
 
         //GET api/Prop/5
         [ResponseType(typeof(Prop))]
-        public IHttpActionResult GetProp(int id)
+        [System.Web.Http.Route("api/prop/week", Name = "GetPropByWeek")]
+        public IHttpActionResult GetPropByWeek()
         {
-            Prop prop = db.Prop.Find(id);
-            if (prop == null)
+
+            //Get Current Week?
+            //------------------------------------
+            var weekId = db.Week.First().Week_Id;
+
+            var results = db.Prop.Where(x => x.Week == weekId).ToList();
+
+
+            if (results == null)
             {
                 return NotFound();
             }
 
-            return Ok(prop);
+            return Ok(results);
         }
 
 
@@ -44,6 +60,23 @@ namespace HappyBall.Controllers.Api
             {
                 return BadRequest(ModelState);
             }
+
+            //get week
+            var weekId = db.Week.First().Week_Id;
+
+            //set week to geomaster
+            prop.Week = weekId;
+
+            //get user id and teamname
+            var currentUserId = User.Identity.GetUserId();
+            var currentTeamName = manager.FindById(currentUserId).TeamName;
+
+            //set TeamName
+            if (prop.TeamName.Length <= 0)
+            {
+                prop.TeamName = currentTeamName;
+            }
+
 
             if (id != prop.Id)
             {
@@ -79,6 +112,23 @@ namespace HappyBall.Controllers.Api
             {
                 return BadRequest(ModelState);
             }
+
+            //get week
+            var weekId = db.Week.First().Week_Id;
+
+            //set week to geomaster
+            prop.Week = weekId;
+
+            //get user id and teamname
+            var currentUserId = User.Identity.GetUserId();
+            var currentTeamName = manager.FindById(currentUserId).TeamName;
+
+            //set TeamName
+            if (prop.TeamName.Length <= 0)
+            {
+                prop.TeamName = currentTeamName;
+            }
+
 
             db.Prop.Add(prop);
             db.SaveChanges();
