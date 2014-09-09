@@ -29,6 +29,10 @@ namespace HappyBall.Controllers
                 ViewBag.UserName = currentUser.UserName;
                 ViewBag.TeamName = currentUser.TeamName;
 
+                ViewBag.SiteRoot = string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~"));
+               
+                //var request = HttpContext.Current.Request;
+
                 //int resultId = (from r in db.Results
                 //                where r.User.Id == currentUser.Id
                 //                select r.Id).First();

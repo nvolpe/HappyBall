@@ -7,7 +7,9 @@ ffa.App.module('Mod', function (Mod, App, Backbone, Marionette, $, _) {
             'home': 'home',
             'prop': 'prop',
             'king': 'king',
-            'map': 'map'
+            'map': 'map',
+            'result': 'result'
+
         }
     });
 
@@ -23,6 +25,9 @@ ffa.App.module('Mod', function (Mod, App, Backbone, Marionette, $, _) {
         },
         map: function () {
             ffa.App.vent.trigger('show:map');
+        },
+        result: function () {
+            ffa.App.vent.trigger('show:result');
         }
     };
 
@@ -43,6 +48,11 @@ ffa.App.module('Mod', function (Mod, App, Backbone, Marionette, $, _) {
 
     ffa.App.on("route:map", function () {
         ffa.App.navigate("map");
+        API.map();
+    });
+
+    ffa.App.on("route:result", function () {
+        ffa.App.navigate("result");
         API.map();
     });
 

@@ -20,15 +20,15 @@
             var resultUrl = null;
 
             if (this.restAction === 'POST') {
-                resultUrl = '/happyball/api/kingresult';
+                resultUrl = ffa.siteRoot + '/api/kingresult';
             }
 
             if (this.restAction === 'PUT') {
-                resultUrl = '/happyball/api/kingresult/' + this.id;
+                resultUrl = ffa.siteRoot + '/api/kingresult/' + this.id;
             }
 
             if (this.restAction === 'GET') {
-                resultUrl = '/happyball/api/kingresult/week';
+                resultUrl = ffa.siteRoot + '/api/kingresult/week';
             }
 
             return resultUrl;
@@ -43,7 +43,7 @@
     ffa.App.KingCollection = Backbone.Collection.extend({
 
         url: function () {
-            return '/happyball/api/king';
+            return ffa.siteRoot + '/api/king';
         },
 
     });
@@ -72,6 +72,10 @@
 
             this.fetchKingResultsModel();
 
+            var eventType = ffa.isMobile ? 'touchend' : 'click';
+            this.events[eventType + ' #submitKing'] = 'submiKingClickHandler';
+
+
         },
         childView: ffa.App.KingItemView,
         childViewContainer: "#king-bet-container",
@@ -82,7 +86,7 @@
         },
 
         events: {
-            'click #submitKing': 'submiKingClickHandler'
+            //'click #submitKing': 'submiKingClickHandler'
         },
 
         onShow: function () {
@@ -92,7 +96,7 @@
             //set question ghetto ajax way
             var question;
 
-            $.getJSON("/happyball/api/king", function (json) {
+            $.getJSON(ffa.siteRoot + "/api/king", function (json) {
 
                 _.each(json, function (item) {
                     console.log('king get!');

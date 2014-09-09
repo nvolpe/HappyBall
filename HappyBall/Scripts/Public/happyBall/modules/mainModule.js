@@ -23,6 +23,7 @@
 
                 this.modalRegion = App.modal;
 
+                this.siteRoot = options.config.siteRoot;
                 this.userTeamName = options.config.userTeamName;
                 this.userId = 3; //switch to user auth
                 this.resultId = options.config.resultId;
@@ -36,6 +37,13 @@
                 //-----------------------------------------
                 this.kingModel = new ffa.App.KingModel();
                 this.kingCollection = new ffa.App.KingCollection();
+
+
+                //TODO:  INIT result Entities
+                //-----------------------------------------
+                this.resultsModel = new ffa.App.ResultsModel();
+                this.geoCollection = new ffa.App.ResultsCollection();
+
 
                 //Geo Results Entities
                 //-----------------------------------------
@@ -58,18 +66,15 @@
                 //Does not sync with server, so we can show template instantly.
                 ffa.App.vent.on('show:map', this.fetchGeoResults);
 
+                //TODO, fetch results
+                ffa.App.vent.on('show:result', this.showReults);
+
                 //Pop the modal, somehow
                 ffa.App.vent.on('show:geoResults', this.showGeoResults);
             },
 
             //Render the Home View
             showHomeView: function () {
-                this.HomeItemView = new ffa.App.HomeItemView({});
-                this.region.show(this.HomeItemView);
-            },
-
-            //Render the Prop View
-            showPropView: function () {
                 this.HomeItemView = new ffa.App.HomeItemView({});
                 this.region.show(this.HomeItemView);
             },
@@ -85,6 +90,20 @@
                 var modalRegion = new ffa.App.ModalRegion({ el: '#modal' });
 
                 modalRegion.show(this.GeoResultsCompositeView);
+
+            },
+
+            
+            //Render the Home View
+            showReults: function () {
+
+                //TODO, get from server
+                this.resultsCompositeView = new ffa.App.ResultsCompositeView({
+                    model: this.resultsModel, 
+                    collection: this.geoCollection
+                });
+
+                this.region.show(this.resultsCompositeView);
 
             },
 

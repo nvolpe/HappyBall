@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json.Serialization;
+using HappyBall.Migrations;
+using System.Data.Entity.Migrations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +17,12 @@ namespace HappyBall
     {
         protected void Application_Start()
         {
+
+
+            //var migrator = new DbMigrator(new Configuration());
+            //migrator.Update();
+
+
             AreaRegistration.RegisterAllAreas();
             Database.SetInitializer<HappyBall.Models.ApplicationDbContext>(null);
             WebApiConfig.Register(GlobalConfiguration.Configuration);
@@ -23,6 +31,7 @@ namespace HappyBall
             BundleConfig.RegisterBundles(BundleTable.Bundles);
            
             GlobalConfiguration.Configuration.EnsureInitialized();
+
 
             // WebApi formatters
             var formatters = GlobalConfiguration.Configuration.Formatters;

@@ -23,15 +23,15 @@
             var resultUrl = null;
 
             if (this.restAction === 'POST') {
-                resultUrl = '/happyball/api/georesult'
+                resultUrl = ffa.siteRoot + '/api/georesult'
             }
 
             if (this.restAction === 'PUT') {
-                resultUrl = '/happyball/api/georesult/' + this.id;
+                resultUrl = ffa.siteRoot + '/api/georesult/' + this.id;
             }
 
             if (this.restAction === 'GET') {
-                resultUrl = '/happyball/api/georesult/week'
+                resultUrl = ffa.siteRoot + '/api/georesult/week'
             }
 
             return resultUrl;
@@ -46,7 +46,7 @@
     ffa.App.GeoCollection = Backbone.Collection.extend({
 
         url: function () {
-            return '/happyball/api/allgeoresult/week';
+            return ffa.siteRoot + '/api/allgeoresult/week';
         },
     });
 

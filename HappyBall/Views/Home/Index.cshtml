@@ -131,6 +131,35 @@ else
 <!-- /.modal -->
 
 
+
+<div id="geoMasterModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Welcome to da GeoMaster!</h4>
+            </div>
+            <div class="modal-body">
+                <h4>Here is what you need to know..</h4>
+                <p>I am a Geo Nerd, So you have to play my little game.</p>
+                <p>Click the Tower Button to start the quiz, a question will appear at the top of the map and Timer will appear at the bottom. 
+                The goal is to drag the map to move the marker closest to where you think the correct answer is. Click the timer button on the button bar on the
+                side to submit your answer. Goodluck yo!
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">No!, Im a loser</button>
+                <button id="geoMaster-start-btn" type="button" class="btn btn-success" data-dismiss="modal">Start the Quiz!</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+
     <!-- Modal -->
 <div class="modal fade" id="LearnMoreModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -187,8 +216,9 @@ punted that shit -->
 
     <script src='https://api.tiles.mapbox.com/mapbox.js/v2.0.1/mapbox.js'></script>
 
-
     @Scripts.Render("~/bundles/happyBall")
+
+    <script src='HappyBall\Scripts\Public\leaflet-awesome-markers\leaflet.awesome-markers.js'></script>
 
 
     <script type="text/javascript">
@@ -196,11 +226,13 @@ punted that shit -->
         if ('@User.Identity.IsAuthenticated' === 'True') {
 
             var userTeamName = '@ViewBag.TeamName';
+            var siteRoot = '@ViewBag.SiteRoot';
             var userName = '@ViewBag.UserName';
             var userId = '@ViewBag.UserId';
             var resultId = '@ViewBag.ResultId';
 
             var config = {
+                siteRoot: siteRoot,
                 userTeamName: userTeamName,
                 userName: userName,
                 userId: userId,

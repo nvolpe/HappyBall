@@ -250,6 +250,7 @@
     <Content Include="Scripts\Public\happyBall\views\geoResultsView.js" />
     <Content Include="Scripts\Public\happyBall\views\mapView.js" />
     <Content Include="Scripts\Public\happyBall\views\kingView.js" />
+    <Content Include="Scripts\Public\happyBall\views\resultsView.js" />
     <Content Include="Scripts\Public\happyBall\views\propView.js" />
     <Content Include="Scripts\Public\ladda-bootstrap\ladda.js" />
     <Content Include="Scripts\Public\ladda-bootstrap\spin.js" />

@@ -11,6 +11,7 @@
 
             console.dir(options);
             console.log('Init Prop Model');
+
         },
         idAttribute: "id",
         restAction: 'GET',
@@ -20,15 +21,15 @@
             var resultUrl = null;
 
             if (this.restAction === 'POST') {
-                resultUrl = '/happyball/api/result'
+                resultUrl = ffa.siteRoot + '/api/result'
             }
 
             if (this.restAction === 'PUT') {
-                resultUrl = '/happyball/api/result/' + this.id;
+                resultUrl = ffa.siteRoot + '/api/result/' + this.id;
             }
 
             if (this.restAction === 'GET') {
-                resultUrl = '/happyball/api/result/week'
+                resultUrl = ffa.siteRoot + '/api/result/week'
             }
 
             return resultUrl;
@@ -47,10 +48,10 @@
         //    options || (options = {});//jshint ignore:line
 
         //    console.log('Init Prop Collection');
-        //},
+        //},s
 
         url: function () {
-            return '/happyball/api/prop';
+            return ffa.siteRoot + '/api/prop';
         },
     });
 
@@ -77,7 +78,15 @@
 
             this.fetchResultsModel();
 
-            //this.model = new ffa.App.PropModel();
+            console.dir(ffa.isMobile);
+
+
+            var eventType = ffa.isMobile ? 'touchend' : 'click';
+            this.events[eventType + ' .yesBtn'] = 'yesBtnClick';
+            this.events[eventType + ' .noBtn'] = 'noBtnClick';
+            this.events[eventType + ' #submitProp'] = 'submiPropClickHandler';
+
+
         },
         childView: ffa.App.PropItemView,
         childViewContainer: "#prop-bet-container",
@@ -88,9 +97,9 @@
         },
 
         events: {
-            'click .yesBtn': 'yesBtnClick',
-            'click .noBtn': 'noBtnClick',
-            'click #submitProp': 'submiPropClickHandler'
+            //'click .yesBtn': 'yesBtnClick',
+            //'click .noBtn': 'noBtnClick',
+            //'click #submitProp': 'submiPropClickHandler'
         },
 
         yesBtnClick: function (evt) {

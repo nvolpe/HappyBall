@@ -6,7 +6,7 @@
 <!-- =================================================== -->
 
 <script type="text/template" id="prop-container-template">
-    <div class="container">
+    <div class="container nick-container">
         <div>
             <h1 style="text-align: center;">Prop Bets</h1>
             <div id="prop-bet-container"></div>
@@ -121,7 +121,7 @@
 <!-- =================================================== -->
 
 <script type="text/template" id="king-container-template">
-    <div class="container">
+    <div class="container nick-container">
         <h1 style="text-align: center;">King of the Week</h1>
         <br />
         <div id="kingQuestionContainer" class="well">
@@ -176,10 +176,10 @@
 
     <div class="btn-group btn-group-lg btn-group-vertical quiz">
         <button id="quiz-start" type="button" class="btn btn-default disabled"><i class="glyphicon glyphicon-tower"></i></button>
-        <button id="quiz-submit" type="button" class="btn btn-default disabled"><i class="glyphicon glyphicon-map-marker"></i></button>
-        <button id="quiz-results" type="button" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
-        <button id="quiz-people" type="button" class="btn btn-default"><i class="glyphicon glyphicon-user"></i></button>
-        <button id="quiz-question" type="button" class="btn btn-default"><i class="glyphicon glyphicon-question-sign"></i></button>
+        @*<button id="quiz-submit" type="button" class="btn btn-default disabled"><i class="glyphicon glyphicon-map-marker"></i></button>*@
+        <button id="quiz-results" type="button" class="btn btn-default disabled"><i class="glyphicon glyphicon-th-list"></i></button>
+        @*<button id="quiz-people" type="button" class="btn btn-default"><i class="glyphicon glyphicon-user"></i></button>*@
+        @*<button id="quiz-question" type="button" class="btn btn-default"><i class="glyphicon glyphicon-question-sign"></i></button>*@
     </div>
 
 
@@ -189,6 +189,32 @@
     <div id="map"></div>
 
 </script>
+
+
+
+<!-- =================================================== -->
+<!--      RESULTS COMPOSITE TEMPLATE                                  -->
+<!-- =================================================== -->
+
+<script type="text/template" id="results-container-template">
+    <div class="container nick-container">
+        <div>
+            <h1 style="text-align: center;">Results</h1>
+            <h3>Shits coming soon</h3>
+            <div id="final-results-container"></div>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="results-template">
+    <div class="well">
+        <div class="centerText">
+            <h3 style="font-size: 22px; margin-left: 50px; margin-right: 50px;">Shits coming soon</h3>
+        </div>
+        <br />
+    </div>
+</script>
+
 
 
 

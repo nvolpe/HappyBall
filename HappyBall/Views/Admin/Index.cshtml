@@ -186,7 +186,7 @@
 
             function initWeek() {
 
-                $.getJSON("/happyball/api/week", function (json) {
+                $.getJSON(ffa.siteRoot + "/api/week", function (json) {
                     _weekSpinner.stop();
 
                     //$("#week-select").val(json.Week_Id);
@@ -210,7 +210,7 @@
 
                 //TODO: Is this really the best way, looping through and sending put requests?
                 //Or should i post new data each time?
-                var url = '/happyball/api/week' + '/' + data[0].id; //TODO: Use c# razer shit to get route
+                var url = ffa.siteRoot + '/api/week' + '/' + data[0].id; //TODO: Use c# razer shit to get route
                 $.ajax({
                     type: "PUT",
                     url: url,
@@ -235,7 +235,7 @@
 
             function initProp() {
                 //Go get props and populate them in the text area boxes
-                $.getJSON("/happyball/api/prop", function (json) {
+                $.getJSON(ffa.siteRoot + "/api/prop", function (json) {
                     _PropSpinner.stop();
                     $('#propQuestion1').text(json[0].bet);
                     $('#propQuestion2').text(json[1].bet);
@@ -272,7 +272,7 @@
                 //TODO: Is this really the best way, looping through and sending put requests?
                 //Or should i post new data each time?
                 $.each(data, function (index, value) {
-                    url = '/happyball/api/prop' + '/' + value.id; //TODO: User c# razer shit to get route
+                    url = ffa.siteRoot + '/api/prop' + '/' + value.id; //TODO: User c# razer shit to get route
                     $.ajax({
                         type: "PUT",
                         url: url,
@@ -304,7 +304,7 @@
                 var question;
 
                 //Go get props and populate them in the text area boxes
-                $.getJSON("/happyball/api/king/week", function (json) {
+                $.getJSON(ffa.siteRoot + "/api/king/week", function (json) {
                     _KingSpinner.stop();
 
                     //underscore each over json results and 
@@ -375,7 +375,7 @@
                 //TODO: Is this really the best way, looping through and sending put requests?
                 //Or should i post new data each time?
                 $.each(dataArray, function (index, value) {
-                    url = '/happyball/api/king'; //TODO: User c# razer shit to get route
+                    url = ffa.siteRoot + '/api/king'; //TODO: User c# razer shit to get route
                     $.ajax({
                         type: "POST",
                         url: url,
@@ -393,7 +393,6 @@
                     });
                 });
             }
-
 
 
 
@@ -438,7 +437,7 @@
 
                 //TODO: Is this really the best way, looping through and sending put requests?
                 //Or should i post new data each time?
-                var url = '/happyball/api/geomaster/1'; //TODO: Use c# razer shit to get route
+                var url = ffa.siteRoot + '/api/geomaster/1'; //TODO: Use c# razer shit to get route
                 $.ajax({
                     type: "PUT",
                     url: url,

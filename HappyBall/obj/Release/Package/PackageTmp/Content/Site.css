@@ -1,6 +1,7 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿@charset "UTF-8";
+
+.nick-container {
+    padding-top: 60px;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -91,7 +92,7 @@ input[type="checkbox"].input-validation-error {
     width: 70%;
     margin-left: 15%;
     margin-right: 15%;
-    position:absolute;
+    position: absolute;
     z-index: 5;
     color: #000000;
     border-color: #000000;
@@ -104,7 +105,7 @@ input[type="checkbox"].input-validation-error {
 .king-item {
     padding: 25px;
     margin-bottom: 10px;
-} 
+}
 
 #king-bet-container {
     font-size: 40px;
@@ -121,4 +122,76 @@ input[type="checkbox"].input-validation-error {
     width: 140px;
     height: 68px;
     margin: -45px 0 0 -70px;
+}
+
+
+
+/* nav */
+
+.container-fluid11 > .navbar-header {
+    display: block;
+    margin: 0;
+}
+
+.navbar-inverse .navbar-toggle:hover {
+    background-color: #777;
+    color: #777;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus,
+.activeNav {
+    color: #428bca;
+}
+
+.chat-item:hover {
+    background-color: #222;
+    color: #669900;
+}
+
+/*.navbar-nav > li > a {
+    padding-top: 10px;
+}*/
+
+ul.nav.navbar-nav li {
+    display: inline-block;
+    width: auto;
+    float: none;
+}
+
+.navbar-inverse .nav span {
+    display: inline-block;
+    margin-left: 8px;
+    font-size: 15px;
+}
+
+
+.navbar-inverse .nav span {
+    display: inline-block;
+    margin-left: 8px;
+    font-size: 15px;
+}
+
+
+#aside {
+    /*display: block;*/
+    clear: both;
+    width: 350px;
+    left: 0;
+    top: 50px;
+    overflow: auto;
+}
+
+/*HELPER CLASSES*/
+
+.no-padding {
+    padding: 0;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+.no-mobile {
+    display: none;
 }

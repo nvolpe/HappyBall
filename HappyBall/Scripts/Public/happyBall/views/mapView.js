@@ -26,14 +26,29 @@
                 self.showErryBody();
             })
 
+
+            //on submit, save the fucking wekk
+            $("#geoMaster-start-btn").click(function () {
+                self.startTheQuiz();
+            });
+
+            this.isPlaying = false;
+
+            var eventType = ffa.isMobile ? 'touchend' : 'click';
+            this.events[eventType + ' #quiz-results'] = 'resultsClickHandler';
+            this.events[eventType + ' #quiz-start'] = 'quizStartClickHandler';
+            this.events[eventType + ' #quiz-submit'] = 'quizSubmitClickHandler';
+            this.events[eventType + ' #close-quiz'] = 'closeQuizClickHandler';
+
         },
 
         template: '#map-template',
 
         ui: {
             quizButton: '#quiz-start',
-            quizSubmitBtn: '#quiz-submit',
+            //quizSubmitBtn: '#quiz-submit',
             quizAlert: '#geo-quiz-alert',
+            quizResults: '#quiz-results',
             closeQuizBtn: '#close-quiz',
             centerPoint: '#centerpoint'
         },
@@ -43,34 +58,39 @@
         onShow: function () {
 
             L.mapbox.accessToken = 'pk.eyJ1IjoibmF2b2xwZSIsImEiOiJwWXhPSjZZIn0.fiO-LWxqNxZo38G2sg02mA';  //navolpe.jda58olb
-            this.map = L.mapbox.map('map', 'navolpe.jcfnjdb9', { zoomControl: false })
+            this.map = L.mapbox.map('map', 'navolpe.jda58olb', { zoomControl: false })
                 .setView([15.199, -6.328], 3);
 
             L.control.zoom({
                 position: 'bottomright'
             }).addTo(this.map);
 
-            // Creates a red marker with the coffee icon
-            //TODO FIGURE OUT AWESOME MARKERS OR GET RID OF IT FROM THE REPO
-            //this.maleMarker = L.AwesomeMarkers.icon({
-            //    icon: 'male',
-            //    color: 'darkblue'
-            //})
-
-            //this.femaleMarker = L.AwesomeMarkers.icon({
-            //    icon: 'female',
-            //    color: 'darkred'
-            //})
 
             this.ui.quizAlert.hide();
         },
 
         events: {
-            'click #quiz-results': 'resultsClickHandler',
-            'click #quiz-start': 'quizStartClickHandler',
-            'click #quiz-submit': 'quizSubmitClickHandler',
-            'click #close-quiz': 'closeQuizClickHandler'
+            //'click #quiz-results': 'resultsClickHandler',
+            //'click #quiz-start': 'quizStartClickHandler',
+            //'click #quiz-submit': 'quizSubmitClickHandler',
+            //'click #close-quiz': 'closeQuizClickHandler'
         },
+
+        testButtonClick: function (evt) {
+
+            this.center = this.map.getCenter();
+
+            this.showCenterPoint();
+
+            this.maleMarker = L.AwesomeMarkers.icon({
+                icon: 'tower',
+                color: 'darkblue',
+                prefix: 'glyphicon'
+            })
+
+            this.usersAnswerMarker = L.marker([this.center.lat, this.center.lng], { icon: this.maleMarker }).addTo(this.map);
+        },
+
 
         resultsClickHandler: function (evt) {
 
@@ -81,9 +101,23 @@
         //May want to leave map click activated, so the user can
         //adjust their answer if they fat fuck finger a map click
         quizStartClickHandler: function (evt) {
+
+            if (this.isPlaying === false) {
+                $('#geoMasterModal').modal('show');
+            } else {
+                this.stopTimerAndSubmit();
+            }
+
+            
+
+        },
+
+        startTheQuiz: function (evt) {
             var self = this;
 
-            this.ui.quizButton.addClass('disabled');
+            this.isPlaying = true;
+
+            this.ui.quizButton.find('.glyphicon-tower').removeClass('glyphicon-tower').addClass('glyphicon-time');
 
             var geoMasterNerd = this.geoMaster.teamName;
             var geoMasterQuestion = this.geoMaster.question;
@@ -96,8 +130,8 @@
             this.ui.quizAlert.show();
 
 
-            this.ui.quizSubmitBtn.removeClass('disabled');
-            this.ui.quizSubmitBtn.addClass('btn-success');
+            this.ui.quizButton.removeClass('disabled');
+            this.ui.quizButton.addClass('btn-success');
             //=========================================
             //SHOUT OUT TO SHAERABOUTS FOR THIS CODE
             //=========================================
@@ -116,7 +150,6 @@
                 clockFace: 'Counter'
             });
 
-
             this.clock.setTime(this.allottedTime);
 
             setTimeout(function () {
@@ -128,14 +161,14 @@
                     console.log(currentTime);
 
                     if (currentTime.time < 10 & currentTime.time > 5) {
-                        self.ui.quizSubmitBtn.removeClass('btn-success');
-                        self.ui.quizSubmitBtn.addClass('btn-warning');
+                        self.ui.quizButton.removeClass('btn-success');
+                        self.ui.quizButton.addClass('btn-warning');
                     }
 
 
                     if (currentTime.time < 5) {
-                        self.ui.quizSubmitBtn.removeClass('btn-warning');
-                        self.ui.quizSubmitBtn.addClass('btn-danger');
+                        self.ui.quizButton.removeClass('btn-warning');
+                        self.ui.quizButton.addClass('btn-danger');
                     }
 
 
@@ -146,24 +179,31 @@
             }, 1000);
         },
 
+
         //Stop Timer, lock map click, pop modal window for submission?
         stopTimerAndSubmit: function (evt) {
+
+            this.isPlaying = false;
 
             clearInterval(this.clockInterval);
             this.clock.stop();
 
-            this.ui.quizSubmitBtn.removeClass('btn-warning');
-            this.ui.quizSubmitBtn.removeClass('btn-danger');
-            this.ui.quizSubmitBtn.removeClass('btn-success');
+            this.ui.quizButton.removeClass('btn-warning');
+            this.ui.quizButton.removeClass('btn-danger');
+            this.ui.quizButton.removeClass('btn-success');
 
-            this.ui.quizSubmitBtn.addClass('btn-default');
-            this.ui.quizSubmitBtn.addClass('disabled');
+            this.ui.quizButton.addClass('btn-default');
+            this.ui.quizButton.addClass('disabled');
+
+            this.ui.quizResults.removeClass('disabled');
+
+            this.ui.quizButton.find('.glyphicon-time').removeClass('glyphicon-time').addClass('glyphicon-tower');
 
             this.currentTime = this.clock.getTime()
             this.center = this.map.getCenter();
 
             this.showCenterPoint();
-            this.usersAnswerMarker = L.marker([this.center.lat, this.center.lng]).addTo(this.map);
+            this.usersAnswerMarker = L.marker([this.center.lat, this.center.lng]).addTo(this.map).bindPopup('You');;
 
 
             this.timeUsed = this.allottedTime - this.currentTime.time;
@@ -176,10 +216,10 @@
         },
 
 
-        quizSubmitClickHandler: function () {
+        //quizSubmitClickHandler: function () {
 
-            this.stopTimerAndSubmit();
-        },
+        //    this.stopTimerAndSubmit();
+        //},
 
 
         showNewPin: function () {
@@ -201,7 +241,7 @@
         fetchQuestion: function (vt) {
             var self = this;
 
-            $.getJSON("/happyball/api/geomaster/week", function (json) {
+            $.getJSON(ffa.siteRoot + "/api/geomaster/week", function (json) {
 
                 self.geoMaster = json;
                 //self.ui.quizButton.removeClass('disabled'); //remove for development
@@ -249,6 +289,7 @@
             if (lat && lon) {
                 //might need to rename this
                 this.ui.quizButton.addClass('disabled');
+                this.ui.quizResults.removeClass('disabled');
 
                 this.usersAnswerMarker = L.marker([lat, lon]).addTo(this.map).bindPopup('You');
 
@@ -316,6 +357,20 @@
 
             console.log('showErryBody');
             console.dir(this.collection);
+
+
+            var lat = this.geoMaster.latitude;
+            var lon = this.geoMaster.longitude;
+
+            //show answer
+            var answerMaker = L.AwesomeMarkers.icon({
+                icon: 'tower',
+                markerColor: 'green',
+                prefix: 'glyphicon'
+            })
+
+            var answerMarker = L.marker([lat, lon], { icon: answerMaker }).addTo(this.map);
+
 
             var list = this.collection.toJSON()
             _.each(list, function (item) {

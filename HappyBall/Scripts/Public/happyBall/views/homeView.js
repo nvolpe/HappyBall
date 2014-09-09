@@ -10,6 +10,7 @@
     ffa.App.HomeItemView = Marionette.ItemView.extend({
         initialize: function (options) {
             _.bindAll.apply(_, [this].concat(_.functions(this)));
+
         },
         template: '#home-template',
         events: {

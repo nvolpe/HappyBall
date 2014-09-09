@@ -4,12 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.02, maximum-scale=1, minimum-scale=1, user-scalable=no">
 
 
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/marker")
 
-    
+
 
     @*<link href="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/Content/css")" rel="stylesheet" type="text/css" />*@
 
@@ -23,40 +25,37 @@
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
 
+    <link rel='stylesheet' media='screen and (max-width: 700px)' href='~/Content/Site-Mobile.css' />
+    <link rel='stylesheet' media='screen and (min-width: 701px)' href='~/Content/Site.css' />
+
 
 </head>
 <body>
-    <nav>
-        <ul class="list-unstyled main-menu">
-            <!--Include your navigation here-->
-            <li class="text-right"><a href="#" id="nav-close">X</a></li>
-            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-            <li><a href="#prop">Prop Bets</a></li>
-            <li><a href="#king">King Bets</a></li>
-            <li>@Html.ActionLink("About", "About", "Home")</li>
-            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
 
-            <li><a href="#map" class="glyphicon glyphicon-globe" data-target="Map" style="font-size: 1.3em;"></a></li>
-        </ul>
-        @Html.Partial("_LoginPartial")
-    </nav>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+
+    <div class="navbar navbar-inverse navbar-fixed-top container-fluid1">
         <!--Include your brand here-->
-        @Html.ActionLink("Happy Ball", "Index", "Home", null, new { @class = "navbar-brand" })
+        @Html.ActionLink("Happy Ball 2.0", "Index", "Home", null, new { @class = "navbar-brand header-title" })
 
-        <div class="navbar-header pull-right">
-            <a id="nav-expander" class="nav-expander fixed">
-                MENU &nbsp;<i class="glyphicon glyphicon-align-justify"></i>
-            </a>
-        </div>
+
+        <ul class="nav navbar-nav">
+            <li><a class="home-link" title="Home page" href="#home"><i class="fa fa-home"></i><span>Home</span></a></li>
+            <li><a class="prop-link" title="Prop Bets page" href="#prop"><i class="fa fa-bolt"></i><span>Props</span></a></li>
+            <li><a class="king-link" title="Kings of the Week page" href="#king"><i class="fa fa-users"></i><span>Kings</span></a></li>
+            <li><a class="map-link" title="Map Page" href="#map"><i class="fa fa-globe"></i><span>Map</span></a></li>
+            <li><a class="results-link" title="Results Page" href="#result"><i class="fa fa-bar-chart"></i><span>Results</span></a></li>
+        </ul>
+
     </div>
+
+
+
+
 
     <div>
         @RenderBody()
         @*<hr />*@
-        @*<footer>
-                <p>&copy; @DateTime.Now.Year - bros and hoes</p>
-            </footer>*@
+
     </div>
 
     @Scripts.Render("~/bundles/jquery")
@@ -66,9 +65,8 @@
 
 
     
-
     
-   
+
 
 
     @RenderSection("scripts", required: false)

@@ -8,6 +8,7 @@ if (!this.ffa || typeof this.ffa !== 'object') {
 
     ffa.App = new Backbone.Marionette.Application();
 
+
     ffa.App.ModalRegion = Backbone.Marionette.Region.extend({
 
         constructor: function () {
@@ -42,6 +43,8 @@ if (!this.ffa || typeof this.ffa !== 'object') {
                 //modal: ffa.App.ModalRegion
         };
 
+        ffa.isMobile = this.checkMobile();
+        ffa.siteRoot = options.siteRoot;
 
         ffa.App.addRegions(regions);
     });
@@ -50,6 +53,15 @@ if (!this.ffa || typeof this.ffa !== 'object') {
     ffa.App.navigate = function (route, options) {
         options || (options = {});
         Backbone.history.navigate(route, options);
+    };
+
+    //get current route
+    ffa.App.checkMobile = function () {
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            return true;
+        } else {
+            return false;
+        }
     };
 
     //get current route
