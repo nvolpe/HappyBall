@@ -57,9 +57,11 @@
         //TODO: Roll this into other views
         onShow: function () {
 
+            $('.hideMe').hide();
+
             L.mapbox.accessToken = 'pk.eyJ1IjoibmF2b2xwZSIsImEiOiJwWXhPSjZZIn0.fiO-LWxqNxZo38G2sg02mA';  //navolpe.jda58olb
             this.map = L.mapbox.map('map', 'navolpe.jda58olb', { zoomControl: false })
-                .setView([15.199, -6.328], 3);
+                .setView([24.767, -102.656], 3);
 
             L.control.zoom({
                 position: 'bottomright'
@@ -107,9 +109,6 @@
             } else {
                 this.stopTimerAndSubmit();
             }
-
-            
-
         },
 
         startTheQuiz: function (evt) {

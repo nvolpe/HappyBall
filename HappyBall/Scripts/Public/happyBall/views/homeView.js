@@ -11,6 +11,8 @@
         initialize: function (options) {
             _.bindAll.apply(_, [this].concat(_.functions(this)));
 
+            $('.hideMe').show();
+
         },
         template: '#home-template',
         events: {

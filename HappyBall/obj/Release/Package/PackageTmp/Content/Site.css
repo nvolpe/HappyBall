@@ -58,7 +58,7 @@ input[type="checkbox"].input-validation-error {
     top: 0;
     bottom: 0;
     width: 100%;
-    margin-top: 50px;
+    /*margin-top: 50px;*/
 }
 
 /*#quiz-start {
@@ -108,7 +108,7 @@ input[type="checkbox"].input-validation-error {
 }
 
 #king-bet-container {
-    font-size: 40px;
+    font-size: 2em;
     margin: 10px;
     /*margin: -45px 0 0 -70px;*/
 }

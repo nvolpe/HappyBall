@@ -94,7 +94,7 @@
             console.log('King View OnShow');
 
             //set question ghetto ajax way
-            var question;
+            var question, team;
 
             $.getJSON(ffa.siteRoot + "/api/king", function (json) {
 
@@ -102,9 +102,13 @@
                     console.log('king get!');
 
                     question = item.question;
+                    team = item.teamName;
                 });
 
-                $('#kingQuestionContainer').text(question);
+
+                var questionString = String.format('<strong>{0}</strong> asks: {1}', team, question)
+
+                $('#kingQuestionContainer').html(questionString);
 
 
             })

@@ -102,6 +102,18 @@
             //'click #submitProp': 'submiPropClickHandler'
         },
 
+        onShow: function () {
+        
+            console.log('yo man');
+            var _model = this.collection.get(1);
+
+            var team = _model.get('teamName');
+
+            var teamString = String.format('<strong>{0}</strong> is responsible for these awesome questions...', team)
+            $('#responsible-prop-team').html(teamString);
+
+        },
+
         yesBtnClick: function (evt) {
 
             var btnId = evt.currentTarget.id;
