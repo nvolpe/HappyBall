@@ -117,18 +117,21 @@ namespace HappyBall.Controllers.Api
 
         // DELETE api/King/5
         [ResponseType(typeof(King))]
-        public IHttpActionResult DeleteKing(int id)
+        [System.Web.Http.Route("api/king/deleteweek", Name = "DeleteKingByWeek")]
+        public IHttpActionResult DeleteKingByWeek()
         {
-            King king = db.Kings.Find(id);
-            if (king == null)
-            {
-                return NotFound();
-            }
+            //Get Current Week?
+            //------------------------------------
+            var weekId = db.Week.First().Week_Id;
 
-            db.Kings.Remove(king);
+            var results = db.Kings.Where(x => x.Week == weekId).ToList();
+
+
+            db.Kings.RemoveRange(results);
+
             db.SaveChanges();
 
-            return Ok(king);
+            return Ok(results);
         }
 
         protected override void Dispose(bool disposing)

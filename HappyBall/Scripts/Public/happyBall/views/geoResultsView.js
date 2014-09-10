@@ -5,6 +5,48 @@
     //===============
     //MODELS
     //===============
+    ffa.App.UserLocationModel = Backbone.Model.extend({
+        initialize: function (options) {
+            options || (options = {});
+
+            console.dir(options);
+            console.log('Init Geo Model');
+        },
+        idAttribute: "id",
+        restAction: 'GET',
+        url: function () {
+
+            var resultUrl;
+
+            resultUrl = ffa.siteRoot + 'api/UserLocation';
+
+            if (this.restAction === 'POST') {
+                resultUrl = ffa.siteRoot + 'api/UserLocation'
+            }
+
+            if (this.restAction === 'PUT') {
+                resultUrl = ffa.siteRoot + 'api/UserLocation/' + this.id;
+            }
+
+            if (this.restAction === 'GET') {
+                resultUrl = ffa.siteRoot + 'api/userlocation/team'
+            }
+
+            return resultUrl;
+        }
+    });
+
+    //===============
+    //COLLECTIONS
+    //===============
+
+    ffa.App.UserLocationCollection = Backbone.Collection.extend({
+
+        url: function () {
+            return ffa.siteRoot + 'api/UserLocation';
+        },
+    });
+
 
     //===============
     //MODELS

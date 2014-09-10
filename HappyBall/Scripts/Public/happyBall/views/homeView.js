@@ -11,14 +11,17 @@
         initialize: function (options) {
             _.bindAll.apply(_, [this].concat(_.functions(this)));
 
-            $('.hideMe').show();
-
         },
+
         template: '#home-template',
         events: {
             'click .jumbotron': 'test',
             'click .logOutModal': 'logOut'
         },
+
+        //onShow: function () {
+        //    $('.hideMe').show();
+        //},
 
         test: function () {
             //ffa.App.trigger("route:prop");

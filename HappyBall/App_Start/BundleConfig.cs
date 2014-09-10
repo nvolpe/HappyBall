@@ -109,6 +109,8 @@ namespace HappyBall
 
                 ));
 
+            BundleTable.EnableOptimizations = false;
+
         }
     }
 }

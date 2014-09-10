@@ -165,6 +165,38 @@ else
 <!-- /.modal -->
 
 
+<div id="getUserLocation" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Share Location!</h4>
+            </div>
+            <div class="modal-body">
+                <h4>Don't be anti-social!</h4>
+                <p>C'mon isnt it cool to see where everyone is located?!?!</p>
+                <p>
+                    I'll give you both options to share your location and to also disable it at a later point! 
+                    Dont be lame like last year plz!
+                </p>
+                <p>
+                    Click the Green button to share your location, and then click YES when your browswer prompts you for your location!
+                    Click the Red Button to disable your location from others seeing it!
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="deny-location-btn" type="button" class="btn btn-danger" data-dismiss="modal">Stop Sharing my location!</button>
+                <button id="share-location-btn" type="button" class="btn btn-success" data-dismiss="modal">Share Location!</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
 
     <!-- Modal -->
 <div class="modal fade" id="LearnMoreModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -224,8 +256,7 @@ punted that shit -->
 
     @Scripts.Render("~/bundles/happyBall")
 
-    <script src='HappyBall\Scripts\Public\leaflet-awesome-markers\leaflet.awesome-markers.js'></script>
-
+    <script src="~/Scripts/Public/leaflet-awesome-markers/leaflet.awesome-markers.js"></script>
 
     <script type="text/javascript">
 

@@ -14,6 +14,8 @@
             console.log('INIT MAP');
 
             this.teamName = options.teamName;
+            this.userLocationModel = options.userLocationModel;
+            this.userLocationCollection = options.userLocationCollection;
 
             this.fetchQuestion();
 
@@ -32,6 +34,18 @@
                 self.startTheQuiz();
             });
 
+            //Event Listeners for share location modal
+            //-----------------------------------------
+            $("#share-location-btn").click(function () {
+                self.getUsersLocation();
+            });
+
+            $("#deny-location-btn").click(function () {
+                self.denyUserLocation();
+            });
+
+            this.fetchPeoplesLocation();
+
             this.isPlaying = false;
 
             var eventType = ffa.isMobile ? 'touchend' : 'click';
@@ -39,6 +53,8 @@
             this.events[eventType + ' #quiz-start'] = 'quizStartClickHandler';
             this.events[eventType + ' #quiz-submit'] = 'quizSubmitClickHandler';
             this.events[eventType + ' #close-quiz'] = 'closeQuizClickHandler';
+            this.events[eventType + ' #geo-location'] = 'showLocationModal';
+            this.events[eventType + ' #geo-show-people'] = 'showPeopleClickHandler';
 
         },
 
@@ -50,7 +66,10 @@
             quizAlert: '#geo-quiz-alert',
             quizResults: '#quiz-results',
             closeQuizBtn: '#close-quiz',
-            centerPoint: '#centerpoint'
+            centerPoint: '#centerpoint',
+            geoLocationBtn: '#geo-location',
+            geoShowPeopleBtn: '#geo-show-people'
+
         },
 
         //Built into marionette, Map DIV is not ready yet until this fires
@@ -71,6 +90,12 @@
             this.ui.quizAlert.hide();
         },
 
+        onDestroy: function () {
+            $('.hideMe').show();
+
+            console.log('closing map view');
+        },
+
         events: {
             //'click #quiz-results': 'resultsClickHandler',
             //'click #quiz-start': 'quizStartClickHandler',
@@ -84,13 +109,190 @@
 
             this.showCenterPoint();
 
-            this.maleMarker = L.AwesomeMarkers.icon({
-                icon: 'tower',
-                color: 'darkblue',
-                prefix: 'glyphicon'
-            })
 
             this.usersAnswerMarker = L.marker([this.center.lat, this.center.lng], { icon: this.maleMarker }).addTo(this.map);
+        },
+
+        showLocationModal: function (evt) {
+            var self = this;
+
+            this.userLocationModel.restAction = 'GET';
+
+            this.userLocationModel.fetch({
+                success: function (results) {
+
+                    $('#getUserLocation').modal('show');
+
+                },
+                error: function () {
+                    console.log('noo geo user results');
+                }
+            });
+        },
+
+
+        denyUserLocation: function () {
+
+            this.userLocationModel.set('show', false)
+
+            if (this.usersLocationMarker) {
+                this.map.removeLayer(this.usersLocationMarker)
+            }
+
+            this.userLocationModel.restAction = 'PUT';
+
+            this.saveLocationModel();
+        },
+
+
+        getUsersLocation: function (evt) {
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(this.onLocationSuccess, this.onLocationError);
+            } else {
+                alert('Your browser doesn\'t support geolocation.');
+            }
+
+        },
+
+        onLocationSuccess: function (position) {
+            var lat = String(position.coords.latitude);
+            var lon = String(position.coords.longitude);
+
+            this.userLocationModel.set('lat', lat)
+            this.userLocationModel.set('lon', lon)
+            this.userLocationModel.set('show', true)
+
+            this.placeIcon(lat, lon);
+        },
+
+        onLocationError: function (message) {
+            console.debug("ERROR");
+            console.dir(message);
+        },
+
+        placeIcon: function (lat, lon) {
+
+            this.smileMarker = L.AwesomeMarkers.icon({
+                icon: 'user',
+                markerColor: 'purple',
+                prefix: 'fa'
+            })
+
+            //this.usersLocationMarker = L.marker([lat, lon], { icon: this.smileMarker }).addTo(this.map);
+
+            if (this.userLocationModel.id) {
+                this.userLocationModel.restAction = 'PUT';
+            } else {
+                this.userLocationModel.restAction = 'POST';
+            }
+
+            this.saveLocationModel();
+        },
+
+
+        saveLocationModel: function () {
+            this.userLocationModel.save({}, {
+                success: this.saveLocCallback,
+                error: this.saveLocErrback
+            });
+        },
+
+        saveLocCallback: function (obj, xhr) {
+            //make sure the next time the user submits, if they do, that it is a put instead
+            //this.userLocationModel.restAction = 'PUT';
+
+            console.log('Save loc Success');
+        },
+
+        saveLocErrback: function (obj, xhr) {
+            console.log('Save Loc Error');
+        },
+
+
+
+        showPeopleClickHandler: function () {
+
+            //if toggled on 
+
+            if ($('#geo-show-icon').hasClass('loc-icon-on')) {
+
+                this.hidePeoplesLocations()
+
+            } else {
+
+                this.fetchPeoplesLocation()
+            }
+
+            
+
+            //if toggled off
+            //this.hidePeoplesLocations();
+        },
+
+
+        fetchPeoplesLocation: function () {
+            //fetch collection
+            //then show markers that have their shit set to true
+
+            var self = this;
+
+            this.userLocationCollection.fetch({
+                success: function (results) {
+
+                    console.log('fetched user collection');
+                    self.showPeople();
+                    
+                },
+                error: function () {
+                    console.log('noo geo user results');
+                }
+            });
+        },
+
+        showPeople: function () {
+
+            var self = this;
+
+            this.markerArray = [];
+            var marker;
+
+            this.smileMarker = L.AwesomeMarkers.icon({
+                icon: 'user',
+                markerColor: 'purple',
+                prefix: 'fa'
+            });
+
+            var list = this.userLocationCollection.toJSON()
+
+            _.each(list, function (item) {
+                if (item.show === true) {
+                    marker = L.marker([item.lat, item.lon], { icon: this.smileMarker }).addTo(this.map).bindPopup(item.teamName);
+
+                    self.markerArray.push(marker);
+
+                } else {
+                    console.log(item.teamName + ' is lame');
+                }
+
+            }, this);
+
+            $('#geo-show-icon').addClass('loc-icon-on');
+
+        },
+
+
+        hidePeoplesLocations: function () {
+
+            if (this.markerArray.length > 0) {
+                _.each(this.markerArray, function (item) {
+
+                    this.map.removeLayer(item);
+
+                }, this);
+            }
+
+            $('#geo-show-icon').removeClass('loc-icon-on');
         },
 
 
@@ -103,6 +305,8 @@
         //May want to leave map click activated, so the user can
         //adjust their answer if they fat fuck finger a map click
         quizStartClickHandler: function (evt) {
+
+            this.hidePeoplesLocations();
 
             if (this.isPlaying === false) {
                 $('#geoMasterModal').modal('show');
@@ -202,7 +406,16 @@
             this.center = this.map.getCenter();
 
             this.showCenterPoint();
-            this.usersAnswerMarker = L.marker([this.center.lat, this.center.lng]).addTo(this.map).bindPopup('You');;
+
+
+            //show guess
+            var yourGuessMarker = L.AwesomeMarkers.icon({
+                icon: 'question',
+                markerColor: 'blue',
+                prefix: 'fa'
+            })
+
+            this.usersAnswerMarker = L.marker([this.center.lat, this.center.lng], { icon: yourGuessMarker }).addTo(this.map).bindPopup('Your Guess');;
 
 
             this.timeUsed = this.allottedTime - this.currentTime.time;
@@ -276,8 +489,6 @@
                     console.log('noo geo results');
                 }
             });
-
-
         },
 
         initView: function () {
@@ -290,7 +501,16 @@
                 this.ui.quizButton.addClass('disabled');
                 this.ui.quizResults.removeClass('disabled');
 
-                this.usersAnswerMarker = L.marker([lat, lon]).addTo(this.map).bindPopup('You');
+
+                //show guess
+                var yourGuessMarker = L.AwesomeMarkers.icon({
+                    icon: 'question',
+                    markerColor: 'blue',
+                    prefix: 'fa'
+                })
+
+                this.usersAnswerMarker = L.marker([lat, lon], { icon: yourGuessMarker }).addTo(this.map).bindPopup('Your Guess');;
+
 
                 this.showErryBody();
 
@@ -327,6 +547,15 @@
                 message = String.format('You Sucked and were too slow... But da GeoMaster has decided to submit your lazy shit anyways. The last spot your cursor was seen at was {0},{1} which is <strong>{2} miles</strong> off target.. Now that you have submitted, da GeoMaster will place everyones results on the map', latitude, longitude, distanceAway);
             }
 
+            this.collection.fetch({
+                success: function (results) {
+                    console.log('refetched geocollection because the user saved their shit');
+                },
+                error: function () {
+                    console.log('noo geoCollection results');
+                }
+            });
+
 
             $('#mapModalSuccess')
                 .find('.modal-body')
@@ -335,6 +564,7 @@
                     .modal('show');
 
             console.log('Save geo Success');
+
         },
 
         saveErrback: function (obj, xhr) {
@@ -371,13 +601,21 @@
             var answerMarker = L.marker([lat, lon], { icon: answerMaker }).addTo(this.map);
 
 
+            //show guess
+            var guessMarker = L.AwesomeMarkers.icon({
+                icon: 'question',
+                markerColor: 'red',
+                prefix: 'fa'
+            })
+
+
             var list = this.collection.toJSON()
             _.each(list, function (item) {
 
                 if (item.latitude && item.teamName != self.teamName) {
 
-                    L.marker([item.latitude, item.longitude]).addTo(self.map)
-                        .bindPopup(item.teamName);
+                    L.marker([item.latitude, item.longitude], { icon: guessMarker }).addTo(self.map)
+                        .bindPopup(item.teamName + "'s guess");
                 }
 
             }, this);

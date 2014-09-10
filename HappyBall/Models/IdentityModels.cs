@@ -39,5 +39,7 @@ namespace HappyBall.Models
         public System.Data.Entity.DbSet<HappyBall.Models.GeoMaster> GeoMasters { get; set; }
         public System.Data.Entity.DbSet<HappyBall.Models.KingResult> KingResults { get; set; }
         public System.Data.Entity.DbSet<HappyBall.Models.King> Kings { get; set; }
+
+        public System.Data.Entity.DbSet<HappyBall.Models.UserLocation> UserLocations { get; set; }
     }
 }

@@ -13,6 +13,14 @@
     padding-top: 60px;
 }
 
+.loc-icon-on {
+    color: purple
+}
+
+.loc-icon-off {
+    color: black
+}
+
 #map {
     position: absolute;
     top: 0;

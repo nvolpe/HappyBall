@@ -50,6 +50,11 @@
                 this.geoModel = new ffa.App.GeoModel();
                 this.geoCollection = new ffa.App.GeoCollection();
 
+                //Geo Results Entities
+                //-----------------------------------------
+                this.userLocationModel = new ffa.App.UserLocationModel();
+                this.userLocationCollection = new ffa.App.UserLocationCollection();
+
 
                 // log it
                 console.log('Home controller initialized...');
@@ -154,7 +159,6 @@
                         console.log('noo kingCollection results');
                     }
                 });
-
             },
 
 
@@ -169,7 +173,9 @@
                         self.MapItemView = new ffa.App.MapItemView({
                             model: self.geoModel,
                             collection: self.geoCollection,
-                            teamName: self.userTeamName
+                            teamName: self.userTeamName,
+                            userLocationModel: self.userLocationModel,
+                            userLocationCollection: self.userLocationCollection
                         });
 
                         self.region.show(self.MapItemView);

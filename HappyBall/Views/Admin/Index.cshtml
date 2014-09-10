@@ -2,7 +2,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="container">
+<div class="container nick-container">
     <h1>Admin</h1>
 
 
@@ -348,13 +348,33 @@
             }
 
 
-
-
             function submitKingQuestions() {
                 //Hack to spin spinner again
                 var kingTarget = document.getElementById('adminKingContainer');
                 _KingSpinner.spin(kingTarget);
 
+                //delete first
+                url = _siteRoot + '/api/king/deleteweek'; //TODO: User c# razer shit to get route
+                $.ajax({
+                    type: "DELETE",
+                    url: url,
+                    dataType: 'json',
+                    error: function () {
+                        _KingSpinner.stop();
+                        console.log('admin error deleteing kings');
+                        alert('shit didnt work, ask nick');
+                    },
+                    success: function () {
+                        _KingSpinner.stop();
+                        console.log('succes:: deleted kings');
+
+                        executePostKingRequest(_KingSpinner);
+                    }
+                });
+            }
+
+
+            function executePostKingRequest(_KingSpinner) {
 
                 var kingList = $('#kingListValues').val();
                 var strippedString;
@@ -410,6 +430,7 @@
                         }
                     });
                 });
+
             }
 
 
