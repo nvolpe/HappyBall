@@ -139,6 +139,29 @@
                 alert('Error ' + xhr.statusText);
             },
 
+            fetchKingResultsModel: function () {
+                var self = this;
+
+                //set url to get url
+                this.kingModel.restAction = 'GET';
+
+                this.kingModel.fetch({
+                    success: function (results) {
+                        console.log('yes got results model ya dig');
+                        console.dir(results);
+
+                        //get the unique Id in the prop table and set it as the id, so we can PUT! instead of post
+                        //self.model.id = results.get('id');
+
+                        self.sortCollectionThenRender();
+
+
+                    },
+                    error: function () {
+                        console.log('noo');
+                    }
+                });
+            },
 
             //go get bets from database
             fetchKingBets: function () {
@@ -148,17 +171,76 @@
                 this.kingCollection.fetch({
                     success: function (results) {
                         //init view
-                        self.KingCollectionView = new ffa.App.KingCompositeView({
-                            model: self.kingModel,
-                            collection: self.kingCollection
-                        });
+           
 
-                        self.region.show(self.KingCollectionView);
+
+                        self.fetchKingResultsModel();
+
+                        
                     },
                     error: function () {
                         console.log('noo kingCollection results');
                     }
                 });
+            },
+
+            //go get bets from database
+            sortCollectionThenRender: function () {
+                var self = this;
+
+                var self = this;
+                var pick1 = this.kingModel.get("pick1");
+                var pick2 = this.kingModel.get("pick2");
+                var pick3 = this.kingModel.get("pick3");
+
+                var hasAlreadySelected = false;
+
+                if (pick1) {
+                    var userSelection1 = this.kingCollection.findWhere({ pick: pick1 });
+                    console.log('omg what it do bitch');
+                    console.dir(userSelection1);
+                }
+
+                if (pick2) {
+                    var userSelection2 = this.kingCollection.findWhere({ pick: pick2 });
+                    console.log('omg what it do bitch');
+                    console.dir(userSelection2);
+                }
+
+                if (pick3) {
+                    var userSelection3 = this.kingCollection.findWhere({ pick: pick3 });
+                    console.log('omg what it do bitch');
+                    console.dir(userSelection3);
+                }
+
+                if (pick1 && pick2 && pick3) {
+                    console.log(userSelection1.id);
+                    console.log(userSelection2.id);
+                    console.log(userSelection3.id);
+
+                    var userSelectionArray = [userSelection1.id, userSelection2.id, userSelection3.id]
+
+                    this.kingCollection.remove(userSelection1);
+                    this.kingCollection.remove(userSelection2);
+                    this.kingCollection.remove(userSelection3);
+
+                    this.kingCollection.add(userSelection1, { at: 0 });
+                    this.kingCollection.add(userSelection2, { at: 1 });
+                    this.kingCollection.add(userSelection3, { at: 2 });
+
+                    hasAlreadySelected = true;
+                }
+
+
+                self.KingCollectionView = new ffa.App.KingCompositeView({
+                    model: self.kingModel,
+                    collection: self.kingCollection,
+                    userSelectionArray: userSelectionArray,
+                    hasAlreadySelected: hasAlreadySelected
+                });
+
+
+                self.region.show(self.KingCollectionView);
             },
 
 

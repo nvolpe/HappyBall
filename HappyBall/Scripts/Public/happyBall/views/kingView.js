@@ -70,6 +70,9 @@
 
             console.log('Init King Composite View');
 
+            this.userSelectionArray = options.userSelectionArray;
+            this.hasAlreadySelected = options.hasAlreadySelected;
+
             this.fetchKingResultsModel();
 
             var eventType = ffa.isMobile ? 'touchend' : 'click';
@@ -124,6 +127,33 @@
             var pick1 = $.trim($('#king1').text());
             var pick2 = $.trim($('#king2').text());
             var pick3 = $.trim($('#king3').text());
+
+            _.each(this.userSelectionArray, function (id) {
+
+                pick1 = $.trim($('#king' + id).text());
+                pick2 = $.trim($('#king' + id).text());
+                pick3 = $.trim($('#king' + id).text());
+
+                $('#king' + id).addClass('text-success');
+                $('#king' + id).addClass('text-success');
+                $('#king' + id).addClass('text-success');
+
+            });
+
+            if (this.hasAlreadySelected) {
+
+                var counter = 1;
+                $('#king-bet-container').find("li").each(function () {
+
+                    if (counter > 3) {
+                        $(this).removeClass("text-success");
+                        $(this).addClass("text-danger");
+                    }
+                    counter++
+                });
+
+            }
+            
 
             this.model.set({
                 pick1: pick1,
@@ -246,6 +276,7 @@
 
                 this.model.restAction = 'PUT';
                 console.log("TODO: INIT KING VIEW DIFFERENTLY IF USER HAS ALREADY ENTERED")
+                console.dir(this.collection);
                 //this.ui.submitKingBtn.addClass('disabled');
 
             }

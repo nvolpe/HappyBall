@@ -53,6 +53,15 @@ input[type="checkbox"].input-validation-error {
     padding: 0;
 }*/
 
+.loc-icon-on {
+    color: purple
+}
+
+.loc-icon-off {
+    color: black
+}
+
+
 #map {
     position: absolute;
     top: 0;

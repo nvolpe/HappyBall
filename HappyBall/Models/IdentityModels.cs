@@ -13,9 +13,11 @@ namespace HappyBall.Models
     public class ApplicationUser : IdentityUser
     {
         public string TeamName { get; set; }
+        public bool Playoffs { get; set; }
+        public bool RegularSeason { get; set; }
+        public bool SideBets { get; set; }
 
         //public virtual UserInfo UserInfo { get; set; }
-
         //public virtual ICollection<Result> Results { get; set; }
     }
 

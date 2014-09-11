@@ -64,5 +64,17 @@ namespace HappyBall.Models
         [Required]
         [Display(Name = "Team name")]
         public string TeamName { get; set; }
+
+        [Required]
+        [Display(Name = "20$ for Playoffs")]
+        public bool Playoffs { get; set; }
+
+        [Required]
+        [Display(Name = "20$ for Regular Season")]
+        public bool RegularSeason { get; set; }
+
+        [Required]
+        [Display(Name = "20$ for Side Bets")]
+        public bool SideBets { get; set; }
     }
 }

@@ -17,6 +17,7 @@
             this.userLocationModel = options.userLocationModel;
             this.userLocationCollection = options.userLocationCollection;
 
+
             this.fetchQuestion();
 
             var self = this;
@@ -143,7 +144,6 @@
 
             this.saveLocationModel();
         },
-
 
         getUsersLocation: function (evt) {
 
