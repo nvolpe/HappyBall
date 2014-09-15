@@ -16,6 +16,10 @@ namespace HappyBall.Models
         public string PropBet1 { get; set; }
         public string PropBet2 { get; set; }
         public string PropBet3 { get; set; }
+        public double Points1 { get; set; }
+        public double Points2 { get; set; }
+        public double Points3 { get; set; }
+        public double WeekTotal { get; set; }
         public int LogIns { get; set; }
         public int Week { get; set; }
         public string UserId { get; set; }

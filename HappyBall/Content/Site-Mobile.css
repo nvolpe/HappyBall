@@ -79,7 +79,16 @@
 #king-bet-container {
     font-size: 2em;
     margin: 10px;
+    margin-left: 25px;
+    margin-right: 25px;
     /*margin: -45px 0 0 -70px;*/
+}
+
+
+#prop-bet-text {
+    font-size: 22px; 
+    /*margin-left: 50px; 
+    margin-right: 50px;*/
 }
 
 

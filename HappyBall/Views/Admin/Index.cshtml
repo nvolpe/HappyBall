@@ -29,44 +29,94 @@
         </select>
         <br>
         <button id="submitWeek" type="submit" class="btn btn-default">Submit</button>
-
     </div>
-
-
 
     <div id="adminPropContainer" class="row well">
-        <h3>Set Prop Bets</h3>
-        <br>
-        <div> Question 1 </div>
-        <textarea id="propQuestion1" class="form-control adminMaxWidth" rows="3"></textarea>
-        <br>
-        <div> Question 2 </div>
-        <textarea id="propQuestion2" class="form-control adminMaxWidth" rows="3"></textarea>
-        <br>
-        <div> Question 3 </div>
-        <textarea id="propQuestion3" class="form-control adminMaxWidth" rows="3"></textarea>
-        <br>
-        <div> Team who set this </div>
-        <input id="propTeam" type="text" class="form-control">
-        <br>
-        <button id="submitProp" type="submit" class="btn btn-default">Submit</button>
+        <div class="col-md-6">
+            <h3>Set Prop Bets</h3>
+            <br>
+            <div> Question 1 </div>
+            <textarea id="propQuestion1" class="form-control" rows="3"></textarea>
+            <br>
+            <div> Question 2 </div>
+            <textarea id="propQuestion2" class="form-control" rows="3"></textarea>
+            <br>
+            <div> Question 3 </div>
+            <textarea id="propQuestion3" class="form-control" rows="3"></textarea>
+            <br>
+            <div> Team who set this </div>
+            <input id="propTeam" type="text" class="form-control">
+            <br>
+            <button id="submitProp" type="submit" class="btn btn-default">Submit</button>
+        </div>
+        <div class="col-md-6">
+            <h3>Set Answers</h3>
+            <br>
+            <div> Answer 1 </div>
+            <select id="propAnswer1" class="form-control">
+                <option value="no">no</option>
+                <option value="yes">yes</option>
+            </select>
+            <br>
+            <div> Answer 2 </div>
+            <select id="propAnswer2" class="form-control">
+                <option value="no">no</option>
+                <option value="yes">yes</option>
+            </select>
+            <br>
+            <div> Answer 3 </div>
+            <select id="propAnswer3" class="form-control">
+                <option value="no">no</option>
+                <option value="yes">yes</option>
+            </select>
+            <br>
+            <button id="submitPropAnswer" type="submit" class="btn btn-default">Submit</button>
+            <br>
+            <hr />
+            <br>
+            <h3>Set Prop Bets</h3>
+            <br>
+            <button id="calculatePropAnswer" type="submit" class="btn btn-default disabled">Calculate Results</button>
+        </div>
     </div>
 
-
     <div id="adminKingContainer" class="row well">
-        <h3>Set Kings of the week</h3>
-        <br>
-        <div>Set the quetion yo</div>
-        <textarea id="kingQuestion" class="form-control adminMaxWidth" rows="3"></textarea>
-        <br>
-        <br>
-        <div> Values for pick list  -- please insert commma delimited list of words for kings of the week </div>
-        <textarea id="kingListValues" class="form-control adminMaxWidth" rows="3"></textarea>
-        <br>
-        <div> Team who set this </div>
-        <input id="kingTeam" type="text" class="form-control">
-        <br>
-        <button id="submitKing" type="submit" class="btn btn-default">Submit</button>
+        <div class="col-md-6">
+            <h3>Set Kings of the week</h3>
+            <br>
+            <div>Set the quetion yo</div>
+            <textarea id="kingQuestion" class="form-control" rows="3"></textarea>
+            <br>
+            <div>How Many Top Spots</div>
+            <select class="form-control">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+            <br>
+            <div>Does Order/Rank Matter?</div>
+            <select class="form-control">
+                <option value="yes">yes</option>
+                <option value="no">no</option>
+            </select>
+            <br>
+            <div> Values for pick list  -- please insert commma delimited list of words for kings of the week </div>
+            <textarea id="kingListValues" class="form-control" rows="3"></textarea>
+            <br>
+            <div> Team who set this </div>
+            <input id="kingTeam" type="text" class="form-control">
+            <br>
+            <button id="submitKing" type="submit" class="btn btn-default">Submit</button>
+        </div>
+        <div class="col-md-6">
+            <h3>Set Answers</h3>
+            <div>Correct Answers in order</div>
+            <textarea id="kingListAnswers" class="form-control" rows="3"></textarea>
+            <br>
+            <button id="submitKingAnswers" type="submit" class="btn btn-default">Submit</button>
+        </div>
     </div>
 
 
@@ -96,407 +146,502 @@
 
 
 
-    @*TODO: Fix this, why is this not loading in time through the _layout*@
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/utilities")
+@*TODO: Fix this, why is this not loading in time through the _layout*@
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/utilities")
 
 
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
-        //AHH Everything about this Script Is nasty, but who the fuck cares it works.
+    //AHH Everything about this Script Is nasty, but who the fuck cares it works.
 
-        $(function () {
+    $(function () {
 
-            //get teamName
-            var _teamName = '@ViewBag.TeamName';
-            var _siteRoot = '@ViewBag.SiteRoot';
+        //get teamName
+        var _teamName = '@ViewBag.TeamName';
+        var _siteRoot = '@ViewBag.SiteRoot';
 
-            ////////////////////////////////////////////
-            //SPINNER
-            ////////////////////////////////////////////
+        ////////////////////////////////////////////
+        //SPINNER
+        ////////////////////////////////////////////
 
-            //spin up spinjs bitch
-            var opts = {
-                lines: 9, // The number of lines to draw
-                length: 6, // The length of each line
-                width: 10, // The line thickness
-                radius: 30, // The radius of the inner circle
-                corners: 0.5, // Corner roundness (0..1)
-                rotate: 77, // The rotation offset
-                direction: 1, // 1: clockwise, -1: counterclockwise
-                color: '#000', // #rgb or #rrggbb or array of colors
-                speed: 1.7, // Rounds per second
-                trail: 60, // Afterglow percentage
-                shadow: false, // Whether to render a shadow
-                hwaccel: false, // Whether to use hardware acceleration
-                className: 'spinner', // The CSS class to assign to the spinner
-                zIndex: 2e9, // The z-index (defaults to 2000000000)
-                top: '100%', // Top position relative to parent
-                left: '100%' // Left position relative to parent
-            };
+        //spin up spinjs bitch
+        var opts = {
+            lines: 9, // The number of lines to draw
+            length: 6, // The length of each line
+            width: 10, // The line thickness
+            radius: 30, // The radius of the inner circle
+            corners: 0.5, // Corner roundness (0..1)
+            rotate: 77, // The rotation offset
+            direction: 1, // 1: clockwise, -1: counterclockwise
+            color: '#000', // #rgb or #rrggbb or array of colors
+            speed: 1.7, // Rounds per second
+            trail: 60, // Afterglow percentage
+            shadow: false, // Whether to render a shadow
+            hwaccel: false, // Whether to use hardware acceleration
+            className: 'spinner', // The CSS class to assign to the spinner
+            zIndex: 2e9, // The z-index (defaults to 2000000000)
+            top: '100%', // Top position relative to parent
+            left: '100%' // Left position relative to parent
+        };
 
+        var weekTarget = document.getElementById('adminWeekContainer');
+        var _weekSpinner = new Spinner(opts).spin(weekTarget);
+
+
+        var propTarget = document.getElementById('adminPropContainer');
+        var _PropSpinner = new Spinner(opts).spin(propTarget);
+
+
+        var kingTarget = document.getElementById('adminKingContainer');
+        var _KingSpinner = new Spinner(opts).spin(kingTarget);
+
+
+
+        var geoTarget = document.getElementById('adminGeoContainer');
+        var _geoSpinner = new Spinner(opts).spin(geoTarget);
+
+        ////////////////////////////////////////////
+        //INITS
+        ////////////////////////////////////////////
+
+        initWeek();
+        initProp();
+        initKing();
+        initGeo();
+
+
+        ////////////////////////////////////////////
+        //CLICK EVENTS
+        ////////////////////////////////////////////
+
+        //on submit, save the fucking wekk
+        $("#submitWeek").click(function () {
+            submitWeek();
+        });
+
+        //on submit, save the fucking props
+        $("#submitProp").click(function () {
+            submitPropQuestions();
+        });
+
+        //on submit, save the fucking props
+        $("#submitPropAnswer").click(function () {
+            submitPropAnswers();
+        });
+
+        //on submit, calculate the fucking props
+        $("#calculatePropAnswer").click(function () {
+            calculatePropAnswers();
+        });
+
+        //on submit, save the fucking props
+        $("#submitKing").click(function () {
+            submitKingQuestions();
+        });
+
+        //on submit, save the fucking props
+        $("#submitGeo").click(function () {
+            submitGeoMaster();
+        });
+
+
+
+
+        ////////////////////////////////////////////
+        //Week
+        ////////////////////////////////////////////
+
+        function initWeek() {
+
+            $.getJSON(_siteRoot + "/api/week", function (json) {
+                _weekSpinner.stop();
+
+                //$("#week-select").val(json.Week_Id);
+
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                console.warn('Error in Admin Page:  API Get WEEK')
+                alert('shit didnt work, ask nick :: Get WEEK');
+                _weekSpinner.stop();
+            });
+        }
+
+
+        function submitWeek() {
+            //Hack to spin spinner again
             var weekTarget = document.getElementById('adminWeekContainer');
-            var _weekSpinner = new Spinner(opts).spin(weekTarget);
+            _weekSpinner.spin(weekTarget);
+
+            var selectedWeek = $("#week-select").val();
+            var data = [{ "id": 1, "Week_Id": selectedWeek }]
+
+            //TODO: Is this really the best way, looping through and sending put requests?
+            //Or should i post new data each time?
+            var url = _siteRoot + '/api/week' + '/' + data[0].id; //TODO: Use c# razer shit to get route
+            $.ajax({
+                type: "PUT",
+                url: url,
+                data: data[0],
+                dataType: 'json',
+                error: function () {
+                    _weekSpinner.stop();
+                    console.log('admin error posting week');
+                    alert('shit didnt work, ask nick :: GET WEEK');
+                },
+                success: function () {
+                    _weekSpinner.stop();
+                    console.log('admin succesffully updated week');
+                }
+            });
+        }
 
 
+        ////////////////////////////////////////////
+        //PROP BETS
+        ////////////////////////////////////////////
+
+        function initProp() {
+
+
+
+
+            var elem = document.getElementById("propTeam"); // Get text field
+            elem.value = _teamName; // Change field
+
+
+            //Go get props and populate them in the text area boxes
+            $.getJSON(_siteRoot + "/api/prop/week", function (json) {
+                _PropSpinner.stop();
+                $('#propQuestion1').text(json[0].bet);
+                $('#propQuestion2').text(json[1].bet);
+                $('#propQuestion3').text(json[2].bet);
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                console.warn('Error in Admin Page:  API Get Prop Bets')
+                alert('shit didnt work, ask nick :: GET PROP BETS');
+                _PropSpinner.stop();
+            });
+        }
+
+
+
+
+        function submitPropQuestions() {
+            //Hack to spin spinner again
             var propTarget = document.getElementById('adminPropContainer');
-            var _PropSpinner = new Spinner(opts).spin(propTarget);
+            _PropSpinner.spin(propTarget);
 
 
-            var kingTarget = document.getElementById('adminKingContainer');
-            var _KingSpinner = new Spinner(opts).spin(kingTarget);
+            var question1 = $('#propQuestion1').val();
+            var question2 = $('#propQuestion2').val();
+            var question3 = $('#propQuestion3').val();
+            var propTeam = $('#propTeam').val();
 
+            var data = [
+                { "id": 1, "bet": question1, "teamName": propTeam },
+                { "id": 2, "bet": question2, "teamName": propTeam },
+                { "id": 3, "bet": question3, "teamName": propTeam }
+            ]
 
+            var url = null;
 
-            var geoTarget = document.getElementById('adminGeoContainer');
-            var _geoSpinner = new Spinner(opts).spin(geoTarget);
-
-            ////////////////////////////////////////////
-            //INITS
-            ////////////////////////////////////////////
-
-            initWeek();
-            initProp();
-            initKing();
-            initGeo();
-
-
-            ////////////////////////////////////////////
-            //CLICK EVENTS
-            ////////////////////////////////////////////
-
-            //on submit, save the fucking wekk
-            $("#submitWeek").click(function () {
-                submitWeek();
-            });
-
-            //on submit, save the fucking props
-            $("#submitProp").click(function () {
-                submitPropQuestions();
-            });
-
-            //on submit, save the fucking props
-            $("#submitKing").click(function () {
-                submitKingQuestions();
-            });
-
-            //on submit, save the fucking props
-            $("#submitGeo").click(function () {
-                submitGeoMaster();
-            });
-
-            ////////////////////////////////////////////
-            //Week
-            ////////////////////////////////////////////
-
-            function initWeek() {
-
-                $.getJSON(_siteRoot + "/api/week", function (json) {
-                    _weekSpinner.stop();
-
-                    //$("#week-select").val(json.Week_Id);
-
-                })
-                .fail(function (jqXHR, textStatus, errorThrown) {
-                    console.warn('Error in Admin Page:  API Get WEEK')
-                    alert('shit didnt work, ask nick :: Get WEEK');
-                    _weekSpinner.stop();
-                });
-            }
-
-
-            function submitWeek() {
-                //Hack to spin spinner again
-                var weekTarget = document.getElementById('adminWeekContainer');
-                _weekSpinner.spin(weekTarget);
-
-                var selectedWeek = $("#week-select").val();
-                var data = [{ "id": 1, "Week_Id": selectedWeek }]
-
-                //TODO: Is this really the best way, looping through and sending put requests?
-                //Or should i post new data each time?
-                var url = _siteRoot + '/api/week' + '/' + data[0].id; //TODO: Use c# razer shit to get route
+            //TODO: Is this really the best way, looping through and sending put requests?
+            //Or should i post new data each time?
+            $.each(data, function (index, value) {
+                url = _siteRoot + '/api/prop' + '/' + value.id; //TODO: User c# razer shit to get route
                 $.ajax({
                     type: "PUT",
                     url: url,
-                    data: data[0],
+                    data: value,
                     dataType: 'json',
                     error: function () {
-                        _weekSpinner.stop();
-                        console.log('admin error posting week');
-                        alert('shit didnt work, ask nick :: GET WEEK');
+                        _PropSpinner.stop();
+                        console.log('admin error posting props');
+                        alert('shit didnt work, ask nick');
                     },
                     success: function () {
-                        _weekSpinner.stop();
-                        console.log('admin succesffully updated week');
+                        _PropSpinner.stop();
+                        console.log('admin succesffully updated props');
                     }
                 });
-            }
+            });
+        }
 
 
-            ////////////////////////////////////////////
-            //PROP BETS
-            ////////////////////////////////////////////
+        ////////////////////////////////////////////
+        //PROP ANSWERS
+        ////////////////////////////////////////////
 
-            function initProp() {
+        function submitPropAnswers() {
+            //Hack to spin spinner again
+            var propTarget = document.getElementById('adminPropContainer');
+            _PropSpinner.spin(propTarget);
 
-                var elem = document.getElementById("propTeam"); // Get text field
-                elem.value = _teamName; // Change field
+            var answer1 = $('#propAnswer1').val();
+            var answer2 = $('#propAnswer2').val();
+            var answer3 = $('#propAnswer3').val();
 
+            var data = [
+                { "id": 1, "answer": answer1 },
+                { "id": 2, "answer": answer2 },
+                { "id": 3, "answer": answer3 }
+            ]
 
-                //Go get props and populate them in the text area boxes
-                $.getJSON(_siteRoot + "/api/prop/week", function (json) {
-                    _PropSpinner.stop();
-                    $('#propQuestion1').text(json[0].bet);
-                    $('#propQuestion2').text(json[1].bet);
-                    $('#propQuestion3').text(json[2].bet);
-                })
-                .fail(function (jqXHR, textStatus, errorThrown) {
-                    console.warn('Error in Admin Page:  API Get Prop Bets')
-                    alert('shit didnt work, ask nick :: GET PROP BETS');
-                    _PropSpinner.stop();
-                });
-            }
+            var url = null;
 
-
-
-
-            function submitPropQuestions() {
-                //Hack to spin spinner again
-                var propTarget = document.getElementById('adminPropContainer');
-                _PropSpinner.spin(propTarget);
-
-
-                var question1 = $('#propQuestion1').val();
-                var question2 = $('#propQuestion2').val();
-                var question3 = $('#propQuestion3').val();
-                var propTeam = $('#propTeam').val();
-
-                var data = [
-                    { "id": 1, "bet": question1, "teamName": propTeam },
-                    { "id": 2, "bet": question2, "teamName": propTeam },
-                    { "id": 3, "bet": question3, "teamName": propTeam }
-                ]
-
-                var url = null;
-
-                //TODO: Is this really the best way, looping through and sending put requests?
-                //Or should i post new data each time?
-                $.each(data, function (index, value) {
-                    url = _siteRoot + '/api/prop' + '/' + value.id; //TODO: User c# razer shit to get route
-                    $.ajax({
-                        type: "PUT",
-                        url: url,
-                        data: value,
-                        dataType: 'json',
-                        error: function () {
-                            _PropSpinner.stop();
-                            console.log('admin error posting props');
-                            alert('shit didnt work, ask nick');
-                        },
-                        success: function () {
-                            _PropSpinner.stop();
-                            console.log('admin succesffully updated props');
-                        }
-                    });
-                });
-            }
-
-
-
-
-            ////////////////////////////////////////////
-            //KING BETS
-            ////////////////////////////////////////////
-
-            function initKing() {
-
-                var elem = document.getElementById("kingTeam"); // Get text field
-                elem.value = _teamName; // Change field
-
-                var stringArray = [];
-                var question;
-
-                //Go get props and populate them in the text area boxes
-                $.getJSON(_siteRoot + "/api/king/week", function (json) {
-                    _KingSpinner.stop();
-
-                    //underscore each over json results and 
-
-                    _.each(json, function (item) {
-                        console.log('king get!');
-                        console.dir(item);
-
-                        question = item.question;
-                        stringArray.push(item.pick)
-
-
-                    });
-
-                    $('#kingQuestion').text(question);
-
-                    var finalString = stringArray.join(", ");
-                    $('#kingListValues').text(finalString);
-
-                })
-                .fail(function (jqXHR, textStatus, errorThrown) {
-                    console.warn('Error in Admin Page:  API Get Prop Bets')
-                    alert('shit didnt work, ask nick :: GET KING BETS');
-                    _KingSpinner.stop();
-                });
-            }
-
-
-            function submitKingQuestions() {
-                //Hack to spin spinner again
-                var kingTarget = document.getElementById('adminKingContainer');
-                _KingSpinner.spin(kingTarget);
-
-                //delete first
-                url = _siteRoot + '/api/king/deleteweek'; //TODO: User c# razer shit to get route
+            //TODO: Is this really the best way, looping through and sending put requests?
+            //Or should i post new data each time?
+            $.each(data, function (index, value) {
+                url = _siteRoot + 'api/prop' + '/' + value.id; //TODO: User c# razer shit to get route
                 $.ajax({
-                    type: "DELETE",
+                    type: "PUT",
                     url: url,
+                    data: value,
+                    dataType: 'json',
+                    error: function () {
+                        _PropSpinner.stop();
+                        console.log('admin error posting props');
+                        alert('shit didnt work, ask nick');
+                    },
+                    success: function () {
+                        _PropSpinner.stop();
+
+                        //deactivate calc button until answers are in
+                        $('#calculatePropAnswer').removeClass('disabled');
+                        console.log('admin succesffully updated props');
+                    }
+                });
+            });
+        }
+
+
+        ////////////////////////////////////////////
+        //PROP CALCULATE
+        ////////////////////////////////////////////
+
+        function calculatePropAnswers() {
+            //Hack to spin spinner again
+            var propTarget = document.getElementById('adminPropContainer');
+            _PropSpinner.spin(propTarget);
+
+
+            var url = _siteRoot + 'api/prop/calculate'; //TODO: User c# razer shit to get route
+            $.ajax({
+                type: "POST",
+                url: url,
+                dataType: 'json',
+                error: function () {
+                    _PropSpinner.stop();
+                    console.log('admin error posting props');
+                    alert('shit didnt work, ask nick');
+                },
+                success: function () {
+                    _PropSpinner.stop();
+
+                    //deactivate calc button until answers are in
+                    console.log('admin succesffully calculated props');
+                }
+            });
+        }
+
+
+
+
+
+
+        ////////////////////////////////////////////
+        //KING BETS
+        ////////////////////////////////////////////
+
+        function initKing() {
+
+            var elem = document.getElementById("kingTeam"); // Get text field
+            elem.value = _teamName; // Change field
+
+            var stringArray = [];
+            var question;
+
+            //Go get props and populate them in the text area boxes
+            $.getJSON(_siteRoot + "/api/king/week", function (json) {
+                _KingSpinner.stop();
+
+                //underscore each over json results and
+
+                _.each(json, function (item) {
+                    console.log('king get!');
+                    console.dir(item);
+
+                    question = item.question;
+                    stringArray.push(item.pick)
+
+
+                });
+
+                $('#kingQuestion').text(question);
+
+                var finalString = stringArray.join(", ");
+                $('#kingListValues').text(finalString);
+
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                console.warn('Error in Admin Page:  API Get Prop Bets')
+                alert('shit didnt work, ask nick :: GET KING BETS');
+                _KingSpinner.stop();
+            });
+        }
+
+
+        function submitKingQuestions() {
+            //Hack to spin spinner again
+            var kingTarget = document.getElementById('adminKingContainer');
+            _KingSpinner.spin(kingTarget);
+
+            //delete first
+            url = _siteRoot + '/api/king/deleteweek'; //TODO: User c# razer shit to get route
+            $.ajax({
+                type: "DELETE",
+                url: url,
+                dataType: 'json',
+                error: function () {
+                    _KingSpinner.stop();
+                    console.log('admin error deleteing kings');
+                    alert('shit didnt work, ask nick');
+                },
+                success: function () {
+                    _KingSpinner.stop();
+                    console.log('succes:: deleted kings');
+
+                    executePostKingRequest(_KingSpinner);
+                }
+            });
+        }
+
+
+        function executePostKingRequest(_KingSpinner) {
+
+            var kingList = $('#kingListValues').val();
+            var strippedString;
+
+            var question = $('#kingQuestion').val();
+
+            var kingTeam = $('#kingTeam').val();
+
+            //build up data with underscore loop over comma dilemited list
+
+            var array = kingList.split(',');
+            var obj = {};
+            var counter = 1;
+
+            var dataArray = [];
+
+            _.each(array, function (value) {
+                console.log('loop king ya know!');
+                console.dir(value);
+
+                strippedString = $.trim(value);
+
+                obj.elementId = counter;
+                obj.pick = strippedString;
+                obj.question = question;
+                obj.teamName = kingTeam;
+
+                dataArray.push(obj);
+
+                obj = {};
+                counter++
+            });
+
+            var url = null;
+
+            //TODO: Is this really the best way, looping through and sending put requests?
+            //Or should i post new data each time?
+            $.each(dataArray, function (index, value) {
+                url = _siteRoot + '/api/king'; //TODO: User c# razer shit to get route
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: value,
                     dataType: 'json',
                     error: function () {
                         _KingSpinner.stop();
-                        console.log('admin error deleteing kings');
+                        console.log('admin error posting props');
                         alert('shit didnt work, ask nick');
                     },
                     success: function () {
                         _KingSpinner.stop();
-                        console.log('succes:: deleted kings');
-
-                        executePostKingRequest(_KingSpinner);
+                        console.log('admin succesffully updated props');
                     }
                 });
-            }
+            });
 
-
-            function executePostKingRequest(_KingSpinner) {
-
-                var kingList = $('#kingListValues').val();
-                var strippedString;
-
-                var question = $('#kingQuestion').val();
-
-                var kingTeam = $('#kingTeam').val();
-
-                //build up data with underscore loop over comma dilemited list
-
-                var array = kingList.split(',');
-                var obj = {};
-                var counter = 1;
-
-                var dataArray = [];
-
-                _.each(array, function (value) {
-                    console.log('loop king ya know!');
-                    console.dir(value);
-
-                    strippedString = $.trim(value);
-
-                    obj.elementId = counter;
-                    obj.pick = strippedString;
-                    obj.question = question;
-                    obj.teamName = kingTeam;
-
-                    dataArray.push(obj);
-
-                    obj = {};
-                    counter++
-                });
-
-                var url = null;
-
-                //TODO: Is this really the best way, looping through and sending put requests?
-                //Or should i post new data each time?
-                $.each(dataArray, function (index, value) {
-                    url = _siteRoot + '/api/king'; //TODO: User c# razer shit to get route
-                    $.ajax({
-                        type: "POST",
-                        url: url,
-                        data: value,
-                        dataType: 'json',
-                        error: function () {
-                            _KingSpinner.stop();
-                            console.log('admin error posting props');
-                            alert('shit didnt work, ask nick');
-                        },
-                        success: function () {
-                            _KingSpinner.stop();
-                            console.log('admin succesffully updated props');
-                        }
-                    });
-                });
-
-            }
+        }
 
 
 
 
-            ////////////////////////////////////////////
-            //DA GEOMASTER
-            ////////////////////////////////////////////
+        ////////////////////////////////////////////
+        //DA GEOMASTER
+        ////////////////////////////////////////////
 
 
-            function initGeo() {
+        function initGeo() {
 
-                var elem = document.getElementById("geoTeam"); // Get text field
-                elem.value = _teamName; // Change field
+            var elem = document.getElementById("geoTeam"); // Get text field
+            elem.value = _teamName; // Change field
 
-                _geoSpinner.stop();
-            }
-
-
-            function submitGeoMaster() {
-                //Hack to spin spinner again
-                var geoTarget = document.getElementById('adminGeoContainer');
-                _geoSpinner.spin(geoTarget);
+            _geoSpinner.stop();
+        }
 
 
-                var lat = $('#lat').val();
-                var long = $('#long').val();
-                var time = $('#geoTime').val();
-                var geoTeam = $('#geoTeam').val();
-                var geoQuestion = $('#geoQuestion').val();
-
-                var data = [
-                    {
-                        "id": 1,
-                        "Question": geoQuestion,
-                        "Latitude": lat,
-                        "Longitude": long,
-                        "AllottedTime": time,
-                        "TeamName": geoTeam
-                    }
-                ]
+        function submitGeoMaster() {
+            //Hack to spin spinner again
+            var geoTarget = document.getElementById('adminGeoContainer');
+            _geoSpinner.spin(geoTarget);
 
 
-                //TODO: Is this really the best way, looping through and sending put requests?
-                //Or should i post new data each time?
-                var url = _siteRoot + '/api/geomaster/1'; //TODO: Use c# razer shit to get route
-                $.ajax({
-                    type: "PUT",
-                    url: url,
-                    data: data[0],
-                    dataType: 'json',
-                    error: function () {
-                        _geoSpinner.stop();
-                        console.log('admin error posting geo');
-                        alert('shit didnt work, ask nick :: GET GEO');
-                    },
-                    success: function () {
-                        _geoSpinner.stop();
-                        console.log('admin succesffully updated week');
-                    }
-                });
-            }
+            var lat = $('#lat').val();
+            var long = $('#long').val();
+            var time = $('#geoTime').val();
+            var geoTeam = $('#geoTeam').val();
+            var geoQuestion = $('#geoQuestion').val();
+
+            var data = [
+                {
+                    "id": 1,
+                    "Question": geoQuestion,
+                    "Latitude": lat,
+                    "Longitude": long,
+                    "AllottedTime": time,
+                    "TeamName": geoTeam
+                }
+            ]
+
+
+            //TODO: Is this really the best way, looping through and sending put requests?
+            //Or should i post new data each time?
+            var url = _siteRoot + '/api/geomaster/1'; //TODO: Use c# razer shit to get route
+            $.ajax({
+                type: "PUT",
+                url: url,
+                data: data[0],
+                dataType: 'json',
+                error: function () {
+                    _geoSpinner.stop();
+                    console.log('admin error posting geo');
+                    alert('shit didnt work, ask nick :: GET GEO');
+                },
+                success: function () {
+                    _geoSpinner.stop();
+                    console.log('admin succesffully updated week');
+                }
+            });
+        }
 
 
 
 
-        });
+    });
 
-    </script>
+</script>

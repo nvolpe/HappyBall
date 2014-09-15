@@ -173,6 +173,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\Api\FinalController.cs" />
     <Compile Include="Controllers\Api\GeoMasterController.cs" />
     <Compile Include="Controllers\Api\GeoResultController.cs" />
     <Compile Include="Controllers\Api\KingController.cs" />
@@ -195,6 +196,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Final.cs" />
     <Compile Include="Models\GeoMaster.cs" />
     <Compile Include="Models\GeoResult.cs" />
     <Compile Include="Models\IdentityModels.cs" />

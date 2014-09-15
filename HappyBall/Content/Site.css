@@ -62,6 +62,17 @@ input[type="checkbox"].input-validation-error {
 }
 
 
+#prop-bet-text {
+    font-size: 22px; 
+    margin-left: 50px; 
+    margin-right: 50px;
+}
+
+#kingQuestionContainer {
+    font-size: 20px; 
+}
+
+
 #map {
     position: absolute;
     top: 0;
