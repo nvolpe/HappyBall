@@ -95,11 +95,50 @@ namespace HappyBall.Controllers.Api
 
             db.Results.ToList().ForEach(x => x.WeekTotal = x.Points1 + x.Points2 + x.Points3);
 
+            //save it first so we can access it next
             db.SaveChanges();
+
+            //ok so now get all the current results so we can add it to the FINAL class to display an ongoing list of leaders to the users client side
+            var resultsForFinals = db.Results.ToList();
+
+            //for each prop result, get weekly total and add it to the fucking FINAL class
+            resultsForFinals.ForEach(x => {
+
+                var finalItem = db.Finals.Where(y => y.TeamName == x.TeamName).FirstOrDefault();
+                var finalProp = db.Finals.Where(y => y.TeamName == x.TeamName).FirstOrDefault().PropResult;
+                var totalProp = finalProp + x.WeekTotal;
+                finalItem.PropResult = totalProp;
+
+            });
+
+            //save it again
+            db.SaveChanges();
+
+
+            //var finalResults = db.Finals.ToList();
+            //finalResults.ForEach(x => x.);
+
+            //var resultsForFinals = db.Results.ToList();
+            //List<Final> finalList = new List<Final>();
+            //resultsForFinals.ForEach(x => {
+            //    finalList.Add(new Final() 
+            //    { 
+            //        TeamName = x.TeamName,
+            //        Week = x.Week,
+            //        PropResult = x.WeekTotal
+            //    });
+            //});
+
 
             return Ok("Success yo");
         }
 
+
+
+        private void CreateRecord()
+        {
+            var test = "test";
+        }
 
 
 

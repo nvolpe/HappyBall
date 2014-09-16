@@ -106,13 +106,16 @@ namespace HappyBall.Controllers
                 {
                     await SignInAsync(user, isPersistent: false);
 
-                    // Insert a new user into the result table
-                    //using (var db = new ApplicationDbContext())
-                    //{
-                    //    ApplicationUser AppUser = db.Users.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
-                    //    db.Results.Add(new Result { TeamName = model.TeamName, User = AppUser });
-                    //    db.SaveChanges();
-                    //}
+                    //HACK, this doesnt solve what im trying to do for this point during the season, but it should work HAD I HAD IT
+                    using (var db = new ApplicationDbContext())
+                    {
+                        // Insert a new user into the result table
+                        //ApplicationUser AppUser = db.Users.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
+                        //db.Results.Add(new Result { TeamName = model.TeamName, User = AppUser });
+                        //db.SaveChanges();
+
+                        db.Finals.Add(new Final { TeamName = model.TeamName, PropResult = 0, KingResult = 0 });
+                    }
 
                     return RedirectToAction("Index", "Home");
                 }

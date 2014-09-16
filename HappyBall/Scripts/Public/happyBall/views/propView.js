@@ -179,7 +179,7 @@
             this.submitPropBtn.start();
 
             //set url to post url
-            this.model.isPost = true;
+            //this.model.restAction = 'POST';
 
             //TODO: Set dynamic Team and User Info
             if ($('#yesBtn1').hasClass('btn-success')) {
@@ -200,10 +200,20 @@
                 this.model.set('propBet3', 'no')
             }
 
-            this.model.save({}, {
-                success: this.saveCallback,
-                error: this.saveErrback
-            });
+            if (this.model.restAction === 'POST') {
+                this.model.save({}, {
+                    type: 'POST',
+                    success: this.saveCallback,
+                    error: this.saveErrback
+                });
+            } else {
+                this.model.save({}, {
+                    success: this.saveCallback,
+                    error: this.saveErrback
+                });
+            }
+
+
         },
 
         saveCallback: function (obj, xhr) {

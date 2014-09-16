@@ -32,12 +32,12 @@ namespace HappyBall.Migrations
               new King { Id = 3, Pick = "Lebron James", Question = "Some question goes here wouldnt you know, gosh i think i fucked up this model", Week = 1, elementId = 3, TeamName = "Touchdown Jesus" }
             );
 
-            context.Results.AddOrUpdate(
-              p => p.Id,
-              new Result { Id = 1, TeamName = "team1", PropBet1 = "Bet 1" },
-              new Result { Id = 2, TeamName = "team2", PropBet2 = "Bet 2" },
-              new Result { Id = 3, TeamName = "team3", PropBet3 = "Bet 3" }
-            );
+            //context.Results.AddOrUpdate(
+            //  p => p.Id,
+            //  new Result { Id = 1, TeamName = "team1", PropBet1 = "Bet 1" },
+            //  new Result { Id = 2, TeamName = "team2", PropBet2 = "Bet 2" },
+            //  new Result { Id = 3, TeamName = "team3", PropBet3 = "Bet 3" }
+            //);
 
             context.Week.AddOrUpdate(
               p => p.Id,
@@ -51,6 +51,12 @@ namespace HappyBall.Migrations
                 new GeoMaster { Id = 1, Week = 1, Location = loc, Latitude = 40.589574, Longitude = -105.080056, TeamName = "Touchdown Jesus", AllottedTime = 15, Question = "Some question goes here" }
             );
 
+            context.Finals.AddOrUpdate(
+              p => p.Id,
+              new Final { Id = 1, TeamName = "Touchdown Jesus", PropResult = 0, KingResult = 0 },
+              new Final { Id = 2, TeamName = "Bob team", PropResult = 0, KingResult = 0 },
+              new Final { Id = 3, TeamName = "Dustins Team", PropResult = 0, KingResult = 0 }
+            );
 
         }
     }
