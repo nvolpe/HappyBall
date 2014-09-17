@@ -58,6 +58,12 @@ namespace HappyBall.Migrations
               new Final { Id = 3, TeamName = "Dustins Team", PropResult = 0, KingResult = 0 }
             );
 
+            context.KingAnswers.AddOrUpdate(
+              p => p.Id,
+              new KingAnswer { Id = 1, Week = 1, Answer = "mom, dad, vern"}
+            );
+
+
         }
     }
 }

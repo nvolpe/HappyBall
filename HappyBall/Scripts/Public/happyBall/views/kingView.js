@@ -217,11 +217,19 @@
             this.submitKingBtn = Ladda.create($(this.ui.submitKingBtn)[0]);
             this.submitKingBtn.start();
 
-            this.model.save({}, {
-                success: this.saveCallback,
-                error: this.saveErrback
-            });
 
+            if (this.model.restAction === 'POST') {
+                this.model.save({}, {
+                    type: 'POST',
+                    success: this.saveCallback,
+                    error: this.saveErrback
+                });
+            } else {
+                this.model.save({}, {
+                    success: this.saveCallback,
+                    error: this.saveErrback
+                });
+            }
         },
 
         saveCallback: function (obj, xhr) {

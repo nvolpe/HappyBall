@@ -176,6 +176,7 @@
     <Compile Include="Controllers\Api\FinalController.cs" />
     <Compile Include="Controllers\Api\GeoMasterController.cs" />
     <Compile Include="Controllers\Api\GeoResultController.cs" />
+    <Compile Include="Controllers\Api\KingAnswerController.cs" />
     <Compile Include="Controllers\Api\KingController.cs" />
     <Compile Include="Controllers\Api\KingResultController.cs" />
     <Compile Include="Controllers\Api\PropController.cs" />
@@ -201,6 +202,7 @@
     <Compile Include="Models\GeoResult.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\King.cs" />
+    <Compile Include="Models\KingAnswer.cs" />
     <Compile Include="Models\KingResult.cs" />
     <Compile Include="Models\Prop.cs" />
     <Compile Include="Models\Result.cs" />
