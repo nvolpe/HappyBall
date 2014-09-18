@@ -74,7 +74,7 @@
             <br>
             <hr />
             <br>
-            <h3>Set Prop Bets</h3>
+            <h3>Calculate Props</h3>
             <br>
             <button id="calculatePropAnswer" type="submit" class="btn btn-default disabled">Calculate Results</button>
         </div>
@@ -112,10 +112,32 @@
         </div>
         <div class="col-md-6">
             <h3>Set Answers</h3>
-            <div>Correct Answers in order</div>
-            <textarea id="kingListAnswers" class="form-control" rows="3"></textarea>
             <br>
-            <button id="submitKingAnswers" type="submit" class="btn btn-default">Submit</button>
+            <div>Answer</div>
+            <select id="kingAnswer1" class="form-control">
+                <option value="no">no</option>
+                <option value="yes">yes</option>
+            </select>
+            <br>
+            <div>Answer</div>
+            <select id="kingAnswer2" class="form-control">
+                <option value="no">no</option>
+                <option value="yes">yes</option>
+            </select>
+            <br>
+            <div>Answer</div>
+            <select id="kingAnswer3" class="form-control">
+                <option value="no">no</option>
+                <option value="yes">yes</option>
+            </select>
+            <br>
+            <button id="submitKingAnswer" type="submit" class="btn btn-default">Submit</button>
+            <br>
+            <hr />
+            <br>
+            <h3>Calculate Kings</h3>
+            <br>
+            <button id="calculateKingAnswer" type="submit" class="btn btn-default disabled">Calculate King Results</button>
         </div>
     </div>
 
@@ -209,6 +231,7 @@
         initWeek();
         initProp();
         initKing();
+        intKingAnswers();
         initGeo();
 
 
@@ -239,6 +262,11 @@
         //on submit, save the fucking props
         $("#submitKing").click(function () {
             submitKingQuestions();
+        });
+
+        //on submit, save the fucking king answer
+        $("#submitKingAnswer").click(function () {
+            submitKingAnswers();
         });
 
         //on submit, save the fucking props
@@ -579,12 +607,89 @@
         }
 
 
+        ////////////////////////////////////////////
+        //Init King Answers
+        ////////////////////////////////////////////
+
+        function intKingAnswers() {
+            var kingsList = [];
+
+            var kingSelect1 = $("#kingAnswer1")[0];
+            var kingSelect2 = $("#kingAnswer2")[0];
+            var kingSelect3 = $("#kingAnswer3")[0];
+
+            //TODO, get list of options and append them to select list options
+            $.getJSON(_siteRoot + '/api/king/week', function (json) {
+                _.each(json, function (item) {
+
+                    kingSelect1.add(new Option(item.pick, item.pick));
+                    kingSelect2.add(new Option(item.pick, item.pick));
+                    kingSelect3.add(new Option(item.pick, item.pick));
+
+                    //kingsList.push(item.pick);
+                });
+
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                console.warn('Error in Admin Page:  API Get KING answers')
+                alert('shit didnt work, ask nick :: Get king answers');
+            });
+
+
+
+        }
+
+
+        ////////////////////////////////////////////
+        //Submit King Answers
+        ////////////////////////////////////////////
+
+        function submitKingAnswers() {
+            //Hack to spin spinner again
+            var kingTarget = document.getElementById('adminKingContainer');
+            _KingSpinner.spin(kingTarget);
+
+            var answer1 = $('#kingAnswer1').val();
+            var answer2 = $('#kingAnswer2').val();
+            var answer3 = $('#kingAnswer3').val();
+
+            var data = [
+                {
+                    "answer1": answer1,
+                    "answer2": answer2,
+                    "answer3": answer3,
+                }
+            ]
+
+            var url = null;
+
+            //TODO: Is this really the best way, looping through and sending put requests?
+            //Or should i post new data each time?
+            url = _siteRoot + 'api/kinganswers'; //TODO: User c# razer shit to get route
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: value,
+                dataType: 'json',
+                error: function () {
+                    _KingSpinner.stop();
+                    console.log('admin error posting props');
+                    alert('shit didnt work, ask nick');
+                },
+                success: function () {
+                    _KingSpinner.stop();
+
+                    //deactivate calc button until answers are in
+                    $('#calculatePropAnswer').removeClass('disabled');
+                    console.log('admin succesffully updated props');
+                }
+            });
+        }
 
 
         ////////////////////////////////////////////
         //DA GEOMASTER
         ////////////////////////////////////////////
-
 
         function initGeo() {
 

@@ -102,7 +102,8 @@ namespace HappyBall.Controllers.Api
             var resultsForFinals = db.Results.ToList();
 
             //for each prop result, get weekly total and add it to the fucking FINAL class
-            resultsForFinals.ForEach(x => {
+            resultsForFinals.ForEach(x =>
+            {
 
                 var finalItem = db.Finals.Where(y => y.TeamName == x.TeamName).FirstOrDefault();
                 var finalProp = db.Finals.Where(y => y.TeamName == x.TeamName).FirstOrDefault().PropResult;
@@ -142,20 +143,12 @@ namespace HappyBall.Controllers.Api
             //------------------------------------
             var weekId = db.Week.First().Week_Id;
 
-            var answerString = db.KingAnswers.Where(x => x.Week == weekId).FirstOrDefault().Answer;
 
-            var answers = from x in answerString.Split(',')
-                          select x;
+            //get list of teams that had a correct answer for pick1
+            var answerCount1 = db.KingResults.Where(x => x.Pick1 == answer).Count();
+            var answerCount2 = db.KingResults.Where(x => x.Pick2 == answer).Count();
+            var answerCount3 = db.KingResults.Where(x => x.Pick3 == answer).Count();
 
-
-            foreach (string answer in answers)
-            {
-                //get list of teams that had a correct answer for pick1
-                var answerCount1 = db.KingResults.Where(x => x.Pick1 == answer).Count();
-                var answerCount2 = db.KingResults.Where(x => x.Pick2 == answer).Count();
-                var answerCount3 = db.KingResults.Where(x => x.Pick3 == answer).Count();
-
-            }
 
             return Ok("Success yo");
         }
