@@ -13,6 +13,7 @@ namespace HappyBall.Models
         public string TeamName { get; set; }
         public double PropResult { get; set; }
         public double KingResult { get; set; }
+        public double WeekTotal { get; set; }
         public double YearTotal { get; set; }
 
 
