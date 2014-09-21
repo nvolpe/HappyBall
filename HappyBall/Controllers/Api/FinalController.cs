@@ -29,8 +29,6 @@ namespace HappyBall.Controllers.Api
         [System.Web.Http.Route("api/final/calculate", Name = "CalculateFinalResults")]
         public IHttpActionResult CalculateFinalResults()
         {
-
-
             //Get Current Week?
             //------------------------------------
             var weekId = db.Week.First().Week_Id;
@@ -77,24 +75,6 @@ namespace HappyBall.Controllers.Api
 
             //save it first so we can access it next
             db.SaveChanges();
-
-            //ok so now get all the current results so we can add it to the FINAL class to display an ongoing list of leaders to the users client side
-            var resultsForFinals = db.Results.ToList();
-
-            //for each prop result, get weekly total and add it to the fucking FINAL class
-            resultsForFinals.ForEach(x =>
-            {
-
-                var finalItem = db.Finals.Where(y => y.TeamName == x.TeamName).FirstOrDefault();
-                var finalProp = db.Finals.Where(y => y.TeamName == x.TeamName).FirstOrDefault().PropResult;
-                var totalProp = finalProp + x.WeekTotal;
-                finalItem.PropResult = totalProp;
-
-            });
-
-            //save it again
-            db.SaveChanges();
-
 
 
             ///////////////////////////////////////////////////////////////////////////////////
@@ -150,8 +130,46 @@ namespace HappyBall.Controllers.Api
             // Calculate Final On-going Results
             ///////////////////////////////////////////////////////////////////////////////////
 
-            return Ok("Success yo");
 
+            //props
+            var resultsForFinals = db.Results.Where(x => x.Week == weekId).ToList();
+
+            //for each prop result, get weekly total and add it to the fucking FINAL class
+            resultsForFinals.ForEach(x =>
+            {
+
+                var finalItem = db.Finals.Where(y => y.TeamName == x.TeamName).FirstOrDefault();
+                //var finalProp = db.Finals.Where(y => y.TeamName == x.TeamName).FirstOrDefault().PropResult;
+                //var totalProp = finalProp + x.WeekTotal;
+                finalItem.PropResult = x.WeekTotal;
+
+            });
+
+
+            //kings
+            var kingsList = db.KingResults.Where(x => x.Week == weekId).ToList();
+
+            kingsList.ForEach(x =>
+            {
+                var finalItem = db.Finals.Where(y => y.TeamName == x.TeamName).FirstOrDefault();
+                //var finalKing = db.Finals.Where(y => y.TeamName == x.TeamName).FirstOrDefault().KingResult;
+                //var totalKing = finalKing + x.WeekTotal;
+                finalItem.KingResult = x.WeekTotal;
+            });
+
+            //save
+            db.SaveChanges();
+
+            //then do it again and save to the ongoing total
+            var finalsList = db.Finals.Where(x => x.Week == weekId).ToList();
+
+            finalsList.ForEach(x =>
+            {
+                x.YearTotal = x.KingResult + x.PropResult;
+            });
+
+
+            return Ok("Success yo");
         }
 
 
