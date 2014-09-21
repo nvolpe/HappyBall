@@ -43,6 +43,14 @@ namespace HappyBall.Controllers.Api
                 return BadRequest(ModelState);
             }
 
+
+            //get week
+            var weekId = db.Week.First().Week_Id;
+
+            //set week to geomaster
+            kinganswer.Week = weekId;
+
+
             if (id != kinganswer.Id)
             {
                 return BadRequest();

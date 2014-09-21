@@ -86,7 +86,7 @@
             <br>
             <div>Set the quetion yo</div>
             <textarea id="kingQuestion" class="form-control" rows="3"></textarea>
-            <br>
+            @*<br>
             <div>How Many Top Spots</div>
             <select class="form-control">
                 <option value="1">1</option>
@@ -100,7 +100,7 @@
             <select class="form-control">
                 <option value="yes">yes</option>
                 <option value="no">no</option>
-            </select>
+            </select>*@
             <br>
             <div> Values for pick list  -- please insert commma delimited list of words for kings of the week </div>
             <textarea id="kingListValues" class="form-control" rows="3"></textarea>
@@ -115,20 +115,14 @@
             <br>
             <div>Answer</div>
             <select id="kingAnswer1" class="form-control">
-                <option value="no">no</option>
-                <option value="yes">yes</option>
             </select>
             <br>
             <div>Answer</div>
             <select id="kingAnswer2" class="form-control">
-                <option value="no">no</option>
-                <option value="yes">yes</option>
             </select>
             <br>
             <div>Answer</div>
             <select id="kingAnswer3" class="form-control">
-                <option value="no">no</option>
-                <option value="yes">yes</option>
             </select>
             <br>
             <button id="submitKingAnswer" type="submit" class="btn btn-default">Submit</button>
@@ -634,9 +628,6 @@
                 console.warn('Error in Admin Page:  API Get KING answers')
                 alert('shit didnt work, ask nick :: Get king answers');
             });
-
-
-
         }
 
 
@@ -654,35 +645,32 @@
             var answer3 = $('#kingAnswer3').val();
 
             var data = [
-                {
-                    "answer1": answer1,
-                    "answer2": answer2,
-                    "answer3": answer3,
-                }
+            { "id": 1, "answer1": answer1 },
+            { "id": 2, "answer2": answer2 },
+            { "id": 3, "answer3": answer3 }
             ]
 
             var url = null;
 
             //TODO: Is this really the best way, looping through and sending put requests?
             //Or should i post new data each time?
-            url = _siteRoot + 'api/kinganswers'; //TODO: User c# razer shit to get route
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: value,
-                dataType: 'json',
-                error: function () {
-                    _KingSpinner.stop();
-                    console.log('admin error posting props');
-                    alert('shit didnt work, ask nick');
-                },
-                success: function () {
-                    _KingSpinner.stop();
-
-                    //deactivate calc button until answers are in
-                    $('#calculatePropAnswer').removeClass('disabled');
-                    console.log('admin succesffully updated props');
-                }
+            $.each(data, function (index, value) {
+                url = _siteRoot + '/api/kinganswer' + '/' + value.id; //TODO: User c# razer shit to get route
+                $.ajax({
+                    type: "PUT",
+                    url: url,
+                    data: value,
+                    dataType: 'json',
+                    error: function () {
+                        _KingSpinner.stop();
+                        console.log('admin error posting kinganswers');
+                        alert('admin error posting kinganswers');
+                    },
+                    success: function () {
+                        _KingSpinner.stop();
+                        console.log('admin succesffully updated kinganswers');
+                    }
+                });
             });
         }
 

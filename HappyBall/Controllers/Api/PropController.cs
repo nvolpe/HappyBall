@@ -72,8 +72,8 @@ namespace HappyBall.Controllers.Api
 
             //Go get how many people answered the right question
             var answer1count = db.Results.Where(x => x.PropBet1 == answer1).Count();
-            var answer2count = db.Results.Where(x => x.PropBet1 == answer2).Count();
-            var answer3count = db.Results.Where(x => x.PropBet1 == answer3).Count();
+            var answer2count = db.Results.Where(x => x.PropBet2 == answer2).Count();
+            var answer3count = db.Results.Where(x => x.PropBet3 == answer3).Count();
 
             //Take the total count for the answer / 100
             double answer1Points = 100;
@@ -134,24 +134,7 @@ namespace HappyBall.Controllers.Api
             return Ok("Success yo");
         }
 
-        //TODO FINISH THIS SHIT ONCE I KNOW HOW KINGS WILL LOOK
-        [System.Web.Http.Route("api/king/calculate", Name = "CalculateKingsForWeek")]
-        public IHttpActionResult CalculateKingsForWeek()
-        {
 
-            //Get Current Week?
-            //------------------------------------
-            var weekId = db.Week.First().Week_Id;
-
-
-            //get list of teams that had a correct answer for pick1
-            var answerCount1 = db.KingResults.Where(x => x.Pick1 == answer).Count();
-            var answerCount2 = db.KingResults.Where(x => x.Pick2 == answer).Count();
-            var answerCount3 = db.KingResults.Where(x => x.Pick3 == answer).Count();
-
-
-            return Ok("Success yo");
-        }
 
 
 

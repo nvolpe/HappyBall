@@ -14,6 +14,7 @@ namespace HappyBall.Models
         public string Pick3 { get; set; }
         public int Week { get; set; }
         public string UserId { get; set; }
+        public double WeekTotal { get; set; }
 
         public KingResult()
         {

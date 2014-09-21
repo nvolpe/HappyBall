@@ -9,10 +9,12 @@ namespace HappyBall.Models
     {
 
         public int Id { get; set; }
+        public int Week { get; set; }
         public string TeamName { get; set; }
         public double PropResult { get; set; }
         public double KingResult { get; set; }
-        public int Week { get; set; }
+        public double YearTotal { get; set; }
+
 
         public Final()
         {

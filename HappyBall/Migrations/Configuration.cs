@@ -60,7 +60,7 @@ namespace HappyBall.Migrations
 
             context.KingAnswers.AddOrUpdate(
               p => p.Id,
-              new KingAnswer { Id = 1, Week = 1, Answer = "mom, dad, vern"}
+              new KingAnswer { Id = 1, Week = 1, Answer1 = "mom", Answer2 = "dad", Answer3 = "vern" }
             );
 
 

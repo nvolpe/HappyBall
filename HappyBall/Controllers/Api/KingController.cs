@@ -50,6 +50,64 @@ namespace HappyBall.Controllers.Api
             return Ok(results);
         }
 
+
+        //TODO FINISH THIS SHIT ONCE I KNOW HOW KINGS WILL LOOK
+        [System.Web.Http.Route("api/king/calculate", Name = "CalculateKingsForWeek")]
+        public IHttpActionResult CalculateKingsForWeek()
+        {
+
+            //Get Current Week?
+            //------------------------------------
+            var weekId = db.Week.First().Week_Id;
+
+            //Go get the right answers
+            var answerItem = db.KingAnswers.Where(x => x.Week == weekId).FirstOrDefault();
+
+            //get the right answers from the db
+            var answer1 = answerItem.Answer1;
+            var answer2 = answerItem.Answer2;
+            var answer3 = answerItem.Answer3;
+
+            //store answers in a list for a .contains where lookup, any other way to do this?
+            List<string> answersList = new List<string>();
+            answersList.Add(answer1);
+            answersList.Add(answer2);
+            answersList.Add(answer3);
+
+            //how many people got the right answers
+            var answerCount1 = db.KingResults.Where(x => answersList.Contains(x.Pick1) && x.Week == weekId).Count();
+            var answerCount2 = db.KingResults.Where(x => answersList.Contains(x.Pick2) && x.Week == weekId).Count();
+            var answerCount3 = db.KingResults.Where(x => answersList.Contains(x.Pick3) && x.Week == weekId).Count();
+
+            var correctTeams = db.KingResults.Where(x =>
+                answersList.Contains(x.Pick1) &&
+                answersList.Contains(x.Pick2) &&
+                answersList.Contains(x.Pick3) &&
+                x.Week == weekId).ToList();
+
+            //TODO: if nobody got the answer right, check if people got 2 of the 3 right. PLAN B for now!
+            //if (correctTeams.Count <= 0)
+            //{
+                //var test = db.KingResults.Where(x => x.Week == weekId).FirstOrDefault();
+                //correctTeams = db.KingResults.Where(x =>
+                //    answersList.Contains(x.Pick1) &&
+                //    answersList.Contains(x.Pick2) &&
+                //    answersList.Contains(x.Pick3) &&
+                //    x.Week == weekId).ToList();
+            //}
+
+
+            //Kings is worth 200
+            double kingPoints = 200;
+
+            correctTeams.ForEach(x => x.WeekTotal = kingPoints);
+
+
+
+            return Ok("Success yo");
+        }
+
+
         // PUT api/King/5
         public IHttpActionResult PutKing(int id, King king)
         {
