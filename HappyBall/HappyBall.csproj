@@ -209,6 +209,7 @@
     <Compile Include="Models\Team.cs" />
     <Compile Include="Models\UserLocation.cs" />
     <Compile Include="Models\Week.cs" />
+    <Compile Include="Models\YearFinal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

@@ -74,9 +74,9 @@
             <br>
             <hr />
             <br>
-            <h3>Calculate Props</h3>
+            @*<h3>Calculate Props</h3>
             <br>
-            <button id="calculatePropAnswer" type="submit" class="btn btn-default disabled">Calculate Results</button>
+            <button id="calculatePropAnswer" type="submit" class="btn btn-default disabled">Calculate Results</button>*@
         </div>
     </div>
 
@@ -129,9 +129,9 @@
             <br>
             <hr />
             <br>
-            <h3>Calculate Kings</h3>
+            @*<h3>Calculate Kings</h3>
             <br>
-            <button id="calculateKingAnswer" type="submit" class="btn btn-default disabled">Calculate King Results</button>
+            <button id="calculateKingAnswer" type="submit" class="btn btn-default disabled">Calculate King Results</button>*@
         </div>
     </div>
 
@@ -158,8 +158,19 @@
             <button id="submitGeo" type="submit" class="btn btn-default">Submit</button>
         </div>
     </div>
-</div>
 
+    <div id="adminFinalContainer" class="row well">
+        <h3>Calculate Final Results for the week</h3>
+        <h4>Make sure all prop and king answers have been set before calculating</h4>
+        <div>
+        <button id="calculateWeekResults" type="submit" class="btn btn-default disabled">Calculate Weekly Results</button>
+        </div>
+    </div>
+
+
+
+
+</div>
 
 
 @*TODO: Fix this, why is this not loading in time through the _layout*@
@@ -177,6 +188,8 @@
         //get teamName
         var _teamName = '@ViewBag.TeamName';
         var _siteRoot = '@ViewBag.SiteRoot';
+        var propsAreSet = false;
+        var kingsAreSet = false;
 
         ////////////////////////////////////////////
         //SPINNER
@@ -213,10 +226,11 @@
         var kingTarget = document.getElementById('adminKingContainer');
         var _KingSpinner = new Spinner(opts).spin(kingTarget);
 
-
-
         var geoTarget = document.getElementById('adminGeoContainer');
         var _geoSpinner = new Spinner(opts).spin(geoTarget);
+
+        var finalTarget = document.getElementById('adminFinalContainer');
+        var _finalSpinner = new Spinner(opts);
 
         ////////////////////////////////////////////
         //INITS
@@ -249,9 +263,9 @@
         });
 
         //on submit, calculate the fucking props
-        $("#calculatePropAnswer").click(function () {
-            calculatePropAnswers();
-        });
+        //$("#calculatePropAnswer").click(function () {
+        //    calculatePropAnswers();
+        //});
 
         //on submit, save the fucking props
         $("#submitKing").click(function () {
@@ -268,7 +282,19 @@
             submitGeoMaster();
         });
 
+        //Calculate the final results after both props and kings have been set
+        $("#calculateWeekResults").click(function () {
+            calculateResults();
+        });
 
+
+        function checkStatus() {
+
+            if (propsAreSet && kingsAreSet) {
+                $("#calculateWeekResults").removeClass('disabled');
+            }
+
+        };
 
 
         ////////////////////////////////////////////
@@ -430,48 +456,15 @@
                     success: function () {
                         _PropSpinner.stop();
 
-                        //deactivate calc button until answers are in
-                        $('#calculatePropAnswer').removeClass('disabled');
+                        //set flag to true
+                        propsAreSet = true;
+                        checkStatus();
+
                         console.log('admin succesffully updated props');
                     }
                 });
             });
         }
-
-
-        ////////////////////////////////////////////
-        //PROP CALCULATE
-        ////////////////////////////////////////////
-
-        function calculatePropAnswers() {
-            //Hack to spin spinner again
-            var propTarget = document.getElementById('adminPropContainer');
-            _PropSpinner.spin(propTarget);
-
-
-            var url = _siteRoot + 'api/prop/calculate'; //TODO: User c# razer shit to get route
-            $.ajax({
-                type: "POST",
-                url: url,
-                dataType: 'json',
-                error: function () {
-                    _PropSpinner.stop();
-                    console.log('admin error posting props');
-                    alert('shit didnt work, ask nick');
-                },
-                success: function () {
-                    _PropSpinner.stop();
-
-                    //deactivate calc button until answers are in
-                    console.log('admin succesffully calculated props');
-                }
-            });
-        }
-
-
-
-
-
 
         ////////////////////////////////////////////
         //KING BETS
@@ -668,6 +661,10 @@
                     },
                     success: function () {
                         _KingSpinner.stop();
+
+                        kingsAreSet = true;
+                        checkStatus();
+
                         console.log('admin succesffully updated kinganswers');
                     }
                 });
@@ -732,8 +729,33 @@
             });
         }
 
+        ////////////////////////////////////////////
+        //CALCULATE FINAL RESULTS FOR THE WEEK
+        ////////////////////////////////////////////
 
+        function calculateResults() {
+            //Hack to spin spinner again
+            var finalTarget = document.getElementById('adminFinalContainer');
+            _finalSpinner.spin(finalTarget);
 
+            var url = _siteRoot + 'api/final/calculate'; //TODO: User c# razer shit to get route
+            $.ajax({
+                type: "POST",
+                url: url,
+                dataType: 'json',
+                error: function () {
+                    _PropSpinner.stop();
+                    console.log('admin error calculating results');
+                    alert('shit didnt work, ask nick');
+                },
+                success: function () {
+                    _PropSpinner.stop();
+
+                    //deactivate calc button until answers are in
+                    console.log('admin succesffully calculated results');
+                }
+            });
+        }
 
     });
 

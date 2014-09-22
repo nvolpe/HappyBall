@@ -160,6 +160,80 @@ namespace HappyBall.Controllers.Api
         }
 
 
+        // GET result by week
+        [ResponseType(typeof(Final))]
+        [System.Web.Http.Route("api/final/week", Name = "GetFinalByWeek")]
+        public IHttpActionResult GetResultByWeek()
+        {
+
+            //Get Current Week?
+            //------------------------------------
+            var weekId = db.Week.First().Week_Id;
+
+            var results = db.Finals.Where(x => x.Week == weekId).ToList();
+
+
+            return Ok(results);
+        }
+
+
+
+        // GET result by week
+        [ResponseType(typeof(Final))]
+        [System.Web.Http.Route("api/final/year", Name = "GetFinalByYear")]
+        public IHttpActionResult GetFinalByYear()
+        {
+
+            //Get Current Week?
+            //------------------------------------
+
+            var results = db.Finals.GroupBy(x => x.Week).ToList();
+
+            var results1 = db.Finals.GroupBy(x => x.TeamName).ToList();
+
+            List<YearFinal> finalYearList = new List<YearFinal>();
+
+            
+
+            //results.ForEach(x =>
+            //{
+            //    finalYear.name = 
+                
+            //});
+
+            
+
+            //for each prop result, get weekly total and add it to the fucking FINAL class
+            results1.ForEach(x =>
+            {
+                YearFinal finalYear = new YearFinal();
+                List<double> testList = new List<double>();
+                var test = x.ToList();
+
+                test.ForEach(y =>
+                        {
+                            testList.Add(y.YearTotal);
+
+                        }
+                    );
+
+                finalYear.name = x.Key;
+                finalYear.data = testList;
+
+                finalYearList.Add(finalYear);
+
+
+                //var finalItem = db.Finals.Where(y => y.TeamName == x.TeamName).FirstOrDefault();
+                //finalItem.PropResult = x.WeekTotal;
+            });
+
+
+            var tester = "tester";
+
+            return Ok(finalYearList);
+        }
+
+
         // GET api/Final/5
         //[ResponseType(typeof(Final))]
         //public IHttpActionResult GetFinal(int id)

@@ -159,9 +159,9 @@
 <script type="text/template" id="king-template">
 
     @*<li id="<%= test %>" class="list-group-item">
-        <span class="badge"><%= test %></span>
-        <%= itemName %>
-    </li>*@
+            <span class="badge"><%= test %></span>
+            <%= itemName %>
+        </li>*@
 
     <li id="king<%= id %>" class="list-group-item">
         <%= pick %>
@@ -204,7 +204,7 @@
 
 
 <!-- =================================================== -->
-<!--      RESULTS COMPOSITE TEMPLATE                                  -->
+<!--      RESULTS COMPOSITE TEMPLATE                     -->
 <!-- =================================================== -->
 
 <script type="text/template" id="results-container-template">
@@ -212,22 +212,31 @@
         <div>
             <h1 style="text-align: center;">Results</h1>
             <h3>Shits coming soon</h3>
-            <div id="final-results-container"></div>
+
+            <div id="graph-year-container" style="width:100%; height:400px;"></div>
+
+            <div id="graph-week-container" style="width:100%; height:400px;"></div>
+
+            <div>
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Team</th>
+                            <th>Points</th>
+                        </tr>
+                    </thead>
+                    <tbody id="final-results-container"></tbody>
+                </table>
+            </div>
+
         </div>
     </div>
 </script>
 
 <script type="text/template" id="results-template">
-    <div class="well">
-        <div class="centerText">
-            <h3 style="font-size: 22px; margin-left: 50px; margin-right: 50px;">Shits coming soon</h3>
-        </div>
-        <br />
-    </div>
+    <td><%= teamName %></td>
+    <td><%= yearTotal %></td>
 </script>
-
-
-
 
 <!-- =================================================== -->
 <!--      GEO RESULTS COMPOSITE TEMPLATE                 -->

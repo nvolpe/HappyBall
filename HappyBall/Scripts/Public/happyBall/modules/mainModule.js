@@ -38,11 +38,11 @@
                 this.kingModel = new ffa.App.KingModel();
                 this.kingCollection = new ffa.App.KingCollection();
 
-
                 //TODO:  INIT result Entities
                 //-----------------------------------------
                 this.resultsModel = new ffa.App.ResultsModel();
-                this.geoCollection = new ffa.App.ResultsCollection();
+                this.resultsCollection = new ffa.App.ResultsCollection();
+                this.allResultsCollection = new ffa.App.AllResultsCollection();
 
 
                 //Geo Results Entities
@@ -50,7 +50,7 @@
                 this.geoModel = new ffa.App.GeoModel();
                 this.geoCollection = new ffa.App.GeoCollection();
 
-                //Geo Results Entities
+                //User Location Entities
                 //-----------------------------------------
                 this.userLocationModel = new ffa.App.UserLocationModel();
                 this.userLocationCollection = new ffa.App.UserLocationCollection();
@@ -97,19 +97,27 @@
                 modalRegion.show(this.GeoResultsCompositeView);
 
             },
-
             
             //Render the Home View
             showReults: function () {
+                var self = this;
 
                 //TODO, get from server
                 this.resultsCompositeView = new ffa.App.ResultsCompositeView({
-                    model: this.resultsModel, 
-                    collection: this.geoCollection
+                    model: this.resultsModel,
+                    collection: this.resultsCollection,
+                    allResultsCollection: this.allResultsCollection
                 });
 
-                this.region.show(this.resultsCompositeView);
-
+                this.resultsCollection.fetch({
+                    success: function (results) {
+                        //init view
+                        self.region.show(self.resultsCompositeView);
+                    },
+                    error: function () {
+                        console.log('noo kingCollection results');
+                    }
+                });
             },
 
             //go get bets from database
