@@ -637,22 +637,18 @@
             var answer2 = $('#kingAnswer2').val();
             var answer3 = $('#kingAnswer3').val();
 
-            var data = [
-            { "id": 1, "answer1": answer1 },
-            { "id": 2, "answer2": answer2 },
-            { "id": 3, "answer3": answer3 }
-            ]
+            var data = [{ "id": 1, "answer1": answer1, "answer2": answer2, "answer3": answer3 }]
 
             var url = null;
 
             //TODO: Is this really the best way, looping through and sending put requests?
             //Or should i post new data each time?
-            $.each(data, function (index, value) {
-                url = _siteRoot + '/api/kinganswer' + '/' + value.id; //TODO: User c# razer shit to get route
+            //$.each(data, function (index, value) {
+            url = _siteRoot + '/api/kinganswer' + '/' + data[0].id; //TODO: User c# razer shit to get route
                 $.ajax({
                     type: "PUT",
                     url: url,
-                    data: value,
+                    data: data[0],
                     dataType: 'json',
                     error: function () {
                         _KingSpinner.stop();
@@ -668,7 +664,7 @@
                         console.log('admin succesffully updated kinganswers');
                     }
                 });
-            });
+            //});
         }
 
 
@@ -744,12 +740,12 @@
                 url: url,
                 dataType: 'json',
                 error: function () {
-                    _PropSpinner.stop();
+                    _finalSpinner.stop();
                     console.log('admin error calculating results');
                     alert('shit didnt work, ask nick');
                 },
                 success: function () {
-                    _PropSpinner.stop();
+                    _finalSpinner.stop();
 
                     //deactivate calc button until answers are in
                     console.log('admin succesffully calculated results');

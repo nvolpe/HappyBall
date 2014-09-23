@@ -53,9 +53,9 @@ namespace HappyBall.Controllers.Api
             var answer3count = db.Results.Where(x => x.PropBet3 == answer3).Count();
 
             //Take the total count for the answer / 100
-            double answer1Points = 100;
-            double answer2Points = 100;
-            double answer3Points = 100;
+            decimal answer1Points = 100;
+            decimal answer2Points = 100;
+            decimal answer3Points = 100;
 
             if (answer1count > 0) { answer1Points = 100 / answer1count; }
             if (answer2count > 0) { answer2Points = 100 / answer2count; }
@@ -105,9 +105,16 @@ namespace HappyBall.Controllers.Api
                 answersList.Contains(x.Pick3) &&
                 x.Week == weekId).ToList();
 
+            var correctTeamCount = db.KingResults.Where(x =>
+                answersList.Contains(x.Pick1) &&
+                answersList.Contains(x.Pick2) &&
+                answersList.Contains(x.Pick3) &&
+                x.Week == weekId).Count();
 
             //Kings is worth 200
-            double kingPoints = 200;
+            decimal kingPoints = 200;
+            if (correctTeamCount > 0) { kingPoints = 200 / correctTeamCount; }
+
             correctTeams.ForEach(x => x.WeekTotal = kingPoints);
 
             //save the database
@@ -156,6 +163,7 @@ namespace HappyBall.Controllers.Api
 
             db.SaveChanges();
 
+
             return Ok("Success yo");
         }
 
@@ -183,52 +191,28 @@ namespace HappyBall.Controllers.Api
         [System.Web.Http.Route("api/final/year", Name = "GetFinalByYear")]
         public IHttpActionResult GetFinalByYear()
         {
-
-            //Get Current Week?
-            //------------------------------------
-
-            var results = db.Finals.GroupBy(x => x.Week).ToList();
-
-            var results1 = db.Finals.GroupBy(x => x.TeamName).ToList();
+            var results = db.Finals.GroupBy(x => x.TeamName).ToList();
 
             List<YearFinal> finalYearList = new List<YearFinal>();
 
-            
-
-            //results.ForEach(x =>
-            //{
-            //    finalYear.name = 
-                
-            //});
-
-            
-
             //for each prop result, get weekly total and add it to the fucking FINAL class
-            results1.ForEach(x =>
+            results.ForEach(x =>
             {
                 YearFinal finalYear = new YearFinal();
-                List<double> testList = new List<double>();
-                var test = x.ToList();
+                List<decimal> finalList = new List<decimal>();
+                var finalItems = x.ToList();
 
-                test.ForEach(y =>
+                finalItems.ForEach(y =>
                         {
-                            testList.Add(y.YearTotal);
-
+                            finalList.Add(y.YearTotal);
                         }
                     );
 
                 finalYear.name = x.Key;
-                finalYear.data = testList;
-
+                finalYear.data = finalList;
                 finalYearList.Add(finalYear);
 
-
-                //var finalItem = db.Finals.Where(y => y.TeamName == x.TeamName).FirstOrDefault();
-                //finalItem.PropResult = x.WeekTotal;
             });
-
-
-            var tester = "tester";
 
             return Ok(finalYearList);
         }

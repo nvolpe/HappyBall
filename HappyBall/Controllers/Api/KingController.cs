@@ -98,7 +98,7 @@ namespace HappyBall.Controllers.Api
 
 
             //Kings is worth 200
-            double kingPoints = 200;
+            decimal kingPoints = 200;
 
             correctTeams.ForEach(x => x.WeekTotal = kingPoints);
 

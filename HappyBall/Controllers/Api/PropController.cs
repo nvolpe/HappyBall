@@ -76,9 +76,9 @@ namespace HappyBall.Controllers.Api
             var answer3count = db.Results.Where(x => x.PropBet3 == answer3).Count();
 
             //Take the total count for the answer / 100
-            double answer1Points = 100;
-            double answer2Points = 100;
-            double answer3Points = 100;
+            decimal answer1Points = 100;
+            decimal answer2Points = 100;
+            decimal answer3Points = 100;
 
             if (answer1count > 0) { answer1Points = 100 / answer1count; }
             if (answer2count > 0) { answer2Points = 100 / answer2count; }

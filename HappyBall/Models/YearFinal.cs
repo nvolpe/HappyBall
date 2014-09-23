@@ -9,7 +9,7 @@ namespace HappyBall.Models
     {
 
         public string name { get; set; }
-        public List<double> data { get; set; }
+        public List<decimal> data { get; set; }
 
     }
 }

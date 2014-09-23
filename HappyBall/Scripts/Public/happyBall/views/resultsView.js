@@ -20,7 +20,6 @@
 
             var resultUrl = ffa.siteRoot + '/api/final/week';
             return resultUrl;
-
         }
     });
 
@@ -47,7 +46,7 @@
         },
     });
 
-    
+
 
 
     //===============
@@ -84,7 +83,7 @@
         childView: ffa.App.ResultsItemView,
         childViewContainer: "#final-results-container",
         template: "#results-container-template",
-        
+
 
         //ui: {
         //    submitPropBtn: '#submitProp'
@@ -99,11 +98,11 @@
 
         onShow: function () {
 
-            this.fetchAllResults();
-
             this.mungeData();
 
-            this.getYearlyData();
+            this.getTotalWeeks();
+
+            //this.getYearlyData();
 
             //this.displayOngoingLineGraph();
 
@@ -111,25 +110,26 @@
         },
 
 
-        fetchAllResults: function () {
+        getTotalWeeks: function () {
             var self = this;
 
-            this.allResultsCollection.fetch({
-                success: function (results) {
-                    //init view
+            $.getJSON(ffa.siteRoot + "/api/week", function (json) {
 
-                    //self.mungeAllData();
 
-                },
-                error: function () {
-                    console.log('noo kingCollection results');
-                }
-            });
+                var amountOfWeeks = json[0].week_id;
+
+
+                self.getYearlyData(amountOfWeeks);
+
+            })
+
+         .fail(function (jqXHR, textStatus, errorThrown) {
+             console.warn('Didnt GET yearly data')
+         });
         },
 
 
-        
-        getYearlyData: function () {
+        getYearlyData: function (amountOfWeeks) {
             var self = this;
 
             $.getJSON(ffa.siteRoot + "/api/final/year", function (json) {
@@ -141,87 +141,7 @@
          .fail(function (jqXHR, textStatus, errorThrown) {
              console.warn('Didnt GET yearly data')
          });
-
-
-
         },
-
-
-
-
-
-
-
-        //mungeAllData: function () {
-        //    var self = this;
-        //    var json = this.allResultsCollection.toJSON();
-        //    var data;
-
-        //    var allResults = [];
-
-        //    _.each(json, function (item) {
-
-        //        data = _.where(json, { 'teamName': item.teamName });
-
-        //        allResults.push(data);
-
-        //        //teamsData.push(data);
-        //        //yearTotal = item.yearTotal;
-        //        //teamName = item.teamName;
-        //    });
-
-        //    console.log('munging ALL data');
-        //    console.dir(allResults);
-
-        //    var howManyWeeks = [0, 1];
-
-        //    var teamObject = {};
-        //    var teamDataArray = [];
-
-        //    this.finalResults = [];
-
-        //    var counter = 0;
-
-        //    _.each(allResults, function (item) {
-                
-                
-        //        _.each(howManyWeeks, function (index) {
-                    
-        //            console.log('i haev so many debugger statements');
-        //            console.log(index);
-        //            console.dir(item[index].teamName);
-        //            console.dir(item[index].yearTotal);
-
-        //            teamObject.name = item[index].teamName;
-        //            teamDataArray.push(item[index].yearTotal);
-
-        //            if (counter == howManyWeeks.length)
-        //            {
-        //                teamObject.data = teamDataArray;
-        //                self.finalResults.push(teamObject);
-
-        //                teamDataArray = [];
-        //                teamObject.data = [];
-        //            }
-
-        //            counter++
-
-        //        });
-
-        //        //teamObject.data = teamDataArray;
-        //        //self.finalResults.push(teamObject);
-                
-
-        //    });
-
-        //    console.log('Denver Lost');
-        //    console.dir(this.finalResults);
-
-        //    this.displayOngoingLineGraph();
-            
-
-        //},
-
 
         mungeData: function () {
             var self = this;
@@ -255,11 +175,7 @@
 
         },
 
-        
         displayOngoingLineGraph: function (data) {
-
-            console.log('yay graph');
-            console.dir(this.collection);
 
             $('#graph-year-container').highcharts({
                 title: {
@@ -271,7 +187,7 @@
                     x: -20
                 },
                 xAxis: {
-                    categories: ['1', '2']
+                    categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16']
                 },
                 yAxis: {
                     title: {
@@ -364,6 +280,8 @@
                 }]
             });
         }
+
+      
 
     });
 

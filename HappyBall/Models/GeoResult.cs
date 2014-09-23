@@ -13,6 +13,7 @@ namespace HappyBall.Models
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public decimal? DistanceAway { get; set; }
+        public double YearlyDistance { get; set; }
         public int Time { get; set; }
         public int Week { get; set; }
         public string UserId { get; set; }
