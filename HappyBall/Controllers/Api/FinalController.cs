@@ -33,6 +33,26 @@ namespace HappyBall.Controllers.Api
             //------------------------------------
             var weekId = db.Week.First().Week_Id;
 
+            //for each already existing item in finals table, we need to create more rows for the next week
+            var previousWeek = weekId - 1;
+
+            var FinalsForAddtionalRows = db.Finals.Where(x => x.Week == previousWeek).ToList();
+
+            FinalsForAddtionalRows.ForEach(x =>
+            {
+                Final newFinalRow = new Final();
+                //newFinalRow.Week = weekId;
+                newFinalRow.PropResult = 0.00M;
+                newFinalRow.KingResult = 0.00M;
+                newFinalRow.WeekTotal = 0.00M;
+                newFinalRow.TeamName = x.TeamName;
+                newFinalRow.YearTotal = x.YearTotal;
+
+                db.Finals.Add(newFinalRow);
+            });
+
+            db.SaveChanges();
+
             ///////////////////////////////////////////////////////////////////////////////////
             // Calculate Prop Results
             ///////////////////////////////////////////////////////////////////////////////////
@@ -42,35 +62,36 @@ namespace HappyBall.Controllers.Api
             resultsList.ForEach(x => { x.Points1 = 0; x.Points2 = 0; x.Points3 = 0; x.WeekTotal = 0; });
 
 
-            //Go get the right answers
+            //Go get the right answers INDEXEES ARE FUCKED FIX ON DB
             var answer1 = db.Prop.Where(x => x.Week == weekId && x.Id == 1).FirstOrDefault().Answer;
             var answer2 = db.Prop.Where(x => x.Week == weekId && x.Id == 2).FirstOrDefault().Answer;
             var answer3 = db.Prop.Where(x => x.Week == weekId && x.Id == 3).FirstOrDefault().Answer;
 
             //Go get how many people answered the right question
-            var answer1count = db.Results.Where(x => x.PropBet1 == answer1).Count();
-            var answer2count = db.Results.Where(x => x.PropBet2 == answer2).Count();
-            var answer3count = db.Results.Where(x => x.PropBet3 == answer3).Count();
+            var answer1count = db.Results.Where(x => x.PropBet1 == answer1 && x.Week == weekId).Count();
+            var answer2count = db.Results.Where(x => x.PropBet2 == answer2 && x.Week == weekId).Count();
+            var answer3count = db.Results.Where(x => x.PropBet3 == answer3 && x.Week == weekId).Count();
 
             //Take the total count for the answer / 100
-            decimal answer1Points = 100;
-            decimal answer2Points = 100;
-            decimal answer3Points = 100;
+            decimal answer1Points = 100.00M;
+            decimal answer2Points = 100.00M;
+            decimal answer3Points = 100.00M;
 
-            if (answer1count > 0) { answer1Points = 100 / answer1count; }
-            if (answer2count > 0) { answer2Points = 100 / answer2count; }
-            if (answer3count > 0) { answer3Points = 100 / answer3count; }
+            if (answer1count > 0) { answer1Points = decimal.Divide(100.00M, answer1count); }
+            if (answer2count > 0) { answer2Points = decimal.Divide(100.00M, answer2count); }
+            if (answer3count > 0) { answer3Points = decimal.Divide(100.00M, answer3count); }
 
             //Todo, iterate over each team in the results and see if they answered the right question, if so give them the amount of points
-            var correctTeamsForAnswer1 = db.Results.Where(x => x.PropBet1 == answer1).ToList();
-            var correctTeamsForAnswer2 = db.Results.Where(x => x.PropBet2 == answer2).ToList();
-            var correctTeamsForAnswer3 = db.Results.Where(x => x.PropBet3 == answer3).ToList();
+            var correctTeamsForAnswer1 = db.Results.Where(x => x.PropBet1 == answer1 && x.Week == weekId).ToList();
+            var correctTeamsForAnswer2 = db.Results.Where(x => x.PropBet2 == answer2 && x.Week == weekId).ToList();
+            var correctTeamsForAnswer3 = db.Results.Where(x => x.PropBet3 == answer3 && x.Week == weekId).ToList();
 
             correctTeamsForAnswer1.ForEach(x => x.Points1 = answer1Points);
             correctTeamsForAnswer2.ForEach(x => x.Points2 = answer2Points);
             correctTeamsForAnswer3.ForEach(x => x.Points3 = answer3Points);
 
-            db.Results.ToList().ForEach(x => x.WeekTotal = x.Points1 + x.Points2 + x.Points3);
+            var resultsToEdit = db.Results.Where(x => x.Week == weekId).ToList();
+            resultsToEdit.ForEach(x => x.WeekTotal = x.Points1 + x.Points2 + x.Points3);
 
             //save it first so we can access it next
             db.SaveChanges();
@@ -81,7 +102,8 @@ namespace HappyBall.Controllers.Api
             ///////////////////////////////////////////////////////////////////////////////////
 
             //Go get the right answers
-            var answerItem = db.KingAnswers.Where(x => x.Week == weekId).FirstOrDefault();
+            //var answerItem = db.KingAnswers.Where(x => x.Week == weekId).FirstOrDefault();
+            var answerItem = db.KingAnswers.FirstOrDefault();
 
             //get the right answers from the db
             var kingAnswer1 = answerItem.Answer1;
@@ -112,8 +134,8 @@ namespace HappyBall.Controllers.Api
                 x.Week == weekId).Count();
 
             //Kings is worth 200
-            decimal kingPoints = 200;
-            if (correctTeamCount > 0) { kingPoints = 200 / correctTeamCount; }
+            decimal kingPoints = 200.00M;
+            if (correctTeamCount > 0) { kingPoints = 200.00M / correctTeamCount; }
 
             correctTeams.ForEach(x => x.WeekTotal = kingPoints);
 
@@ -127,10 +149,12 @@ namespace HappyBall.Controllers.Api
             //props
             var resultsForFinals = db.Results.Where(x => x.Week == weekId).ToList();
 
+            var finalsCached = db.Finals.Where(x => x.Week == weekId).ToList();
+
             //for each prop result, get weekly total and add it to the fucking FINAL class
             resultsForFinals.ForEach(x =>
             {
-                var finalItem = db.Finals.Where(y => y.TeamName == x.TeamName).FirstOrDefault();
+                var finalItem = finalsCached.Where(y => y.TeamName == x.TeamName).First();
                 finalItem.PropResult = x.WeekTotal;
             });
 
@@ -139,7 +163,7 @@ namespace HappyBall.Controllers.Api
 
             kingsList.ForEach(x =>
             {
-                var finalItem = db.Finals.Where(y => y.TeamName == x.TeamName).FirstOrDefault();
+                var finalItem = finalsCached.Where(y => y.TeamName == x.TeamName).First();
                 finalItem.KingResult = x.WeekTotal;
             });
 
